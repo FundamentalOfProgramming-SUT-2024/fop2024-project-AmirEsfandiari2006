@@ -2,6 +2,6 @@
 
 
 int main(){
-    main_menu();
+    get_command_main_menu();
     return 0;
 }
