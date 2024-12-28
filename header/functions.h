@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include "constants.h"
 #include "checkerfunc.h"
+#include "file.h"
 
 void draw_borders(){
     for(int i = 0; i < COLS; i++){
@@ -48,11 +49,10 @@ int get_command_main_menu(){
 }
 
 void sign_up_user(){
+
     char username[MAX_INPUT_SIZE];
     char password[MAX_INPUT_SIZE];
     char email[MAX_INPUT_SIZE];
-
-    
 
     initscr();
     echo();
@@ -104,6 +104,9 @@ void sign_up_user(){
             }
             continue;
         } else {
+            add_username(username);
+            create_folder(username);
+            add_info(username,password,email);
             break;
         }
     }

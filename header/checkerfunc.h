@@ -4,18 +4,25 @@
 #include <stdbool.h>
 #include "constants.h"
 
-bool valid_username(char username[]){
+bool valid_username(char username[]) {
+    if (strlen(username) == 0) {
+        return false; 
+    }
+
+    FILE *file = fopen("usernames.txt", "r");
+
     char line[MAX_INPUT_SIZE];
-    FILE * file = fopen("usernames.txt", "r");
-    while(fgets(line, 50, file)) {
-        if(!strcmp(username,line)){
-            return false;
+    while (fgets(line, sizeof(line), file)) {
+        line[strcspn(line, "\n")] = 0;
+
+        if (strcmp(username, line) == 0) {
+            fclose(file);
+            return false; 
         }
     }
-    if(strlen(username) == 0){
-        return false;
-    }
-    return true;
+
+    fclose(file);
+    return true;  
 }
 
 bool valid_password(char password[]){
