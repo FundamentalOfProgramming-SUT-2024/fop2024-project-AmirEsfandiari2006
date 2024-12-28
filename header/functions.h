@@ -34,8 +34,11 @@ int get_command_main_menu(){
             hover = (hover == 0) ? number_menu_item - 1: hover - 1;
         else if (command == KEY_DOWN)
             hover = (hover == number_menu_item - 1) ? 0 : hover + 1;
-        else if (command == ENTER)
+        else if (command == ENTER){
+            endwin();
             return hover;
+        }
+            
         clear();
     }
     refresh();
