@@ -5,6 +5,7 @@
 #include "constants.h"
 #include "checkerfunc.h"
 #include "file.h"
+#include "global.h"
 
 void draw_borders(){
     for(int i = 0; i < COLS; i++){
@@ -15,10 +16,15 @@ void draw_borders(){
         mvprintw(i,0,"|");
         mvprintw(i,COLS - 1,"|"); 
     }
+    if(is_logged_in){
+        mvprintw(LINES - 2,1,"Your Logged in!");
+    } else {
+        mvprintw(LINES - 2,1,"Your not Logged in!");
+    }
 }
 
 int get_command_main_menu(){
-    const char* menu_item[] = {"Play","Sign up","History","Setting","Exit"};
+    const char* menu_item[] = {"Play","Sign up","Leader Board","Setting","Exit"};
     const int number_menu_item = 5;
     initscr();
     noecho();
@@ -131,11 +137,78 @@ void sign_up_user(){
 
 }
 
+void log_in_user(){
+    char username[MAX_INPUT_SIZE];
+    char password[MAX_INPUT_SIZE];
+
+    initscr();
+    echo();
+    curs_set(1);
+    start_color();
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+    draw_borders();
+    const int top = LINES/2 - 5;
+    int first_time = 0;
+    while(true){
+        int state = true;
+        mvprintw(top + 0,COLS/2 - 40 , "%s","Enter your Username: ");
+        mvprintw(top + 2,COLS/2 - 40 , "%s","Enter your Password: ");
+
+        if(first_time){
+            mvprintw(top - 2,COLS/2 - 40 , "%s","Do you want to back to main menu? [y/n] ");
+            char ch[MAX_INPUT_SIZE];
+            mvscanw(top - 2,COLS/2 , "%s", ch);;
+            if(!strcmp("y",ch)){ 
+                break;
+            } else {
+                mvprintw(top - 2,COLS/2 - 40 , "%s","                                           ");
+            }
+        }
+        mvscanw(top + 0,COLS/2 , "%s", username);
+        mvscanw(top + 2,COLS/2 , "%s", password);
+        first_time = 1;
+        if(valid_username(username)){
+            state = false;
+            attron(COLOR_PAIR(1));
+            mvprintw(top + 11,COLS/2 - 40 ,"Invalid username.");
+            attroff(COLOR_PAIR(1));
+        }else{
+            mvprintw(top + 11,COLS/2 - 40 ,"                 " );
+            if(!check_password_for_username(username,password)){
+            state = false;
+            attron(COLOR_PAIR(1));
+            mvprintw(top + 13,COLS/2 - 40 ,"Password is incorrect.");
+            attroff(COLOR_PAIR(1));
+            } else {
+                mvprintw(top + 13,COLS/2 - 40 ,"                      ");
+            }
+        }
+
+        if(state == false){
+            for (int i = top; i < LINES/2; i++) {
+                move(i, COLS/2 - 40);
+                for (int j = COLS/2 - 40 ; j < COLS; j++) {
+                addch(' '); 
+                }
+            }
+            continue;
+        } else {
+            is_logged_in = true;
+            break;
+        }
+    }
+
+    clear();
+    
+    refresh();
+    endwin();
+}
+
 
 //incomplete function.
 void open_items_menu(int menu_number){
     switch(menu_number){
-        case 0: return;
+        case 0: log_in_user() ; return;
         case 1: sign_up_user(); return;
         case 2: return;
         case 3: return;

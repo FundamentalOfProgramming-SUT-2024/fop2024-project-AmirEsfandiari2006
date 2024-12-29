@@ -6,6 +6,6 @@
 #define ENTER 10
 #define MAX_INPUT_SIZE 50
 #define ESCAPE 27
-
+#define EXIT 4
 
 #endif

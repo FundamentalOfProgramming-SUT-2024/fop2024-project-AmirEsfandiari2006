@@ -85,4 +85,25 @@ bool valid_email(const char email[]) {
     return false;
 }
 
+bool check_password_for_username(char username[], char password[]){
+    char folder_path[256];
+    strcpy(folder_path, "data/");
+    strcat(folder_path,username);
+    strcat(folder_path,"/");
+    strcat(folder_path,"info.txt");
+    FILE *file = fopen(folder_path, "r");
+    char line[MAX_INPUT_SIZE];
+    while (fgets(line, sizeof(line), file)) {
+        line[strcspn(line, "\n")] = 0;
+
+        if (strcmp(password, line) == 0) {
+            fclose(file);
+            return true; 
+        }
+    }
+    fclose(file);
+    return false;
+}
+
+
 #endif
