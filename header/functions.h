@@ -1,3 +1,6 @@
+#ifndef FUNCTION_H
+#define FUNCTION_H
+
 #include <ncurses.h>
 #include "constants.h"
 #include "checkerfunc.h"
@@ -57,46 +60,47 @@ void sign_up_user(){
     initscr();
     echo();
     curs_set(1);
+    start_color();
     init_pair(1, COLOR_RED, COLOR_BLACK);
     draw_borders();
-
+    const int top = LINES/2 - 5;
     while(true){
         int state = 1;
-        mvprintw(LINES/2 - 5,COLS/2 - 40 , "%s","Enter your Username: ");
-        mvprintw(LINES/2 - 3,COLS/2 - 40 , "%s","Enter your Password: ");
-        mvprintw(LINES/2 - 1,COLS/2 - 40 , "%s","Enter your Email address: ");
-        mvprintw(LINES/2 + 4,COLS/2 - 40 , "%s","*Your password must have at least 7 characters, consist of one upper,lower and number.");
+        mvprintw(top + 0,COLS/2 - 40 , "%s","Enter your Username: ");
+        mvprintw(top + 2,COLS/2 - 40 , "%s","Enter your Password: ");
+        mvprintw(top + 4,COLS/2 - 40 , "%s","Enter your Email address: ");
+        mvprintw(top + 9,COLS/2 - 40 , "%s","*Your password must have at least 7 characters, consist of one upper,lower and number.");
 
-        mvscanw(LINES/2 - 5,COLS/2 , "%s", username);
-        mvscanw(LINES/2 - 3,COLS/2 , "%s", password);
-        mvscanw(LINES/2 - 1,COLS/2 , "%s", email);
+        mvscanw(top + 0,COLS/2 , "%s", username);
+        mvscanw(top + 2,COLS/2 , "%s", password);
+        mvscanw(top + 4,COLS/2 , "%s", email);
 
         if(!valid_username(username)){
-            //attron(COLOR_PAIR(7));
-            mvprintw(LINES/2 + 6,COLS/2 - 40 ,"This username is already defined." );
+            attron(COLOR_PAIR(1));
+            mvprintw(top + 11,COLS/2 - 40 ,"This username is already defined." );
             state = 0;
-            //attroff(COLOR_PAIR(7)); 
+            attroff(COLOR_PAIR(1)); 
         } else {
-            mvprintw(LINES/2 + 6,COLS/2 - 40,"                                  ");
+            mvprintw(top + 11,COLS/2 - 40,"                                  ");
         }
         if(!valid_password(password)){
             attron(COLOR_PAIR(1));
-            mvprintw(LINES/2 + 8,COLS/2 - 40 ,"Your Password doesn't meet the requirments." );
+            mvprintw(top + 13,COLS/2 - 40 ,"Your Password doesn't meet the requirments." );
             state = 0;
             attroff(COLOR_PAIR(1));
         } else {
-            mvprintw(LINES/2 + 8,COLS/2 - 40 ,"                                           " );
+            mvprintw(top + 13,COLS/2 - 40 ,"                                           " );
         }
         if(!valid_email(email)){
             attron(COLOR_PAIR(1));
-            mvprintw(LINES/2 + 10,COLS/2 - 40 ,"Invalid Email." );
+            mvprintw(top + 15,COLS/2 - 40 ,"Invalid Email." );
             state = 0;
             attroff(COLOR_PAIR(1));
         } else{
-            mvprintw(LINES/2 + 10,COLS/2 - 40 ,"              " );
+            mvprintw(top + 15,COLS/2 - 40 ,"              " );
         }
         if(state == false){
-            for (int i = LINES/2 - 5; i < LINES/2; i++) {
+            for (int i = top; i < LINES/2; i++) {
                 move(i, COLS/2 - 40);
                 for (int j = COLS/2 - 40 ; j < COLS; j++) {
                 addch(' '); 
@@ -127,3 +131,5 @@ void open_items_menu(int menu_number){
         case 4: return;
     }
 }
+
+#endif

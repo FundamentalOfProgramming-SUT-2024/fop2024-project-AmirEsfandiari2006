@@ -1,3 +1,6 @@
+#ifndef CHECKERFUNC_H
+#define CHECKERFUNC_H
+
 #include <stdlib.h>
 #include <stdlib.h>
 #include <string.h>
@@ -81,3 +84,5 @@ bool valid_email(const char email[]) {
     }
     return false;
 }
+
+#endif

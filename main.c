@@ -1,4 +1,5 @@
 #include "header/functions.h"
+#include "header/global.h"
 
 int main(){
     int command;

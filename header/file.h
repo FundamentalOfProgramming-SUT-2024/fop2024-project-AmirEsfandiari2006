@@ -1,3 +1,6 @@
+#ifndef FILE_H
+#define FILE_H
+
 #include <sys/stat.h>
 #include <string.h>
 
@@ -21,8 +24,11 @@ void add_info(char username[],char password[],char email[]){
     strcat(folder_path,"/");
     strcat(folder_path,"info.txt");
     FILE *file = fopen(folder_path, "w");
-    fprintf(file, "%s\n", username);  // Write username followed by a newline
-    fprintf(file, "%s\n", password);  // Write password followed by a newline
+    fprintf(file, "%s\n", username);
+    fprintf(file, "%s\n", password);  
     fprintf(file, "%s\n", email);
     fclose(file);
 }
+
+
+#endif
