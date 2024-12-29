@@ -64,16 +64,27 @@ void sign_up_user(){
     init_pair(1, COLOR_RED, COLOR_BLACK);
     draw_borders();
     const int top = LINES/2 - 5;
+    int first_time = 0;
     while(true){
         int state = 1;
         mvprintw(top + 0,COLS/2 - 40 , "%s","Enter your Username: ");
         mvprintw(top + 2,COLS/2 - 40 , "%s","Enter your Password: ");
         mvprintw(top + 4,COLS/2 - 40 , "%s","Enter your Email address: ");
         mvprintw(top + 9,COLS/2 - 40 , "%s","*Your password must have at least 7 characters, consist of one upper,lower and number.");
-
+        if(first_time){
+            mvprintw(top - 2,COLS/2 - 40 , "%s","Do you want to back to main menu? [y/n] ");
+            char ch[MAX_INPUT_SIZE];
+            mvscanw(top - 2,COLS/2 , "%s", ch);;
+            if(!strcmp("y",ch)){ 
+                break;
+            } else {
+                mvprintw(top - 2,COLS/2 - 40 , "%s","                                           ");
+            }
+        }
         mvscanw(top + 0,COLS/2 , "%s", username);
         mvscanw(top + 2,COLS/2 , "%s", password);
         mvscanw(top + 4,COLS/2 , "%s", email);
+        first_time = 1;
 
         if(!valid_username(username)){
             attron(COLOR_PAIR(1));
