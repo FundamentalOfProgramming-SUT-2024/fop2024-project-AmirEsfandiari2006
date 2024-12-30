@@ -1,11 +1,8 @@
 #ifndef CHECKERFUNC_H
 #define CHECKERFUNC_H
 
-#include <stdlib.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include "constants.h"
+
+#include "include.h"
 
 bool valid_username(char username[]) {
     if (strlen(username) == 0) {

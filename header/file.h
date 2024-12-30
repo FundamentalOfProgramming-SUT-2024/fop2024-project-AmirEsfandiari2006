@@ -1,8 +1,7 @@
 #ifndef FILE_H
 #define FILE_H
 
-#include <sys/stat.h>
-#include <string.h>
+#include "include.h"
 
 void create_folder(const char username[]) {
     char folder_path[256]; 
@@ -23,10 +22,11 @@ void add_info(char username[],char password[],char email[]){
     strcat(folder_path,username);
     strcat(folder_path,"/");
     strcat(folder_path,"info.txt");
+    
     FILE *file = fopen(folder_path, "w");
-    fprintf(file, "%s\n", username);
-    fprintf(file, "%s\n", password);  
-    fprintf(file, "%s\n", email);
+        fprintf(file, "%s\n", username);
+        fprintf(file, "%s\n", password);  
+        fprintf(file, "%s\n", email);
     fclose(file);
 }
 
