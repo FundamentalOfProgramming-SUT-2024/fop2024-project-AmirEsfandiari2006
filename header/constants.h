@@ -5,6 +5,7 @@
 #define MAX_INPUT_SIZE 50
 #define MAX_DOOR 4
 #define MAX_ROOM 8
+#define MAX_CORRIDOR 10
 
 #define true 1
 #define false 0

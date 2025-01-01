@@ -2,9 +2,8 @@
 #define GENERATEMAP_H
 
 #include "include.h"
-#include "functions.h"
-
 int random_number(int,int);
+
 
 
 Room init_room(Point start,int width,int height,int num_of_door){
@@ -72,7 +71,7 @@ void print_room(Room room){
     
 
     for(int t = 0; t < room.height + 2; t++){
-        mvprintw(start_x,start_y,"-");
+        mvprintw(start_x,start_y,"_");
         start_y++;
     }
     start_y = copy_start_y;
@@ -90,7 +89,7 @@ void print_room(Room room){
         start_y = copy_start_y;
     }
     for(int t = 0; t < room.height + 2; t++){
-        mvprintw(start_x,start_y,"-");
+        mvprintw(start_x,start_y,"_");
         start_y++;
     }
     for(int i = 0; i < MAX_DOOR; i++){
@@ -149,6 +148,7 @@ void generate_random_room(Level* level){
         int count = 0;
         int add_room[4];
         select_numbers(add_room,&count,4,7);
+        int room5_room6 = 0;
         for(int i = 0; i < count; i++){
             level->is_there_room[add_room[i]] = 1;
             level->rooms[add_room[i]].start.x = random_number(4,10) + lines/2;
@@ -169,39 +169,37 @@ void generate_random_room(Level* level){
                 }
                 
             }
-            int room5_room6 = 0;
-            if(add_room[i] == 5 ){
+            if(add_room[i] == 5){
             
                 for(int j = 0;j < count; j++){
                     if(add_room[j] == 4){
                         set_door(&level->rooms[add_room[i]],Left);
                     }
                 }
-                set_door(&level->rooms[add_room[i]],Up);
                 set_door(&level->rooms[add_room[i] - 4],Down);
+                set_door(&level->rooms[add_room[i]],Up);
                 for(int j = 0;j < count; j++){
                 if(add_room[j] == 6){
                     if(random_number(0,1)){
-                    room5_room6 = 1;
-                    set_door(&level->rooms[add_room[i]],Right);
+                        room5_room6 = 1;
+                        set_door(&level->rooms[add_room[i]],Right);
                     }
                     }
                 }
             }
             
             if(add_room[i] == 6 ){
-                if(room5_room6){
+                if(room5_room6 == 1){
                     set_door(&level->rooms[add_room[i]],Left);
                 }
-                
-                if(room5_room6){
+                if(room5_room6 == 1){
                    if(random_number(0,1)){
-                        set_door(&level->rooms[add_room[i]],Up);
                         set_door(&level->rooms[add_room[i] - 4],Down);
+                        set_door(&level->rooms[add_room[i]],Up);
                     } 
                 }else{
-                    set_door(&level->rooms[add_room[i]],Up);
                     set_door(&level->rooms[add_room[i] - 4],Down);
+                    set_door(&level->rooms[add_room[i]],Up);
                 }
                 for(int j = 0;j < count; j++){
                     if(add_room[j] == 7){
@@ -247,6 +245,7 @@ void generate_random_room(Level* level){
         int count = 0;
         int add_room[4];
         select_numbers(add_room,&count,0,3);
+                    int room2_room3 = 0;
         for(int i = 0; i < count; i++){
             level->is_there_room[add_room[i]] = 1;
             level->rooms[add_room[i]].start.x = random_number(4,10) ;
@@ -263,11 +262,10 @@ void generate_random_room(Level* level){
                 }
                 if(random_number(0,1) || state){
                     set_door(&level->rooms[add_room[i]],Down);
-                    set_door(&level->rooms[add_room[i] +4 ],Up);
+                    set_door(&level->rooms[add_room[i] + 4],Up);
                 }
                 
             }
-            int room2_room3 = 0;
             if(add_room[i] == 1){
             
                 for(int j = 0;j < count; j++){
@@ -327,6 +325,110 @@ void generate_random_room(Level* level){
 }
 
 
+Point find_empty_for_door(Point point){
+    if(mvinch(point.x + 1,point.y) == ' '){
+        point.x ++; return point;
+    }
+    if(mvinch(point.x - 1,point.y) == ' '){
+        point.x --; return point;
+    }
+    if(mvinch(point.x,point.y + 1) == ' '){
+        point.y++; return point;
+    }
+    if(mvinch(point.x,point.y - 1) == ' '){
+        point.y--; return point;
+    }
+}   
+
+
+
+void generate_road(Point start, Point end) {
+    Point mid;
+
+
+    mid.x = end.x;
+    mid.y = start.y;
+
+    int dx = abs(mid.x - start.x);
+    int dy = abs(mid.y - start.y);
+    int sx = (start.x < mid.x) ? 1 : -1;
+    int sy = (start.y < mid.y) ? 1 : -1;
+
+    int x = start.x, y = start.y;
+    while (true) {
+        mvprintw(x, y, "#");
+        if (x == mid.x && y == mid.y) break;
+
+        if (dx >= dy) {
+            x += sx;
+        } else {
+            y += sy;
+        }
+    }
+
+    dx = abs(end.x - mid.x);
+    dy = abs(end.y - mid.y);
+    sx = (mid.x < end.x) ? 1 : -1;
+    sy = (mid.y < end.y) ? 1 : -1;
+
+    x = mid.x, y = mid.y;
+    while (true) {
+        mvprintw(x, y, "#"); 
+        if (x == end.x && y == end.y) break;
+
+        if (dx >= dy) {
+            x += sx;
+        } else {
+            y += sy;
+        }
+    }
+}
+
+
+void generate_corridor(Point start, Point end) {
+    Point mid1;
+
+    mid1.x = (start.x + end.x) / 2;
+    mid1.y = (start.y + end.y) / 2;
+
+    
+
+    generate_road(start, mid1); 
+    generate_road(mid1, end);
+}
+
+void set_up_corridors(Level level){
+    for(int i = 0; i < 3; i++){
+        if(level.rooms[i].is_door[Right] == 1 && level.rooms[i + 1].is_door[Left] == 1){
+            generate_corridor(find_empty_for_door(level.rooms[i].doors[Right]),find_empty_for_door(level.rooms[i + 1].doors[Left]));
+            level.is_there_corridor[i] = 1;
+        }
+    }
+    for(int i = 4; i < 7; i++){
+        if(level.rooms[i].is_door[Right] == 1 && level.rooms[i + 1].is_door[Left] == 1){
+            generate_corridor(find_empty_for_door(level.rooms[i].doors[Right]),find_empty_for_door(level.rooms[i + 1].doors[Left]));
+            level.is_there_corridor[i] = 1;
+        }
+    }
+    for(int i = 0; i < 4; i++){
+        if(level.rooms[i].is_door[Down] == 1 && level.rooms[i + 4].is_door[Up] == 1){
+            generate_corridor(find_empty_for_door(level.rooms[i].doors[Down]),find_empty_for_door(level.rooms[i + 4].doors[Up]));
+            level.is_there_corridor[i + 7] = 1;
+        }
+    }
+}
+
+
+void clear_first_line(){
+    for(int i = 0; i < cols; i++){
+        mvprintw(0,i,"%c",' ');
+    }
+    for(int i = 1; i < cols; i++){
+        mvprintw(0,i,"%c",' ');
+    }
+}
+
+
 void printf_level(Level *level){
     initscr();
     noecho();
@@ -337,6 +439,8 @@ void printf_level(Level *level){
                 print_room(level->rooms[i]);
         }
     }
+    set_up_corridors(*level);
+    clear_first_line();
     getch();
     refresh();
     endwin();

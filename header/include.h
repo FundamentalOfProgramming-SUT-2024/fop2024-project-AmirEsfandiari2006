@@ -12,9 +12,10 @@
 #include "constants.h"
 #include "checkerfunc.h"
 #include "file.h"
+#include "menu.h"
 #include "global.h"
 #include "datatype.h"
 #include "gamemap.h"
-
+#include "tools.h"
 
 #endif

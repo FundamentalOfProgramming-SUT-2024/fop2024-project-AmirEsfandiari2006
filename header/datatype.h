@@ -35,13 +35,13 @@ typedef struct
 typedef struct 
 {
     int level;
+
     int is_there_room[MAX_ROOM];
     Room rooms[MAX_ROOM];
 
+    int is_there_corridor[MAX_ROOM];
+    
+
 } Level;
-
-
-
-
 
 #endif

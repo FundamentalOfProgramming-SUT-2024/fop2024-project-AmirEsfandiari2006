@@ -2,6 +2,8 @@
 #define FUNCTION_H
 
 #include "include.h"
+#include "global.h"
+
 
 void draw_borders(){
     for(int i = 0; i < COLS; i++){
@@ -249,11 +251,6 @@ void log_in_user(){
     
     refresh();
     endwin();
-}
-
-int random_number(int min, int max) {
-
-    return rand() % (max - min + 1) + min;
 }
 
 //incomplete function.

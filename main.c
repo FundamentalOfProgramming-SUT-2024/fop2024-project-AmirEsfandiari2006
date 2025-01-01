@@ -1,6 +1,3 @@
-#include "header/functions.h"
-#include "header/global.h"
-
 #include "header/include.h"
 
 int main(){
@@ -16,14 +13,9 @@ int main(){
     */
     //play_the_game();
     
-    
-    
     Level level1;
     generate_random_room(&level1);
     printf_level(&level1);
-
-
     
-
     return 0;
 }
