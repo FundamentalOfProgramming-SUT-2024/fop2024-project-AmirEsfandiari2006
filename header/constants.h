@@ -3,6 +3,8 @@
 
 
 #define MAX_INPUT_SIZE 50
+#define MAX_DOOR 4
+#define MAX_ROOM 8
 
 #define true 1
 #define false 0
@@ -20,6 +22,11 @@
 
 #define NEWGAME 0
 #define LOADGAME 1
+
+#define Right 0
+#define Up    1
+#define Left  2
+#define Down  3
 
 
 #endif

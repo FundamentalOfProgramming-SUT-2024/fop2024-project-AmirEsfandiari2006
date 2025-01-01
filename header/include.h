@@ -7,12 +7,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <time.h>
 
 #include "constants.h"
 #include "checkerfunc.h"
 #include "file.h"
 #include "global.h"
 #include "datatype.h"
+#include "gamemap.h"
 
 
 #endif

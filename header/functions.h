@@ -237,7 +237,7 @@ void log_in_user(){
             } else {
 
                 is_logged_in = true;
-                strcpy(player.username,username);
+                //strcpy(player.username,username);
                 //It should be continued by other values but for now. It would be enough.
                 clear();
                 break;
@@ -251,6 +251,10 @@ void log_in_user(){
     endwin();
 }
 
+int random_number(int min, int max) {
+
+    return rand() % (max - min + 1) + min;
+}
 
 //incomplete function.
 void open_items_menu(int menu_number){
@@ -262,8 +266,6 @@ void open_items_menu(int menu_number){
         case EXIT          :                      return;
     }
 }
-
-
 
 
 #endif

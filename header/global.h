@@ -8,8 +8,7 @@
 bool extern is_logged_in = false;
 bool extern is_game_plying = false;
 
-
-Player player;
-
+const int cols = 195;
+const int lines = 45;
 
 #endif
