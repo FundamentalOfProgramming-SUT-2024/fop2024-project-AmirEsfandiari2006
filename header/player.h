@@ -34,35 +34,57 @@ void print_player(const Player* player){
     attroff(COLOR_PAIR(1));
 }
 
+bool valid_tile(int x,int y){
+    char tile = mvinch(x,y);
+    switch (tile)
+    {
+    case '.':
+    case '#':
+    case '+':
+    return true;
+    case '_':
+    case 'O':
+    case ' ':
+    case '|':
+        return false;
+    }
+}
+
+
 void move_player(int command,Player* player){
     switch(command){
         case KEY_LEFT:
+        if(valid_tile(player->position.x,player->position.y - 1))
             player->position.y--;
-            break;
+        break;
         case KEY_RIGHT:
+        if(valid_tile(player->position.x,player->position.y + 1))
             player->position.y++;
-            break;
+        break;
         case KEY_UP:
+        if(valid_tile(player->position.x - 1,player->position.y))
             player->position.x--;
-            break;
+        break;
         case KEY_DOWN:
+        if(valid_tile(player->position.x + 1,player->position.y))
             player->position.x++;
-            break;
+        break;
         case KEY_HOME:
+        if(valid_tile(player->position.x - 1,player->position.y - 1))
             player->position.x--;
             player->position.y--;
-            break;
+        break;
         case KEY_PPAGE:
-            player->position.x--;
-            player->position.y++;
-            break;
+        if(valid_tile(player->position.x - 1,player->position.y + 1)){}
+            player->position.x--; player->position.y++;
+        break;
         case KEY_NPAGE:
-            player->position.x++;
-            player->position.y++;
-            break;
+        if(valid_tile(player->position.x + 1,player->position.y + 1)){}
+            player->position.x++; player->position.y++;
+        break;
         case KEY_END:
-            player->position.x++;
-            player->position.y--;
-            break;
+        if(valid_tile(player->position.x + 1,player->position.y - 1)){}
+            player->position.x++; player->position.y--;
+        break;
     }
 }
