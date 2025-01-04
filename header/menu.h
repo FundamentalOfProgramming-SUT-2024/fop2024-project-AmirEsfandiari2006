@@ -49,7 +49,7 @@ int play_the_game_menu(){
         else if (command == ENTER){
             clear();
             endwin();
-            is_game_plying = true;
+            is_game_playing = true;
             return hover;
         }
             

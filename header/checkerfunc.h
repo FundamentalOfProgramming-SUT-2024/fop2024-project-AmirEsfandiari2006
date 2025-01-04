@@ -29,7 +29,7 @@ bool valid_password(char password[]){
     bool upper_case = false;
     bool lower_case = false;
     bool number = false;
-    bool length = strlen(password) > 7 ? true : false;
+    bool length = strlen(password) >= 7 ? true : false;
     int index = 0;
     while(password[index] != '\0'){
         if(password[index] >= 'a' && password[index] <= 'z')

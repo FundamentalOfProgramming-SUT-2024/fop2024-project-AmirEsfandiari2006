@@ -33,5 +33,7 @@
 
 #define PLAYER_SYM "@"
 
+#define START_GAME 1
+
 
 #endif

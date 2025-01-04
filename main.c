@@ -1,32 +1,40 @@
 #include "header/include.h"
 
-int main(){
-
+int main() {
     srand(time(0));
-    
-    int command;
-    while(command != EXIT && is_game_plying == false){
-        command = get_command_main_menu(); open_items_menu(command);
-        
-    }  
-    
 
+    //Game set_up
     Level level1;
     generate_random_room(&level1);
 
-    Player player; init_player(&player,&level1);
+    //Player set_up
+    Player player;
+    init_player(&player, &level1);
 
-    
-    while(command != ESCAPE){
+    int command = 0;   
+    while (command != EXIT) {
+        if (!is_game_playing) {
 
-        printf_level(&level1);
-        print_player(&player);
+            while (command != EXIT && !is_game_playing) {
+                command = get_command_main_menu();
+                open_items_menu(command);
 
-        command = getch();
-        move_player(command,&player);
-        clear();
+            }
+        }
+
+        if (is_game_playing && is_logged_in) {
+
+            while (command != ESCAPE) {
+                printf_level(&level1);
+                print_player(&player);
+
+                command = getch();
+                move_player(command, &player);
+                clear();
+            }
+            is_game_playing = false;
+        }
     }
-
 
     refresh();
     endwin();
