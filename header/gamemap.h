@@ -178,14 +178,7 @@ void generate_random_room(Level* level){
                 }
                 set_door(&level->rooms[add_room[i] - 4],Down);
                 set_door(&level->rooms[add_room[i]],Up);
-                for(int j = 0;j < count; j++){
-                if(add_room[j] == 6){
-                    if(random_number(0,1)){
-                        room5_room6 = 1;
-                        set_door(&level->rooms[add_room[i]],Right);
-                    }
-                    }
-                }
+
             }
             
             if(add_room[i] == 6 ){
@@ -386,11 +379,11 @@ void generate_road(Point start, Point end) {
 
 
 void generate_corridor(Point start, Point end) {
+
     Point mid1;
 
     mid1.x = (start.x + end.x) / 2;
     mid1.y = (start.y + end.y) / 2;
-
     
 
     generate_road(start, mid1); 
@@ -419,12 +412,17 @@ void set_up_corridors(Level level){
 }
 
 
-void clear_first_line(){
+void clear_baord(){
     for(int i = 0; i < cols; i++){
         mvprintw(0,i,"%c",' ');
     }
     for(int i = 1; i < cols; i++){
         mvprintw(0,i,"%c",' ');
+    }
+    for(int i = lines - 10; i <= lines; i++){
+        for(int j = 0; j <= 4; j++){
+            mvprintw(i,j," ");
+        }
     }
 }
 
@@ -440,10 +438,7 @@ void printf_level(Level *level){
         }
     }
     set_up_corridors(*level);
-    clear_first_line();
-    getch();
-    refresh();
-    endwin();
+    clear_baord();
 }
 
 

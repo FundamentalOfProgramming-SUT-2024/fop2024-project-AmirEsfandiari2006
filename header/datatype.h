@@ -44,4 +44,15 @@ typedef struct
 
 } Level;
 
+typedef struct 
+{
+    Point position;
+    int room;
+    int gold;
+    int health;
+    int strength;
+  
+} Player;
+
+
 #endif

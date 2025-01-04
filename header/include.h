@@ -17,5 +17,6 @@
 #include "datatype.h"
 #include "gamemap.h"
 #include "tools.h"
+#include "player.h"
 
 #endif
