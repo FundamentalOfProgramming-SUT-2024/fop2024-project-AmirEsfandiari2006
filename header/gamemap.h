@@ -3,7 +3,8 @@
 
 #include "include.h"
 int random_number(int,int);
-
+int random_room(const Level*);
+Point random_position_point(const Room*);
 
 
 Room init_room(Point start,int width,int height,int num_of_door){
@@ -12,10 +13,9 @@ Room init_room(Point start,int width,int height,int num_of_door){
     room.start.y = start.y;
     room.width = width;
     room.height = height;
+    room.total_places = 0;
     return room;
 }
-
-
 
 void select_numbers(int *num, int *count, int start, int end) {
     int range_size = end - start + 1;
@@ -96,7 +96,9 @@ void print_room(Room room){
         if(room.is_door[i] == true)
         mvprintw(room.doors[i].x,room.doors[i].y,"+");
     }
-    
+    for(int i = 0; i < room.total_places; i++){
+        mvprintw(room.places->position.x,room.places->position.y,"%c",room.places->display);
+    }
 }
 
 void set_door(Room* room, int dir){
@@ -441,5 +443,23 @@ void printf_level(Level *level){
     clear_baord();
 }
 
+void random_level_staricase(Level* level){
+    int stair_room = random_room(level);
+    Point stair_postion = random_position_point(&level->rooms[stair_room]);
+    level->rooms[stair_room].places[level->rooms[stair_room].total_places].display = '>';
+    level->rooms[stair_room].places[level->rooms[stair_room].total_places].position = stair_postion;
+    level->rooms[stair_room].total_places++;
+    
+}
+
+void init_level(Level level[]){
+
+    for(int i = 0; i < MAX_LEVEL; i++){
+        generate_random_room(&level[i]);
+        if(i != MAX_LEVEL - 1){
+            random_level_staricase(&level[i]);
+        }
+    }
+}
 
 #endif

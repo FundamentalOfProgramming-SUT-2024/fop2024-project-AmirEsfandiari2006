@@ -1,5 +1,8 @@
 #include "include.h"
 
+#ifndef PLAYER_H
+#define PLAYER_H
+
 int random_number(int,int);
 
 
@@ -88,3 +91,12 @@ void move_player(int command,Player* player){
         break;
     }
 }
+
+
+void handle_movement(){
+    
+}
+
+
+
+#endif 

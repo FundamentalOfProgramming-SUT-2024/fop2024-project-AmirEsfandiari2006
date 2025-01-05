@@ -5,6 +5,7 @@
 #include "include.h"
 
 bool valid_username(char username[]) {
+    if(username  == (char*){NULL})
     if (strlen(username) == 0) {
         return false; 
     }

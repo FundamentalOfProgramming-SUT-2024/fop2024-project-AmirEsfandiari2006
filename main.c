@@ -4,16 +4,16 @@ int main() {
     srand(time(0));
 
     //Game set_up
-    Level level1;
-    generate_random_room(&level1);
+    Level level[MAX_LEVEL + 1];
+    init_level(level);
 
     //Player set_up
     Player player;
-    init_player(&player, &level1);
+    init_player(&player, &level[level_map]);
 
     int command = 0;   
     while (command != EXIT) {
-        if (!is_game_playing) {
+        if(!is_game_playing) {
 
             while (command != EXIT && !is_game_playing) {
                 command = get_command_main_menu();
@@ -25,7 +25,7 @@ int main() {
         if (is_game_playing && is_logged_in) {
 
             while (command != ESCAPE) {
-                printf_level(&level1);
+                printf_level(&level[level_map]);
                 print_player(&player);
 
                 command = getch();

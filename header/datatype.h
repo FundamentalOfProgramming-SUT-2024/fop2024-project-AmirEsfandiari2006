@@ -20,6 +20,14 @@ typedef struct
 
 } Point;
 
+typedef struct
+{
+    char display;
+    Point position;
+
+} Place;
+
+
 
 typedef struct
 {
@@ -27,8 +35,10 @@ typedef struct
     int width;
     int height;
     int num_of_door;
+    int total_places;
     bool is_door[MAX_DOOR];
     Point doors[MAX_DOOR];
+    Place places[MAX_PLACE];
     
 } Room;
 
@@ -40,6 +50,7 @@ typedef struct
     Room rooms[MAX_ROOM];
 
     int is_there_corridor[MAX_ROOM];
+
     
 
 } Level;
@@ -53,6 +64,7 @@ typedef struct
     int strength;
   
 } Player;
+
 
 
 #endif
