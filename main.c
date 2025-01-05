@@ -4,7 +4,7 @@ int main() {
     srand(time(0));
 
     //Game set_up
-    Level level[MAX_LEVEL + 1];
+    Level level[MAX_LEVEL];
     init_level(level);
 
     //Player set_up
@@ -30,6 +30,7 @@ int main() {
 
                 command = getch();
                 move_player(command, &player);
+                handle_movement(mvinch(player.position.x,player.position.y),level,&player);
                 clear();
             }
             is_game_playing = false;

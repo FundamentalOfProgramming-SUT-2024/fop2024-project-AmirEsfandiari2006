@@ -440,24 +440,40 @@ void printf_level(Level *level){
         }
     }
     set_up_corridors(*level);
-    clear_baord();
+    mvprintw(lines - 1,cols - 25,"You're at level: %d",level_map + 1);
+    //clear_baord();
 }
 
-void random_level_staricase(Level* level){
+void random_place(Level* level, char ch) {
     int stair_room = random_room(level);
-    Point stair_postion = random_position_point(&level->rooms[stair_room]);
-    level->rooms[stair_room].places[level->rooms[stair_room].total_places].display = '>';
-    level->rooms[stair_room].places[level->rooms[stair_room].total_places].position = stair_postion;
+    Point stair_position;
+    bool position_found = false;
+    while (!position_found) {
+        stair_position = random_position_point(&level->rooms[stair_room]);
+        position_found = true; 
+        for (int i = 0; i < level->rooms[stair_room].total_places; i++) {
+            if (level->rooms[stair_room].places[i].position.x == stair_position.x &&
+                level->rooms[stair_room].places[i].position.y == stair_position.y) {
+                position_found = false; 
+                break;
+            }
+        }
+    }
+    level->rooms[stair_room].places[level->rooms[stair_room].total_places].display = ch;
+    level->rooms[stair_room].places[level->rooms[stair_room].total_places].position = stair_position;
     level->rooms[stair_room].total_places++;
-    
 }
+
 
 void init_level(Level level[]){
 
-    for(int i = 0; i < MAX_LEVEL; i++){
+    for(int i = 0; i < 5; i++){
         generate_random_room(&level[i]);
-        if(i != MAX_LEVEL - 1){
-            random_level_staricase(&level[i]);
+        if(i !=  3){
+            random_place(&level[i],'>');
+        }
+        if(i != 0){
+            random_place(&level[i],'<');
         }
     }
 }

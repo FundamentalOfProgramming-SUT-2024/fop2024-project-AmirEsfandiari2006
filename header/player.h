@@ -73,30 +73,37 @@ void move_player(int command,Player* player){
             player->position.x++;
         break;
         case KEY_HOME:
-        if(valid_tile(player->position.x - 1,player->position.y - 1))
-            player->position.x--;
-            player->position.y--;
+        if(valid_tile(player->position.x - 1,player->position.y - 1)){
+            player->position.x--;player->position.y--;
+        } 
         break;
         case KEY_PPAGE:
-        if(valid_tile(player->position.x - 1,player->position.y + 1)){}
-            player->position.x--; player->position.y++;
+        if(valid_tile(player->position.x - 1,player->position.y + 1)){
+                        player->position.x--; player->position.y++;
+        }
         break;
         case KEY_NPAGE:
-        if(valid_tile(player->position.x + 1,player->position.y + 1)){}
+        if(valid_tile(player->position.x + 1,player->position.y + 1)){
             player->position.x++; player->position.y++;
+        }
         break;
         case KEY_END:
-        if(valid_tile(player->position.x + 1,player->position.y - 1)){}
+        if(valid_tile(player->position.x + 1,player->position.y - 1)){
             player->position.x++; player->position.y--;
+        }
         break;
     }
 }
 
 
-void handle_movement(){
-    
+void handle_movement(char ch,Level level[],Player *player){
+    switch (ch)
+    {
+    case '>':
+        level_map++;
+        player->position = find_point_by_char(level[level_map],'<');
+        break;
+    }
 }
-
-
 
 #endif 
