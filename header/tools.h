@@ -38,4 +38,43 @@ Point find_point_by_char(Level level,char ch){
     }
 }
 
+int item_of_room_index_in_room(const Room* room,Point point){
+    for(int i = 0; i < room->total_places; i++){
+        if(room->places[i].position.x == point.x && room->places[i].position.y == point.y){
+            return i;
+        }
+    }
+    return -1;
+}
+
+int update_player_room(Player *player, const Level* level){
+    for(int i = 0; i < MAX_ROOM; i++){
+        if(level->is_there_room[i] == 1){
+            if(player->position.x > level->rooms[i].start.x && player->position.x <= level->rooms[i].start.x + level->rooms[i].width
+                && player->position.y > level->rooms[i].start.y && player->position.y <= level->rooms[i].start.y + level->rooms[i].height)
+                {
+                    player->room = i;
+                    return i;
+                }
+        }
+    }
+}
+
+
+void remove_place(Room *room, int index) {
+    if (index < 0 || index >= room->total_places) {
+        printf("Invalid index to remove.\n");
+        return; 
+    }
+
+    for (int i = index; i < room->total_places - 1; i++) {
+        room->places[i] = room->places[i + 1];
+    }
+
+    room->total_places--;
+    room->places[room->total_places] = (Place){0, 0, 0, 0};
+}
+
+
+
 #endif

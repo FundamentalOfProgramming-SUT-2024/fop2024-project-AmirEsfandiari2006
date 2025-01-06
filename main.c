@@ -28,6 +28,7 @@ int main() {
         if (is_game_playing && is_logged_in) {
 
             while (command != ESCAPE) {
+                
                 printf_level(&level[level_map],&player);
                 print_player(&player);
 
@@ -36,6 +37,8 @@ int main() {
                 handle_movement(mvinch(player.position.x,player.position.y),level,&player);
                 clear();
                 handle_command(command);
+                update_player_room(&player,&(level[level_map]));
+                
             }
             is_game_playing = false;
         }

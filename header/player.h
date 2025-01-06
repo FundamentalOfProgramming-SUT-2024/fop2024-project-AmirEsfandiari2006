@@ -97,7 +97,7 @@ void move_player(int command,Player* player){
 }
 
 
-void handle_movement(char ch,Level level[],Player *player){
+void handle_movement(char ch,Level *level,Player *player){
     switch (ch)
     {
     case '>':
@@ -107,8 +107,12 @@ void handle_movement(char ch,Level level[],Player *player){
     case '<':
         level_map--;
         player->position = find_point_by_char(level[level_map],'>');
+        break;
     case 'G':
-        
+        player->gold += level->rooms[player->room].places[item_of_room_index_in_room(&level->rooms[player->room],player->position)].amout;
+        mvprintw(1,1,"You collect %d gold!",level->rooms[player->room].places[item_of_room_index_in_room(&level->rooms[player->room],player->position)].amout);
+        remove_place(&(level->rooms[player->room]),item_of_room_index_in_room(&level->rooms[player->room],player->position));
+        break;
     }
 }
 

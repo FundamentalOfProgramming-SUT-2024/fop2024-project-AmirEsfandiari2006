@@ -438,10 +438,10 @@ void print_message(char message[]){
 
 
 void print_status(const Player* player){
-    mvprintw(lines - 2,cols/2 - 38,"Health: %d",player->health);
-    mvprintw(lines - 2,cols/2 - 18,"Gold: %d"  ,player->gold);
-    mvprintw(lines - 2,cols/2 + 2,"Strength: %d",player->strength);
-    mvprintw(lines - 2,cols/2 + 22,"Armor: %d",player->armor);
+    mvprintw(lines - 1,cols/2 - 38,"Health: %d",player->health);
+    mvprintw(lines - 1,cols/2 - 18,"Gold: %d"  ,player->gold);
+    mvprintw(lines - 1,cols/2 + 2,"Strength: %d",player->strength);
+    mvprintw(lines - 1,cols/2 + 22,"Armor: %d",player->armor);
 }
 
 void printf_level(const Level* level,const Player* player){
