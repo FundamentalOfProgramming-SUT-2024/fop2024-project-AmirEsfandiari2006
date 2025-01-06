@@ -109,9 +109,9 @@ void handle_movement(char ch,Level *level,Player *player){
         player->position = find_point_by_char(level[level_map],'>');
         break;
     case 'G':
-        player->gold += level->rooms[player->room].places[item_of_room_index_in_room(&level->rooms[player->room],player->position)].amout;
-        mvprintw(1,1,"You collect %d gold!",level->rooms[player->room].places[item_of_room_index_in_room(&level->rooms[player->room],player->position)].amout);
-        remove_place(&(level->rooms[player->room]),item_of_room_index_in_room(&level->rooms[player->room],player->position));
+        player->gold += (&level[level_map])->rooms[player->room].places[item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position)].amout;
+        mvprintw(1,1,"You collect %d gold!",(&level[level_map])->rooms[player->room].places[item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position)].amout);
+        remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
         break;
     }
 }
