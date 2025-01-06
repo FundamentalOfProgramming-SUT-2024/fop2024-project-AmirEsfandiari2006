@@ -28,13 +28,14 @@ int main() {
         if (is_game_playing && is_logged_in) {
 
             while (command != ESCAPE) {
-                printf_level(&level[level_map]);
+                printf_level(&level[level_map],&player);
                 print_player(&player);
 
                 command = getch();
                 move_player(command, &player);
                 handle_movement(mvinch(player.position.x,player.position.y),level,&player);
                 clear();
+                handle_command(command);
             }
             is_game_playing = false;
         }

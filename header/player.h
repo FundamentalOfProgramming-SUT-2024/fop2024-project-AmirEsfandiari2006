@@ -22,7 +22,8 @@ Point random_position(Player *player, const Level* level){
 
 void init_player(Player *player,const Level* level){
     player->gold = 0;
-    player->health = MAX_PLAYER_HEALTH;
+    player->armor = START_ARMOR;
+    player->health = START_HEALTH;
     player->room = random_room(level);
     player->position.x = random_position(player,level).x;
     player->position.y = random_position(player,level).y;   
@@ -106,7 +107,24 @@ void handle_movement(char ch,Level level[],Player *player){
     case '<':
         level_map--;
         player->position = find_point_by_char(level[level_map],'>');
+    case 'G':
+        
     }
 }
+
+void handle_command(char command){
+    switch(command){
+        case 'q':
+        if(can_get_item == true){
+            can_get_item = !can_get_item;
+            print_message("Getting Items is turned off Press 'q' to turn on.");
+        } else {
+            can_get_item = !can_get_item;
+            print_message("Getting Items is turned on Press 'q' to turn off.");
+        }
+        return;
+    }
+}
+
 
 #endif 

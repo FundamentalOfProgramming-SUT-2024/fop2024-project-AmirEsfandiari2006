@@ -226,7 +226,7 @@ void generate_random_room(Level* level){
     } else {
         for(int i = 4; i < MAX_ROOM; i++){
             level->is_there_room[i] = 1;
-            level->rooms[i].start.x = random_number(4,10) + lines/2;
+            level->rooms[i].start.x = random_number(4,8) + lines/2;
             level->rooms[i].start.y = random_number(10,13) + (i - 4) * (cols / 4);
             level->rooms[i].width = random_number(4,10);
             level->rooms[i].height = random_number(4,15);
@@ -432,8 +432,19 @@ void clear_baord(){
     }
 }
 
+void print_message(char message[]){
+    mvprintw(1,1,"%s",message);
+}
 
-void printf_level(Level *level){
+
+void print_status(const Player* player){
+    mvprintw(lines - 2,cols/2 - 38,"Health: %d",player->health);
+    mvprintw(lines - 2,cols/2 - 18,"Gold: %d"  ,player->gold);
+    mvprintw(lines - 2,cols/2 + 2,"Strength: %d",player->strength);
+    mvprintw(lines - 2,cols/2 + 22,"Armor: %d",player->armor);
+}
+
+void printf_level(const Level* level,const Player* player){
     initscr();
     noecho();
     curs_set(0);
@@ -454,6 +465,7 @@ void printf_level(Level *level){
     }
     mvprintw(1,cols - 30,"Game difficulty: %s",game_difficulty);
     mvprintw(lines - 1,cols - 25,"You're at level: %d",level_map + 1);
+    print_status(player);
     //clear_baord();
 }
 
@@ -461,8 +473,9 @@ void random_place(Level* level, char ch,int color) {
     int stair_room = random_room(level);
     Point stair_position;
     bool position_found = false;
-    int total_attmpt =  100;
+    int total_attmpt =  1000;
     while (!position_found && total_attmpt >= 0) {
+        stair_room = random_room(level);
         stair_position = random_position_point(&level->rooms[stair_room]);
         position_found = true; 
         for (int i = 0; i < level->rooms[stair_room].total_places; i++) {
@@ -486,7 +499,7 @@ void random_gold(Level *level){
             for(int repeat = 0; repeat < random_number(0,3) - game_diff; repeat++){
                 Point gold_position;
                 bool position_found = false;
-                int total_attmpt =  100;
+                int total_attmpt =  1000;
                 while (!position_found && total_attmpt >= 0) {
                     gold_position = random_position_point(&level->rooms[gold_room]);
                     position_found = true; 

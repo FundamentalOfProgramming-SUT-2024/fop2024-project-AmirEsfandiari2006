@@ -31,7 +31,8 @@
 #define Left  2
 #define Down  3
 
-#define MAX_PLAYER_HEALTH 16
+#define START_HEALTH 16
+#define START_ARMOR 6
 
 #define PLAYER_SYM "@"
 

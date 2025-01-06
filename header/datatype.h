@@ -61,6 +61,7 @@ typedef struct
     int gold;
     int health;
     int strength;
+    int armor;
   
 } Player;
 
