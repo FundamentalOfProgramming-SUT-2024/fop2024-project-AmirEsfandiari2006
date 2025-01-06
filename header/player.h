@@ -103,6 +103,9 @@ void handle_movement(char ch,Level level[],Player *player){
         level_map++;
         player->position = find_point_by_char(level[level_map],'<');
         break;
+    case '<':
+        level_map--;
+        player->position = find_point_by_char(level[level_map],'>');
     }
 }
 

@@ -9,8 +9,8 @@ int random_number(int min, int max) {
 }
 
 Point random_position_point(const Room* room){
-    int x = random_number(room->start.x + 1, room->start.x + room->width - 1);
-    int y = random_number(room->start.y + 1, room->start.y + room->height - 1);
+    int x = random_number(room->start.x + 2, room->start.x + room->width - 2);
+    int y = random_number(room->start.y + 2, room->start.y + room->height - 2);
     return (Point){x,y};
 }
 

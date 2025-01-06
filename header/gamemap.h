@@ -476,6 +476,11 @@ void init_level(Level level[]){
             random_place(&level[i],'<');
         }
     }
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < random_number(4,7); j++){
+            random_place(&level[i],'O');
+        }
+    }
 }
 
 #endif
