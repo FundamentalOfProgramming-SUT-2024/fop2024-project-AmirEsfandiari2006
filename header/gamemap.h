@@ -466,7 +466,7 @@ void printf_level(const Level* level,const Player* player){
     mvprintw(1,cols - 30,"Game difficulty: %s",game_difficulty);
     mvprintw(lines - 1,cols - 25,"You're at level: %d",level_map + 1);
     print_status(player);
-    //clear_baord();
+    clear_baord();
 }
 
 void random_place(Level* level, char ch,int color) {

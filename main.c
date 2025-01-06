@@ -34,11 +34,14 @@ int main() {
 
                 command = getch();
                 move_player(command, &player);
-                handle_movement(mvinch(player.position.x,player.position.y),level,&player);
-                handle_command(command);
                 update_player_room(&player,&(level[level_map]));
-                clear();
-
+                
+                if(handle_command(command) || handle_movement(mvinch(player.position.x,player.position.y),level,&player)){
+                    
+                }
+                else{
+                    clear();
+                }  
             }
             is_game_playing = false;
         }

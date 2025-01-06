@@ -97,26 +97,29 @@ void move_player(int command,Player* player){
 }
 
 
-void handle_movement(char ch,Level *level,Player *player){
+bool handle_movement(char ch,Level *level,Player *player){
     switch (ch)
     {
     case '>':
         level_map++;
         player->position = find_point_by_char(level[level_map],'<');
-        break;
+        clear();
+        return true;
     case '<':
         level_map--;
         player->position = find_point_by_char(level[level_map],'>');
-        break;
+        clear();
+        return true;
     case 'G':
         player->gold += (&level[level_map])->rooms[player->room].places[item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position)].amout;
         mvprintw(1,1,"You collect %d gold!",(&level[level_map])->rooms[player->room].places[item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position)].amout);
         remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
-        break;
+        return true;
     }
+    return false;
 }
 
-void handle_command(char command){
+bool handle_command(char command){
     switch(command){
         case 'q':
         if(can_get_item == true){
@@ -126,8 +129,9 @@ void handle_command(char command){
             can_get_item = !can_get_item;
             print_message("Getting Items is turned on Press 'q' to turn off.");
         }
-        return;
+        return true;
     }
+    return false;
 }
 
 
