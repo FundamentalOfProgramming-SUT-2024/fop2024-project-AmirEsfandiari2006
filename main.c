@@ -3,6 +3,8 @@
 int main() {
     srand(time(0));
 
+    getch();    
+
     //Game set_up
     Level level[MAX_LEVEL];
     init_level(level);
@@ -11,7 +13,7 @@ int main() {
     Player player;
     init_player(&player, &level[level_map]);
   
-
+    
     int command = 0;   
     while (command != EXIT) {
         if(!is_game_playing) {
@@ -40,6 +42,6 @@ int main() {
 
     refresh();
     endwin();
-
+    
     return 0;
 }

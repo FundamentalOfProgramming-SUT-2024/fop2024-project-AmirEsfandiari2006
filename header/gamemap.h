@@ -461,13 +461,15 @@ void random_place(Level* level, char ch,int color) {
     int stair_room = random_room(level);
     Point stair_position;
     bool position_found = false;
-    while (!position_found) {
+    int total_attmpt =  100;
+    while (!position_found && total_attmpt >= 0) {
         stair_position = random_position_point(&level->rooms[stair_room]);
         position_found = true; 
         for (int i = 0; i < level->rooms[stair_room].total_places; i++) {
             if (level->rooms[stair_room].places[i].position.x == stair_position.x &&
                 level->rooms[stair_room].places[i].position.y == stair_position.y) {
                 position_found = false; 
+                total_attmpt--;
                 break;
             }
         }
@@ -484,13 +486,15 @@ void random_gold(Level *level){
             for(int repeat = 0; repeat < random_number(0,3) - game_diff; repeat++){
                 Point gold_position;
                 bool position_found = false;
-                while (!position_found) {
+                int total_attmpt =  100;
+                while (!position_found && total_attmpt >= 0) {
                     gold_position = random_position_point(&level->rooms[gold_room]);
                     position_found = true; 
                     for (int i = 0; i < level->rooms[gold_room].total_places; i++) {
                         if (level->rooms[gold_room].places[i].position.x == gold_position.x &&
                             level->rooms[gold_room].places[i].position.y == gold_position.y) {
                             position_found = false; 
+                            total_attmpt--;
                             break;
                         }
                     }

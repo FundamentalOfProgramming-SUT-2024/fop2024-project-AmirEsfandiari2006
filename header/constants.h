@@ -6,7 +6,7 @@
 #define MAX_DOOR 4
 #define MAX_ROOM 8
 #define MAX_CORRIDOR 10
-#define MAX_LEVEL 7
+#define MAX_LEVEL 8
 #define MAX_PLACE 20
 
 #define true 1
