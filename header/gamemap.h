@@ -5,6 +5,7 @@
 int random_number(int,int);
 int random_room(const Level*);
 Point random_position_point(const Room*);
+void set_up_colors();
 
 
 Room init_room(Point start,int width,int height,int num_of_door){
@@ -97,7 +98,10 @@ void print_room(Room room){
         mvprintw(room.doors[i].x,room.doors[i].y,"+");
     }
     for(int i = 0; i < room.total_places; i++){
-        mvprintw(room.places->position.x,room.places->position.y,"%c",room.places->display);
+        set_up_colors();
+        attron(COLOR_PAIR(room.places[i].color));
+        mvprintw(room.places[i].position.x,room.places[i].position.y,"%c",room.places[i].display);
+        attroff(COLOR_PAIR(room.places[i].color));
     }
 }
 
@@ -441,10 +445,19 @@ void printf_level(Level *level){
     }
     set_up_corridors(*level);
     mvprintw(lines - 1,cols - 25,"You're at level: %d",level_map + 1);
+
+    char game_difficulty[MAX_LENGTH];
+    switch(game_diff){
+        case 0: strcpy(game_difficulty,"Easy");   break;
+        case 1: strcpy(game_difficulty,"Normal"); break;
+        case 2: strcpy(game_difficulty,"Hard"); break;
+
+    }
+    mvprintw(1,cols - 30,"Game difficulty: %s",game_difficulty);
     //clear_baord();
 }
 
-void random_place(Level* level, char ch) {
+void random_place(Level* level, char ch,int color) {
     int stair_room = random_room(level);
     Point stair_position;
     bool position_found = false;
@@ -461,24 +474,25 @@ void random_place(Level* level, char ch) {
     }
     level->rooms[stair_room].places[level->rooms[stair_room].total_places].display = ch;
     level->rooms[stair_room].places[level->rooms[stair_room].total_places].position = stair_position;
+    level->rooms[stair_room].places[level->rooms[stair_room].total_places].color = color;
     level->rooms[stair_room].total_places++;
 }
 
 
 void init_level(Level level[]){
 
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < MAX_LEVEL - 3; i++){
         generate_random_room(&level[i]);
         if(i !=  3){
-            random_place(&level[i],'>');
+            random_place(&level[i],'>',2);
         }
         if(i != 0){
-            random_place(&level[i],'<');
+            random_place(&level[i],'<',2);
         }
     }
-    for(int i = 0; i < 4; i++){
-        for(int j = 0; j < random_number(4,7); j++){
-            random_place(&level[i],'O');
+    for(int i = 0; i < MAX_LEVEL - 3; i++){
+        for(int j = 0; j < random_number(2,4); j++){
+            random_place(&level[i],'O',3);
         }
     }
 }

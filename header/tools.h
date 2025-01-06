@@ -3,6 +3,14 @@
 
 #include "include.h"
 
+void set_up_colors(){
+    init_pair(1, player_color, COLOR_BLACK);
+    init_pair(2,COLOR_MAGENTA,COLOR_WHITE);
+    init_pair(3,COLOR_RED,COLOR_BLACK);
+}
+
+
+
 int random_number(int min, int max) {
 
     return rand() % (max - min + 1) + min;

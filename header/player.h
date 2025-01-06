@@ -31,7 +31,7 @@ void init_player(Player *player,const Level* level){
 
 void print_player(const Player* player){
     start_color();
-    init_pair(1, COLOR_GREEN, COLOR_BLACK);
+    set_up_colors();
     attron(COLOR_PAIR(1));
     mvprintw(player->position.x,player->position.y,PLAYER_SYM);
     attroff(COLOR_PAIR(1));

@@ -24,6 +24,7 @@ typedef struct
 {
     char display;
     Point position;
+    int color;
 
 } Place;
 
@@ -65,6 +66,10 @@ typedef struct
   
 } Player;
 
-
+typedef struct {
+    int amount;
+    int color;
+    char display;
+} Gold;
 
 #endif
