@@ -10,6 +10,7 @@ int main() {
     //Player set_up
     Player player;
     init_player(&player, &level[level_map]);
+  
 
     int command = 0;   
     while (command != EXIT) {

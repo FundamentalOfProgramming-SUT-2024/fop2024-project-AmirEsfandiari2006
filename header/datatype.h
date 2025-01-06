@@ -22,13 +22,12 @@ typedef struct
 
 typedef struct
 {
+    int amout;
     char display;
     Point position;
     int color;
 
 } Place;
-
-
 
 typedef struct
 {
@@ -39,8 +38,7 @@ typedef struct
     int total_places;
     bool is_door[MAX_DOOR];
     Point doors[MAX_DOOR];
-    Place places[MAX_PLACE];
-    
+    Place places[MAX_PLACE];    
 } Room;
 
 typedef struct 
@@ -66,10 +64,6 @@ typedef struct
   
 } Player;
 
-typedef struct {
-    int amount;
-    int color;
-    char display;
-} Gold;
+
 
 #endif

@@ -444,7 +444,6 @@ void printf_level(Level *level){
         }
     }
     set_up_corridors(*level);
-    mvprintw(lines - 1,cols - 25,"You're at level: %d",level_map + 1);
 
     char game_difficulty[MAX_LENGTH];
     switch(game_diff){
@@ -454,6 +453,7 @@ void printf_level(Level *level){
 
     }
     mvprintw(1,cols - 30,"Game difficulty: %s",game_difficulty);
+    mvprintw(lines - 1,cols - 25,"You're at level: %d",level_map + 1);
     //clear_baord();
 }
 
@@ -478,6 +478,39 @@ void random_place(Level* level, char ch,int color) {
     level->rooms[stair_room].total_places++;
 }
 
+void random_gold(Level *level){
+    for(int gold_room = 0; gold_room < MAX_ROOM; gold_room++){
+        if(level->is_there_room[gold_room] == true){
+            for(int repeat = 0; repeat < random_number(0,3) - game_diff; repeat++){
+                Point gold_position;
+                bool position_found = false;
+                while (!position_found) {
+                    gold_position = random_position_point(&level->rooms[gold_room]);
+                    position_found = true; 
+                    for (int i = 0; i < level->rooms[gold_room].total_places; i++) {
+                        if (level->rooms[gold_room].places[i].position.x == gold_position.x &&
+                            level->rooms[gold_room].places[i].position.y == gold_position.y) {
+                            position_found = false; 
+                            break;
+                        }
+                    }
+                }
+                    int color;
+                    int start,end;
+                    if(!random_number(0,9)){
+                        color = 5; start = 30; end = 60;
+                    } else {
+                        color = 4; start = 10; end = 30;
+                    }
+                    level->rooms[gold_room].places[level->rooms[gold_room].total_places].display = 'G';
+                    level->rooms[gold_room].places[level->rooms[gold_room].total_places].position = gold_position;
+                    level->rooms[gold_room].places[level->rooms[gold_room].total_places].color = color;
+                    level->rooms[gold_room].places[level->rooms[gold_room].total_places].amout = random_number(start,end);
+                    level->rooms[gold_room].total_places++;
+                }
+        }
+    }
+}
 
 void init_level(Level level[]){
 
@@ -494,6 +527,9 @@ void init_level(Level level[]){
         for(int j = 0; j < random_number(2,4); j++){
             random_place(&level[i],'O',3);
         }
+    }
+    for(int i = 0; i < MAX_LEVEL - 3; i++){
+            random_gold(&level[i]);
     }
 }
 

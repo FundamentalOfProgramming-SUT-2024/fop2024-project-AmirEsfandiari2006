@@ -294,11 +294,9 @@ void setting(){
                 which_line = 2;
                 game_diff = hover;
                 hover = 0;
-                endwin();
             } else if(command == ESCAPE){
                 clear();
-                break;
-                endwin();
+                break;;
             }
         } 
         if(which_line == 2){
@@ -322,11 +320,10 @@ void setting(){
                 case 2: player_color = COLOR_CYAN; break;
                 }
                 clear();
-                endwin();
                 break;
             } else if(command == ESCAPE){
                 which_line = 1;
-                endwin();
+
             }    
 
         clear();
