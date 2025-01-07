@@ -54,6 +54,13 @@ typedef struct
 
 } Level;
 
+
+typedef struct {
+    char name[MAX_NAME];
+    char symbol;
+} Weapon;
+
+
 typedef struct 
 {
     Point position;
@@ -62,6 +69,8 @@ typedef struct
     int health;
     int strength;
     int armor;
+    Weapon player_weapon[MAX_ITEM];
+    int number_of_player_weapon;
   
 } Player;
 

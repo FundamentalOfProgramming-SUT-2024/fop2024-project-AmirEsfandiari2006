@@ -586,7 +586,7 @@ void init_level(Level level[]){
         }
     }
     for(int i = 0; i < MAX_LEVEL - 3; i++){
-        random_weapon(&level[i],1,2);
+        random_weapon(&level[i],1,3/*1*/);
     }
         
 }

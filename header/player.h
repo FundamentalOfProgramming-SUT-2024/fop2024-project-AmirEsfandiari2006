@@ -26,7 +26,10 @@ void init_player(Player *player,const Level* level){
     player->health = START_HEALTH;
     player->room = random_room(level);
     player->position.x = random_position(player,level).x;
-    player->position.y = random_position(player,level).y;   
+    player->position.y = random_position(player,level).y;
+    strcpy(player->player_weapon[0].name, "Mace");
+    player->number_of_player_weapon = 1;
+
 }
 
 
@@ -45,6 +48,12 @@ bool valid_tile(int x,int y){
     case '.':
     case '#':
     case '+':
+    case 'W':
+    case 'S':
+    case 'R':
+    case 'M':
+    case 'D':
+    case 'G':
     return true;
     case '_':
     case 'O':
@@ -118,8 +127,58 @@ bool handle_movement(char ch,Level *level,Player *player){
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
             return true;
         }
-
+    case 'M':
+        if(can_get_item){
+            clear();
+            strcpy(player->player_weapon[player->number_of_player_weapon].name, "Mace");
+            player->player_weapon[player->number_of_player_weapon].symbol = 'M';
+            player->number_of_player_weapon++;
+            mvprintw(1,1,"You collect a mace!");
+            remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            return true;
+        }
+    case 'D':
+        if(can_get_item){
+            clear();
+            strcpy(player->player_weapon[player->number_of_player_weapon].name, "Dagger");
+            player->player_weapon[player->number_of_player_weapon].symbol = 'D';
+            player->number_of_player_weapon++;
+            mvprintw(1,1,"You collect a Dagger!");
+            remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            return true;
+        }
+    case 'W':
+        if(can_get_item){
+            clear();
+            strcpy(player->player_weapon[player->number_of_player_weapon].name, "Magin Wand");
+            player->player_weapon[player->number_of_player_weapon].symbol = 'W';
+            player->number_of_player_weapon++;
+            mvprintw(1,1,"You collect a Magic wand!");
+            remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            return true;
+        }
+    case 'R':
+        if(can_get_item){
+            clear();
+            strcpy(player->player_weapon[player->number_of_player_weapon].name, "Normal Arrow");
+            player->player_weapon[player->number_of_player_weapon].symbol = 'R';
+            player->number_of_player_weapon++;
+            mvprintw(1,1,"You collect a Magic Normal Arrow!");
+            remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            return true;
+        }
+    case 'S':
+        if(can_get_item){
+            clear();
+            strcpy(player->player_weapon[player->number_of_player_weapon].name, "Sword");
+            player->player_weapon[player->number_of_player_weapon].symbol = 'S';
+            player->number_of_player_weapon++;
+            mvprintw(1,1,"You collect a Magic Sword!");
+            remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            return true;
+        }       
     }
+
     return false;
 }
 
