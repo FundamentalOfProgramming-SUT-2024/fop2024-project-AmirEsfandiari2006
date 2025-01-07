@@ -4,7 +4,8 @@ int main() {
     
     srand(time(0));
     set_up_display();
-   
+    setlocale(LC_ALL,"");
+    
     //Game set_up
     Level level[MAX_LEVEL];
     init_level(level);

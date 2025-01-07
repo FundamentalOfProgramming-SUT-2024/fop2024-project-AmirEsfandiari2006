@@ -493,6 +493,39 @@ void random_place(Level* level, char ch,int color) {
     level->rooms[stair_room].total_places++;
 }
 
+void random_weapon(Level *level,int max_number,int max_chance){
+    for(int item_room = 0; item_room < MAX_ROOM; item_room++){
+        if(random_number(0,max_chance)){
+        if(level->is_there_room[item_room] == true){
+            for(int repeat = 0; repeat < random_number(0,max_number) - game_diff; repeat++){
+                Point item_position;
+                bool position_found = false;
+                int total_attmpt =  1000;
+                while (!position_found && total_attmpt >= 0) {
+                    item_position = random_position_point(&level->rooms[item_room]);
+                    position_found = true; 
+                    for (int i = 0; i < level->rooms[item_room].total_places; i++) {
+                        if (level->rooms[item_room].places[i].position.x == item_position.x &&
+                            level->rooms[item_room].places[i].position.y == item_position.y) {
+                            position_found = false; 
+                            total_attmpt--;
+                            break;
+                        }
+                    }
+                }
+                    int color = 1;
+                    int start,end;
+                    char weapon = weapons[random_number(0,weapons_number -1)];
+                    level->rooms[item_room].places[level->rooms[item_room].total_places].display = weapon;
+                    level->rooms[item_room].places[level->rooms[item_room].total_places].position = item_position;
+                    level->rooms[item_room].places[level->rooms[item_room].total_places].color = color;
+                    level->rooms[item_room].total_places++;
+                }
+        }
+    }
+    }
+}
+
 void random_gold(Level *level){
     for(int gold_room = 0; gold_room < MAX_ROOM; gold_room++){
         if(level->is_there_room[gold_room] == true){
@@ -529,15 +562,19 @@ void random_gold(Level *level){
     }
 }
 
+
 void init_level(Level level[]){
 
     for(int i = 0; i < MAX_LEVEL - 3;i++){
         generate_random_room(&level[i]);
     }
         for(int i = 0; i < MAX_LEVEL - 3; i++){
-        for(int j = 0; j < random_number(2,4); j++){
-            random_place(&level[i],'O',3);
-        }
+            for(int j = 0; j < random_number(2,4); j++){
+                random_place(&level[i],'O',3);
+            }
+    }
+    for(int i = 0; i < MAX_LEVEL - 3; i++){
+        random_gold(&level[i]);
     }
     for(int i = 0; i < MAX_LEVEL - 3; i++){
         
@@ -549,9 +586,9 @@ void init_level(Level level[]){
         }
     }
     for(int i = 0; i < MAX_LEVEL - 3; i++){
-        random_gold(&level[i]);
+        random_weapon(&level[i],1,2);
     }
-
+        
 }
 
 #endif

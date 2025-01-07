@@ -17,4 +17,7 @@ int player_color = 2;
 int cols;
 int lines;
 
+char weapons[MAX_ITEM] = {'M','D','W','R','S'};
+const int  weapons_number = 5;
+
 #endif

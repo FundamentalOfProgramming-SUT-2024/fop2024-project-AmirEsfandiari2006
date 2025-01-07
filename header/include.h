@@ -8,6 +8,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <time.h>
+#include <locale.h>
 
 #include "constants.h"
 #include "checkerfunc.h"

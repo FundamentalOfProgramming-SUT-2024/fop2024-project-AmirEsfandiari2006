@@ -2,6 +2,7 @@
     "files.associations": {
         "functions.h": "c",
         "global.h": "c",
-        "include.h": "c"
+        "include.h": "c",
+        "locale.h": "c"
     }
 }
