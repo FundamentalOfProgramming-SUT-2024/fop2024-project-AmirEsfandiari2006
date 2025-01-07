@@ -30,6 +30,7 @@ void init_player(Player *player,const Level* level){
     strcpy(player->player_weapon[0].name, "Mace");
     player->number_of_player_weapon = 1;
     player->number_of_player_spell = 0;
+    player->number_of_player_food = 0;
 
 }
 
@@ -58,6 +59,7 @@ bool valid_tile(int x,int y){
     case 'H':
     case 'Z':
     case 'C':
+    case 'F':
     return true;
     case '_':
     case 'O':
@@ -159,6 +161,16 @@ bool handle_movement(Point position,Level *level,Player *player){
             player->plaeyr_spell[player->number_of_player_spell].symbol = 'C';
             player->number_of_player_spell++;
             mvprintw(1,1,"You collect a Speed Spell!");
+            remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            return true;
+        }
+    case 'F':
+        if(can_get_item){
+            clear();
+            strcpy(player->player_food[player->number_of_player_food].name, "Normal Food");
+            player->player_food[player->number_of_player_food].symbol = 'F';
+            player->number_of_player_food++;
+            mvprintw(1,1,"You collect a Normal Food!");
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
             return true;
         }

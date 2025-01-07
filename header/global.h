@@ -23,4 +23,7 @@ const int  weapons_number = 5;
 char spell[MAX_ITEM] = {'H','Z','C'};
 const int spell_number = 3;
 
+char food[MAX_ITEM] = {'F'};
+const int food_number = 1;
+
 #endif

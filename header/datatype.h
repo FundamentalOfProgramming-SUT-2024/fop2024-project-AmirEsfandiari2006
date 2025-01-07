@@ -65,6 +65,12 @@ typedef struct {
     char symbol;
 } Spell;
 
+
+typedef struct {
+    char name[MAX_NAME];
+    char symbol;
+} Food;
+
 typedef struct 
 {
     Point position;
@@ -75,6 +81,8 @@ typedef struct
     int armor;
     Weapon player_weapon[MAX_ITEM];
     Spell plaeyr_spell [MAX_ITEM];
+    Food player_food[MAX_FOOD];
+    int number_of_player_food;
     int number_of_player_spell;
     int number_of_player_weapon;
   

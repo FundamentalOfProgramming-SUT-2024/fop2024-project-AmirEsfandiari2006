@@ -562,6 +562,41 @@ void random_spell(Level *level,int max_number,int max_chance){
 }
 
 
+void random_food(Level *level,int max_number,int max_chance){
+    for(int item_room = 0; item_room < MAX_ROOM; item_room++){
+        if(random_number(0,max_chance)){
+        if(level->is_there_room[item_room] == true){
+            for(int repeat = 0; repeat < random_number(0,max_number) - game_diff; repeat++){
+                Point item_position;
+                bool position_found = false;
+                int total_attmpt =  1000;
+                while (!position_found && total_attmpt >= 0) {
+                    item_position = random_position_point(&level->rooms[item_room]);
+                    position_found = true; 
+                    for (int i = 0; i < level->rooms[item_room].total_places; i++) {
+                        if (level->rooms[item_room].places[i].position.x == item_position.x &&
+                            level->rooms[item_room].places[i].position.y == item_position.y) {
+                            position_found = false; 
+                            total_attmpt--;
+                            break;
+                        }
+                    }
+                }
+                    int color = 6;
+                    int start,end;
+                    char food_sym = food[random_number(0,food_number -1)];
+                    level->rooms[item_room].places[level->rooms[item_room].total_places].display = food_sym;
+                    level->rooms[item_room].places[level->rooms[item_room].total_places].position = item_position;
+                    level->rooms[item_room].places[level->rooms[item_room].total_places].color = color;
+                    level->rooms[item_room].total_places++;
+                }
+        }
+    }
+    }
+}
+
+
+
 void random_gold(Level *level){
     for(int gold_room = 0; gold_room < MAX_ROOM; gold_room++){
         if(level->is_there_room[gold_room] == true){
@@ -627,7 +662,9 @@ void init_level(Level level[]){
     for(int i = 0; i < MAX_LEVEL - 3; i++){
         random_spell(&level[i],1,2/*1*/);
     }
-        
+    for(int i = 0; i < MAX_LEVEL - 3; i++){
+        random_food(&level[i],1,2/*1*/);
+    }        
 }
 
 #endif
