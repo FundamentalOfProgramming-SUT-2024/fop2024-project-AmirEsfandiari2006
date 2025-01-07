@@ -3,6 +3,16 @@
 
 #include "include.h"
 
+
+void set_up_display(){
+    initscr();
+    cols = COLS;
+    lines = LINES;
+    endwin();
+    refresh;
+}
+
+
 void set_up_colors(){
     init_pair(1, player_color, COLOR_BLACK);
     init_pair(2,COLOR_MAGENTA,COLOR_WHITE);
@@ -32,7 +42,7 @@ Point find_point_by_char(Level level,char ch){
     for(int i = 0; i < MAX_ROOM; i++){
         for(int j = 0; j < level.rooms[i].total_places ; j++){
             if(level.rooms[i].places[j].display == ch){
-                return level.rooms[i].places->position;
+                return level.rooms[i].places[j].position;
             }
         }
     }

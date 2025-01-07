@@ -1,10 +1,10 @@
 #include "header/include.h"
 
 int main() {
+    
     srand(time(0));
-
-    getch();    
-
+    set_up_display();
+   
     //Game set_up
     Level level[MAX_LEVEL];
     init_level(level);

@@ -227,7 +227,7 @@ void generate_random_room(Level* level){
         for(int i = 4; i < MAX_ROOM; i++){
             level->is_there_room[i] = 1;
             level->rooms[i].start.x = random_number(4,8) + lines/2;
-            level->rooms[i].start.y = random_number(10,13) + (i - 4) * (cols / 4);
+            level->rooms[i].start.y = random_number(5,8) + (i - 4) * (cols / 4);
             level->rooms[i].width = random_number(4,10);
             level->rooms[i].height = random_number(4,15);
             if(i == 4){
@@ -531,23 +531,27 @@ void random_gold(Level *level){
 
 void init_level(Level level[]){
 
-    for(int i = 0; i < MAX_LEVEL - 3; i++){
+    for(int i = 0; i < MAX_LEVEL - 3;i++){
         generate_random_room(&level[i]);
-        if(i !=  3){
-            random_place(&level[i],'>',2);
-        }
-        if(i != 0){
-            random_place(&level[i],'<',2);
-        }
     }
-    for(int i = 0; i < MAX_LEVEL - 3; i++){
+        for(int i = 0; i < MAX_LEVEL - 3; i++){
         for(int j = 0; j < random_number(2,4); j++){
             random_place(&level[i],'O',3);
         }
     }
     for(int i = 0; i < MAX_LEVEL - 3; i++){
-            random_gold(&level[i]);
+        
+        if(i !=  3){
+            random_place(&level[i],'>', 2);
+        }
+        if(i != 0){
+            random_place(&level[i],'<', 2);
+        }
     }
+    for(int i = 0; i < MAX_LEVEL - 3; i++){
+        random_gold(&level[i]);
+    }
+
 }
 
 #endif
