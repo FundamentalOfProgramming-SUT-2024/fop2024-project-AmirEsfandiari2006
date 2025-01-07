@@ -106,8 +106,9 @@ void move_player(int command,Player* player){
 }
 
 
-bool handle_movement(char ch,Level *level,Player *player){
-    switch (ch)
+bool handle_movement(Point position,Level *level,Player *player){
+    int value = mvinch(position.x,position.y) & A_CHARTEXT;
+    switch (value)
     {
     case '>':
         level_map++;
@@ -127,7 +128,7 @@ bool handle_movement(char ch,Level *level,Player *player){
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
             return true;
         }
-    case 'M':
+    case MACE:
         if(can_get_item){
             clear();
             strcpy(player->player_weapon[player->number_of_player_weapon].name, "Mace");
@@ -137,7 +138,7 @@ bool handle_movement(char ch,Level *level,Player *player){
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
             return true;
         }
-    case 'D':
+    case DAGGER:
         if(can_get_item){
             clear();
             strcpy(player->player_weapon[player->number_of_player_weapon].name, "Dagger");
@@ -147,7 +148,7 @@ bool handle_movement(char ch,Level *level,Player *player){
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
             return true;
         }
-    case 'W':
+    case MAGIC_WAND:
         if(can_get_item){
             clear();
             strcpy(player->player_weapon[player->number_of_player_weapon].name, "Magin Wand");
@@ -157,7 +158,7 @@ bool handle_movement(char ch,Level *level,Player *player){
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
             return true;
         }
-    case 'R':
+    case NORMAL_ARROW:
         if(can_get_item){
             clear();
             strcpy(player->player_weapon[player->number_of_player_weapon].name, "Normal Arrow");
@@ -167,13 +168,13 @@ bool handle_movement(char ch,Level *level,Player *player){
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
             return true;
         }
-    case 'S':
+    case SWORD:
         if(can_get_item){
             clear();
             strcpy(player->player_weapon[player->number_of_player_weapon].name, "Sword");
             player->player_weapon[player->number_of_player_weapon].symbol = 'S';
             player->number_of_player_weapon++;
-            mvprintw(1,1,"You collect a Magic Sword!");
+            mvprintw(1,1,"You collect a Sword!");
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
             return true;
         }       

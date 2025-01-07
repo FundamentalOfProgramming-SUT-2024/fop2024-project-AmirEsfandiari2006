@@ -1,7 +1,6 @@
 #ifndef INCLUDE_H
 #define INCLUDE_H
 
-#include <ncurses.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,6 +8,9 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <locale.h>
+#include <wchar.h>
+#include <ncursesw/ncurses.h>
+
 
 #include "constants.h"
 #include "checkerfunc.h"

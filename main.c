@@ -2,9 +2,10 @@
 
 int main() {
     
+    setlocale(LC_ALL, "");
+
     srand(time(0));
     set_up_display();
-    setlocale(LC_ALL,"");
     
     //Game set_up
     Level level[MAX_LEVEL];
@@ -36,8 +37,8 @@ int main() {
                 command = getch();
                 move_player(command, &player);
                 update_player_room(&player,&(level[level_map]));
-                
-                if(handle_command(command) || handle_movement(mvinch(player.position.x,player.position.y),level,&player)){
+
+                if(handle_command(command) || handle_movement(player.position,level,&player)){
                 }
                 else{
                     clear();

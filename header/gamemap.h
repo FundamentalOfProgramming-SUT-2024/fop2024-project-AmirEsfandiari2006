@@ -6,6 +6,7 @@ int random_number(int,int);
 int random_room(const Level*);
 Point random_position_point(const Room*);
 void set_up_colors();
+bool handle_unicode(char,Point);
 
 
 Room init_room(Point start,int width,int height,int num_of_door){
@@ -100,7 +101,9 @@ void print_room(Room room){
     for(int i = 0; i < room.total_places; i++){
         set_up_colors();
         attron(COLOR_PAIR(room.places[i].color));
-        mvprintw(room.places[i].position.x,room.places[i].position.y,"%c",room.places[i].display);
+        if(!handle_unicode(room.places[i].display,room.places[i].position)){
+            mvprintw(room.places[i].position.x,room.places[i].position.y,"%c",room.places[i].display);
+        }
         attroff(COLOR_PAIR(room.places[i].color));
     }
 }

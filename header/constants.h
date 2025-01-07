@@ -41,4 +41,10 @@
 #define START_GAME 1
 
 
+#define MACE 146
+#define DAGGER 225
+#define MAGIC_WAND 133
+#define NORMAL_ARROW 185
+#define SWORD 148
+
 #endif

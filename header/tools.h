@@ -88,6 +88,28 @@ void remove_place(Room *room, int index) {
     room->places[room->total_places] = (Place){0, 0, 0, 0};
 }
 
+bool handle_unicode(char symbol,Point point){
+
+    switch(symbol){
+        case 'M':
+            mvprintw(point.x, point.y, "%ls", L"⚒");
+            return true;
+        case 'D':
+            mvprintw(point.x, point.y, "%ls", L"🗡");
+            return true;
+        case 'W':
+            mvprintw(point.x, point.y, "%ls", L"🪄");
+            return true;
+        case 'R':
+            mvprintw(point.x, point.y, "%ls", L"➹");
+            return true;
+        case 'S':
+            mvprintw(point.x, point.y, "%ls", L"⚔");
+            return true;
+    }
+    return false;
+}
+
 
 
 #endif
