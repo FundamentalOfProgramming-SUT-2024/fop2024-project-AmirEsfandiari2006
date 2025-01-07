@@ -60,6 +60,10 @@ typedef struct {
     char symbol;
 } Weapon;
 
+typedef struct {
+    char name[MAX_NAME];
+    char symbol;
+} Spell;
 
 typedef struct 
 {
@@ -70,6 +74,8 @@ typedef struct
     int strength;
     int armor;
     Weapon player_weapon[MAX_ITEM];
+    Spell plaeyr_spell [MAX_ITEM];
+    int number_of_player_spell;
     int number_of_player_weapon;
   
 } Player;

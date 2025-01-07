@@ -29,6 +29,7 @@ void init_player(Player *player,const Level* level){
     player->position.y = random_position(player,level).y;
     strcpy(player->player_weapon[0].name, "Mace");
     player->number_of_player_weapon = 1;
+    player->number_of_player_spell = 0;
 
 }
 
@@ -54,6 +55,9 @@ bool valid_tile(int x,int y){
     case 'M':
     case 'D':
     case 'G':
+    case 'H':
+    case 'Z':
+    case 'C':
     return true;
     case '_':
     case 'O':
@@ -128,6 +132,36 @@ bool handle_movement(Point position,Level *level,Player *player){
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
             return true;
         }
+    case 'H':
+        if(can_get_item){
+            clear();
+            strcpy(player->plaeyr_spell[player->number_of_player_spell].name, "Health");
+            player->plaeyr_spell[player->number_of_player_spell].symbol = 'H';
+            player->number_of_player_spell++;
+            mvprintw(1,1,"You collect a Health Spell!");
+            remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            return true;
+        }
+    case 'Z':
+        if(can_get_item){
+            clear();
+            strcpy(player->plaeyr_spell[player->number_of_player_spell].name, "Damage");
+            player->plaeyr_spell[player->number_of_player_spell].symbol = 'Z';
+            player->number_of_player_spell++;
+            mvprintw(1,1,"You collect a Damage Spell!");
+            remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            return true;
+        }
+    case 'C':
+        if(can_get_item){
+            clear();
+            strcpy(player->plaeyr_spell[player->number_of_player_spell].name, "Speed");
+            player->plaeyr_spell[player->number_of_player_spell].symbol = 'C';
+            player->number_of_player_spell++;
+            mvprintw(1,1,"You collect a Speed Spell!");
+            remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            return true;
+        }
     case MACE:
         if(can_get_item){
             clear();
@@ -164,7 +198,7 @@ bool handle_movement(Point position,Level *level,Player *player){
             strcpy(player->player_weapon[player->number_of_player_weapon].name, "Normal Arrow");
             player->player_weapon[player->number_of_player_weapon].symbol = 'R';
             player->number_of_player_weapon++;
-            mvprintw(1,1,"You collect a Magic Normal Arrow!");
+            mvprintw(1,1,"You collect a Normal Arrow!");
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
             return true;
         }

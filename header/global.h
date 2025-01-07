@@ -20,4 +20,7 @@ int lines;
 char weapons[MAX_ITEM] = {'M','D','W','R','S'};
 const int  weapons_number = 5;
 
+char spell[MAX_ITEM] = {'H','Z','C'};
+const int spell_number = 3;
+
 #endif

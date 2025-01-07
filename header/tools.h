@@ -19,6 +19,7 @@ void set_up_colors(){
     init_pair(3,COLOR_RED,COLOR_BLACK);
     init_pair(4,COLOR_YELLOW,COLOR_BLACK);
     init_pair(5,COLOR_MAGENTA,COLOR_BLACK);
+    init_pair(6,COLOR_WHITE,COLOR_BLACK);
     }
 
 
@@ -89,7 +90,6 @@ void remove_place(Room *room, int index) {
 }
 
 bool handle_unicode(char symbol,Point point){
-
     switch(symbol){
         case 'M':
             mvprintw(point.x, point.y, "%ls", L"⚒");
@@ -109,7 +109,5 @@ bool handle_unicode(char symbol,Point point){
     }
     return false;
 }
-
-
 
 #endif
