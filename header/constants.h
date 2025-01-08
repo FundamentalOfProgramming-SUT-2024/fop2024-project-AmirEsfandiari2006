@@ -8,9 +8,9 @@
 #define MAX_CORRIDOR 10
 #define MAX_LEVEL 8
 #define MAX_PLACE 20
-#define MAX_ITEM 10
+#define MAX_ITEM 50
 #define MAX_NAME 20
-#define MAX_FOOD 5
+#define MAX_FOOD 20
 
 #define true 1
 #define false 0

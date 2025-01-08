@@ -94,6 +94,8 @@ void print_room(Room room){
         mvprintw(start_x,start_y,"_");
         start_y++;
     }
+    mvprintw(room.width + room.start.x + 1 , room.start.y , "|");
+    mvprintw(room.width + room.start.x + 1 , room.start.y + room.height  + 1, "|");
     for(int i = 0; i < MAX_DOOR; i++){
         if(room.is_door[i] == true)
         mvprintw(room.doors[i].x,room.doors[i].y,"+");

@@ -197,7 +197,7 @@ bool handle_movement(Point position,Level *level,Player *player){
     case MAGIC_WAND:
         if(can_get_item){
             clear();
-            strcpy(player->player_weapon[player->number_of_player_weapon].name, "Magin Wand");
+            strcpy(player->player_weapon[player->number_of_player_weapon].name, "Magic Wand");
             player->player_weapon[player->number_of_player_weapon].symbol = 'W';
             player->number_of_player_weapon++;
             mvprintw(1,1,"You collect a Magic wand!");
@@ -239,6 +239,9 @@ bool handle_command(char command){
             can_get_item = !can_get_item;
             print_message("Getting Items is turned on Press 'q' to turn off.");
         }
+        return true;
+        case 'i':
+            //open_and_handle_inventory(Player* player);
         return true;
     }
     return false;
