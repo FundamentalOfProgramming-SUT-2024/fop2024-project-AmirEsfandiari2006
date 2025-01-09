@@ -255,7 +255,7 @@ bool handle_command(char command,Player*player){
         }
         return true;
         case 'i':
-            //open_and_handle_inventory(Player* player);
+            open_and_handle_inventory(player);
         return true;
     }
     return false;

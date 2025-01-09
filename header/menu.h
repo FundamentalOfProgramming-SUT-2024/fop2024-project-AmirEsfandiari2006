@@ -347,6 +347,66 @@ void open_items_menu(int menu_number){
 
 void open_and_handle_inventory(Player* player){
 
+
+    const char* main_line_name[] = {"Weapons","Spells","Foods","Other Items"};
+    const char* weapons_name[] = {"Mace","Dagger","Magic Wand","Normal Arrow","Sword"};
+    const char* spells_name[] = {"Damage","Health","Speed"};
+    const char* foods_name[] = {"Normal Food"};
+
+    const int number_of_main_line_name = 4;
+
+    initscr();
+    noecho();
+    keypad(stdscr, true); 
+    curs_set(0);
+    int which_line = 1;
+    int hover = 0;
+
+
+    int command;
+    while(true){
+        clear();
+        mvprintw(1,cols/2 - 10,"Player Inventory");
+
+        for(int i = 4; i < lines; i++){
+            mvprintw(i, 1 * cols / 4 - 2,"|");
+            mvprintw(i, 2 * cols / 4 - 2, "|");
+            mvprintw(i, 3 * cols / 4 - 2, "|");
+        }
+        for(int i = 0; i < number_of_main_line_name; i++){
+            if(i == hover){attron(A_REVERSE);}
+            mvprintw(4 , i * (cols / 4) + 20, "%s\n",main_line_name[i]);
+            if(i == hover){attroff(A_REVERSE);}
+        }
+
+        for(int i = 0; i < MAX_WEAPON_N;i++){
+            mvprintw(8 + 2 * i, 2,"Number of %s: %d",weapons_name[i],player->number_of_each_weapon[i]);
+        }
+        for(int i = 0; i < MAX_SPELL_N;i++){
+            mvprintw(8 + 2 * i, 48,"Number of %s Spell: %d",spells_name[i],player->number_of_each_spell[i]);
+        }
+        for(int i = 0; i < MAX_FOOD_N;i++){
+            mvprintw(8 + 2 * i, 96,"Number of %s: %d",foods_name[i],player->number_of_each_food[i]);
+        }
+
+        command = getch();
+
+        if (command == KEY_LEFT)
+            hover = (hover == 0) ? number_of_main_line_name - 1: hover - 1;
+        else if (command == KEY_RIGHT)
+            hover = (hover == number_of_main_line_name - 1) ? 0 : hover + 1;
+        else if (command == ENTER){
+            
+        } else if(command == ESCAPE){
+            clear();
+            break;;
+        } else if(command == 'i'){
+            clear();
+            return;
+        } 
+    }
+    refresh();
+    endwin();
 }
 
 #endif
