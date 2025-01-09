@@ -85,6 +85,9 @@ typedef struct
     int number_of_player_food;
     int number_of_player_spell;
     int number_of_player_weapon;
+    int number_of_each_food[MAX_FOOD];
+    int number_of_each_spell[MAX_ITEM];
+    int number_of_each_weapon[MAX_ITEM];
   
 } Player;
 

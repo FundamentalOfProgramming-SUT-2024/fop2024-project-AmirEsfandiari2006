@@ -48,4 +48,18 @@
 #define NORMAL_ARROW 185
 #define SWORD 148
 
+
+#define MACE_INDEX 0
+#define DAGGER_INDEX 1
+#define MAGIC_WAND_INDEX 2
+#define NORMAL_ARROW_INDEX 3
+#define SWORD_INDEX 4
+
+#define DAMAGE_SPELL_INDEX 0
+#define HEALTH_SPELL_INDEX 1
+#define SPEED_SPELL_INDEX  2
+
+#define NORMAL_FOOD_INDEX 0
+
+
 #endif

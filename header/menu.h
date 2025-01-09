@@ -3,8 +3,7 @@
 
 #include "include.h"
 #include "global.h"
-
-
+#include "datatype.h"
 void draw_borders(){
     for(int i = 0; i < COLS; i++){
         mvprintw(0,i,"#");
@@ -345,5 +344,9 @@ void open_items_menu(int menu_number){
     }
 }
 
+
+void open_and_handle_inventory(Player* player){
+
+}
 
 #endif

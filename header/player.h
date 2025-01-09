@@ -31,6 +31,11 @@ void init_player(Player *player,const Level* level){
     player->number_of_player_weapon = 1;
     player->number_of_player_spell = 0;
     player->number_of_player_food = 0;
+    for(int i = 0; i < MAX_FOOD; i++){
+        player->number_of_each_food[i] = 0;
+        player->number_of_each_spell[i] = 0;
+        player->number_of_each_weapon[i] = 0;
+    }
 
 }
 
@@ -142,6 +147,7 @@ bool handle_movement(Point position,Level *level,Player *player){
             player->number_of_player_spell++;
             mvprintw(1,1,"You collect a Health Spell!");
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            player->number_of_each_spell[HEALTH_SPELL_INDEX]++;
             return true;
         }
     case 'Z':
@@ -152,6 +158,7 @@ bool handle_movement(Point position,Level *level,Player *player){
             player->number_of_player_spell++;
             mvprintw(1,1,"You collect a Damage Spell!");
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            player->number_of_each_spell[DAMAGE_SPELL_INDEX]++;    
             return true;
         }
     case 'C':
@@ -162,6 +169,7 @@ bool handle_movement(Point position,Level *level,Player *player){
             player->number_of_player_spell++;
             mvprintw(1,1,"You collect a Speed Spell!");
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            player->number_of_each_spell[SPEED_SPELL_INDEX]++;
             return true;
         }
     case 'F':
@@ -172,6 +180,7 @@ bool handle_movement(Point position,Level *level,Player *player){
             player->number_of_player_food++;
             mvprintw(1,1,"You collect a Normal Food!");
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            player->number_of_each_food[NORMAL_FOOD_INDEX]++;
             return true;
         }
     case MACE:
@@ -182,6 +191,7 @@ bool handle_movement(Point position,Level *level,Player *player){
             player->number_of_player_weapon++;
             mvprintw(1,1,"You collect a mace!");
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            player->number_of_each_weapon[MACE_INDEX]++;
             return true;
         }
     case DAGGER:
@@ -192,6 +202,7 @@ bool handle_movement(Point position,Level *level,Player *player){
             player->number_of_player_weapon++;
             mvprintw(1,1,"You collect a Dagger!");
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            player->number_of_each_weapon[DAGGER_INDEX]++;
             return true;
         }
     case MAGIC_WAND:
@@ -202,6 +213,7 @@ bool handle_movement(Point position,Level *level,Player *player){
             player->number_of_player_weapon++;
             mvprintw(1,1,"You collect a Magic wand!");
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            player->number_of_each_weapon[MAGIC_WAND_INDEX]++;
             return true;
         }
     case NORMAL_ARROW:
@@ -212,6 +224,7 @@ bool handle_movement(Point position,Level *level,Player *player){
             player->number_of_player_weapon++;
             mvprintw(1,1,"You collect a Normal Arrow!");
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            player->number_of_each_weapon[NORMAL_ARROW_INDEX]++;
             return true;
         }
     case SWORD:
@@ -222,6 +235,7 @@ bool handle_movement(Point position,Level *level,Player *player){
             player->number_of_player_weapon++;
             mvprintw(1,1,"You collect a Sword!");
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            player->number_of_each_weapon[SWORD_INDEX]++;
             return true;
         }       
     }
@@ -229,7 +243,7 @@ bool handle_movement(Point position,Level *level,Player *player){
     return false;
 }
 
-bool handle_command(char command){
+bool handle_command(char command,Player*player){
     switch(command){
         case 'q':
         if(can_get_item == true){
