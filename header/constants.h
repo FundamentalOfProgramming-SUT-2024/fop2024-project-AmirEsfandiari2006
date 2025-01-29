@@ -61,8 +61,11 @@
 #define SPEED_SPELL_INDEX  2
 
 
-#define MAX_FOOD_N 1
+#define MAX_FOOD_N 4
 #define NORMAL_FOOD_INDEX 0
+#define PURE_FOOD_INDEX 1
+#define MAGIC_FOOD_INDEX 2
 
+#define MAX_TRAP 2
 
 #endif

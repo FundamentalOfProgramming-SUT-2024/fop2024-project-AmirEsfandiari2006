@@ -65,6 +65,7 @@ bool valid_tile(int x,int y){
     case 'Z':
     case 'C':
     case 'F':
+    case '^':
     return true;
     case '_':
     case 'O':
@@ -121,6 +122,21 @@ bool handle_movement(Point position,Level *level,Player *player){
     int value = mvinch(position.x,position.y) & A_CHARTEXT;
     switch (value)
     {
+    case '.':
+        for(int i = 0; i < level->rooms[player->room].total_trap;i++){
+            if(level->rooms[player->room].traps[i].position.x == position.x && level->rooms[player->room].traps[i].position.y == position.y){
+                clear();
+                player->health -= 1;
+                level->rooms[player->room].traps[i].position.x = -1;
+                level->rooms[player->room].traps[i].position.y = -1;
+                mvprintw(1,1,"You stand on a trap! Becareful next time!");
+            } 
+        }
+        return true;
+    case '^':
+        is_game_ended = true;
+        clear();
+        return true;
     case '>':
         level_map++;
         player->position = find_point_by_char(level[level_map],'<');
@@ -175,12 +191,24 @@ bool handle_movement(Point position,Level *level,Player *player){
     case 'F':
         if(can_get_item){
             clear();
-            strcpy(player->player_food[player->number_of_player_food].name, "Normal Food");
-            player->player_food[player->number_of_player_food].symbol = 'F';
+            int random_num = random_number(1,10);
+            if(random_num >= 0 && random_num <= 6){
+                strcpy(player->player_food[player->number_of_player_food].name, "Normal Food");
+                player->number_of_each_food[NORMAL_FOOD_INDEX]++;
+                mvprintw(1,1,"You collect a Normal Food!");
+            }
+            if(random_num >= 7 && random_num <= 8){
+                strcpy(player->player_food[player->number_of_player_food].name, "Pure Food");
+                player->number_of_each_food[PURE_FOOD_INDEX]++;
+                mvprintw(1,1,"You collect a Pure Food!");
+            }
+            if(random_num >= 9 && random_num <= 10){
+                strcpy(player->player_food[player->number_of_player_food].name, "Magic Food");
+                player->number_of_each_food[MAGIC_FOOD_INDEX]++;
+                mvprintw(1,1,"You collect a Magic Food!");
+            }
             player->number_of_player_food++;
-            mvprintw(1,1,"You collect a Normal Food!");
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
-            player->number_of_each_food[NORMAL_FOOD_INDEX]++;
             return true;
         }
     case MACE:
@@ -259,6 +287,26 @@ bool handle_command(char command,Player*player){
         return true;
     }
     return false;
+}
+
+void clear_message(){
+    mvprintw(1,1,"                                                  ");
+}
+
+void use_food(int food_index,Player *player){
+    clear_message();
+    switch(food_index){
+        case NORMAL_FOOD_INDEX:
+            if(player->number_of_each_food[NORMAL_FOOD_INDEX] >= 1){
+                player->health++;
+                if(player->health > START_HEALTH){player->health = START_HEALTH;}
+                player->number_of_each_food[NORMAL_FOOD_INDEX]--;
+                mvprintw(1,1,"You Consumed a normal food!");
+            } else {
+                mvprintw(1,1,"You don't have normal food to consume!");
+            }
+   
+    }
 }
 
 

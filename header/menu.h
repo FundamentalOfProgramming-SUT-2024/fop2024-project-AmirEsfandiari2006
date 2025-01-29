@@ -4,6 +4,10 @@
 #include "include.h"
 #include "global.h"
 #include "datatype.h"
+
+void use_food(int,Player*);
+void clear_message();
+
 void draw_borders(){
     for(int i = 0; i < COLS; i++){
         mvprintw(0,i,"#");
@@ -291,7 +295,7 @@ void setting(){
                 hover = (hover == number_lien1_item - 1) ? 0 : hover + 1;
             else if (command == ENTER){
                 which_line = 2;
-                game_diff = hover;
+                game_diff = hover - 1;
                 hover = 0;
             } else if(command == ESCAPE){
                 clear();
@@ -351,9 +355,9 @@ void open_and_handle_inventory(Player* player){
     const char* main_line_name[] = {"Weapons","Spells","Foods","Other Items"};
     const char* weapons_name[] = {"Mace","Dagger","Magic Wand","Normal Arrow","Sword"};
     const char* spells_name[] = {"Damage","Health","Speed"};
-    const char* foods_name[] = {"Normal Food"};
+    const char* foods_name[] = {"Normal Food","Pure Food","Magic Food","Rotten Food"};
 
-    const int number_of_main_line_name = 4;
+    const int number_of_main_line_name = 3;
 
     initscr();
     noecho();
@@ -362,10 +366,13 @@ void open_and_handle_inventory(Player* player){
     int which_line = 1;
     int hover = 0;
 
-
+    bool first_time = 1;
     int command;
     while(true){
-        clear();
+        if(first_time){
+            clear();
+            first_time = 0;
+        }
         mvprintw(1,cols/2 - 10,"Player Inventory");
 
         for(int i = 4; i < lines; i++){
@@ -380,23 +387,33 @@ void open_and_handle_inventory(Player* player){
         }
 
         for(int i = 0; i < MAX_WEAPON_N;i++){
-            mvprintw(8 + 2 * i, 2,"Number of %s: %d",weapons_name[i],player->number_of_each_weapon[i]);
+            mvprintw(8 + 2 * i, 2,"%d.Number of %s: %d",i+1,weapons_name[i],player->number_of_each_weapon[i]);
         }
         for(int i = 0; i < MAX_SPELL_N;i++){
-            mvprintw(8 + 2 * i, 48,"Number of %s Spell: %d",spells_name[i],player->number_of_each_spell[i]);
+            mvprintw(8 + 2 * i, 48,"%d.Number of %s Spell: %d",i+1,spells_name[i],player->number_of_each_spell[i]);
         }
         for(int i = 0; i < MAX_FOOD_N;i++){
-            mvprintw(8 + 2 * i, 96,"Number of %s: %d",foods_name[i],player->number_of_each_food[i]);
+            mvprintw(8 + 2 * i, 90,"%d.Number of %s: %d",i+1,foods_name[i],player->number_of_each_food[i]);
         }
 
         command = getch();
+        clear_message();
 
         if (command == KEY_LEFT)
             hover = (hover == 0) ? number_of_main_line_name - 1: hover - 1;
         else if (command == KEY_RIGHT)
             hover = (hover == number_of_main_line_name - 1) ? 0 : hover + 1;
         else if (command == ENTER){
-            
+            mvprintw(1,1,"Which Item do want to use? (Enter the number)");
+            command = getch();
+            if(hover == 0){
+                //use_weapon(int index);
+            } else if(hover == 1){
+                //use_spell(int index);
+            } else if(hover == 2){
+                use_food(command - 1 - '0',player);
+            }
+
         } else if(command == ESCAPE){
             clear();
             break;;

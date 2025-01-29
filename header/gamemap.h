@@ -16,6 +16,7 @@ Room init_room(Point start,int width,int height,int num_of_door){
     room.width = width;
     room.height = height;
     room.total_places = 0;
+    room.total_trap = 0;
     return room;
 }
 
@@ -463,13 +464,13 @@ void printf_level(const Level* level,const Player* player){
 
     char game_difficulty[MAX_LENGTH];
     switch(game_diff){
-        case 0: strcpy(game_difficulty,"Easy");   break;
-        case 1: strcpy(game_difficulty,"Normal"); break;
-        case 2: strcpy(game_difficulty,"Hard"); break;
+        case -1: strcpy(game_difficulty,"Easy");   break;
+        case 0: strcpy(game_difficulty,"Normal"); break;
+        case 1: strcpy(game_difficulty,"Hard"); break;
 
     }
     mvprintw(1,cols - 30,"Game difficulty: %s",game_difficulty);
-    mvprintw(lines - 1,cols - 25,"You're at level: %d",level_map + 1);
+    mvprintw(lines - 1,cols - 25,"You're at level: %d %d",level_map + 1,player->room + 1);
     print_status(player);
     clear_baord();
 }
@@ -635,6 +636,34 @@ void random_gold(Level *level){
     }
 }
 
+void random_trap(Level *level,int max_number,int max_chance){
+    for(int item_room = 0; item_room < MAX_ROOM; item_room++){
+        if(random_number(0,max_chance)){
+        if(level->is_there_room[item_room] == true){
+            for(int repeat = 0; repeat < random_number(0,max_number) - game_diff; repeat++){
+                Point item_position;
+                bool position_found = false;
+                int total_attmpt =  1000;
+                while (!position_found && total_attmpt >= 0) {
+                    item_position = random_position_point(&level->rooms[item_room]);
+                    position_found = true; 
+                    for (int i = 0; i < level->rooms[item_room].total_places; i++) {
+                        if (level->rooms[item_room].traps[i].position.x == item_position.x &&
+                            level->rooms[item_room].traps[i].position.y == item_position.y) {
+                            position_found = false; 
+                            total_attmpt--;
+                            break;
+                        }
+                    }
+                }
+                    level->rooms[item_room].traps[level->rooms[item_room].total_trap].position = item_position;
+                    level->rooms[item_room].total_trap++;
+                }
+        }
+    }
+    }
+}
+
 
 void init_level(Level level[]){
 
@@ -653,20 +682,25 @@ void init_level(Level level[]){
         
         if(i !=  3){
             random_place(&level[i],'>', 2);
+        } else {
+            random_place(&level[i],'^',2);
         }
         if(i != 0){
             random_place(&level[i],'<', 2);
         }
     }
     for(int i = 0; i < MAX_LEVEL - 3; i++){
-        random_weapon(&level[i],1,2/*1*/);
+        random_weapon(&level[i],1,3);
     }
     for(int i = 0; i < MAX_LEVEL - 3; i++){
-        random_spell(&level[i],1,2/*1*/);
+        random_spell(&level[i],1,3);
     }
     for(int i = 0; i < MAX_LEVEL - 3; i++){
-        random_food(&level[i],1,2/*1*/);
-    }        
+        random_food(&level[i],1,3);
+    }
+    for(int i = 0; i < MAX_LEVEL - 3; i++){
+        random_trap(&level[i],1,3);
+    }         
 }
 
 #endif

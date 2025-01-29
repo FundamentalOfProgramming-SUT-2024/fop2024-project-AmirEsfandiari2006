@@ -29,6 +29,13 @@ typedef struct
 
 } Place;
 
+typedef struct 
+{
+    Point position;
+    int damage;
+} Trap;
+
+
 typedef struct
 {
     Point start;
@@ -38,7 +45,9 @@ typedef struct
     int total_places;
     bool is_door[MAX_DOOR];
     Point doors[MAX_DOOR];
-    Place places[MAX_PLACE];    
+    Place places[MAX_PLACE];
+    Trap traps[MAX_PLACE];
+    int total_trap;
 } Room;
 
 typedef struct 
