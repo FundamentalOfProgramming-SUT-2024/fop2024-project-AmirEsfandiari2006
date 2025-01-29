@@ -3,16 +3,13 @@
 
 #include "include.h"
 
-
-
 bool  is_logged_in = false;
 bool  is_game_playing = false;
-bool  is_game_ended = false;
+bool  is_treasure_room = false;
 bool  can_get_item = true;
 
-
 int level_map = 0;
-int game_diff = 0.9;
+int game_diff = 0;
 int player_color = 2;
 
 int cols;

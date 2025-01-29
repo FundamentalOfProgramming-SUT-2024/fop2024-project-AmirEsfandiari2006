@@ -10,6 +10,7 @@ int main() {
     //Game set_up
     Level level[MAX_LEVEL];
     init_level(level);
+    
 
     //Player set_up
     Player player;
@@ -30,8 +31,11 @@ int main() {
         if (is_game_playing && is_logged_in) {
 
             while (command != ESCAPE) {
-                
-                printf_level(&level[level_map],&player);
+                if(!is_treasure_room){
+                    printf_level(&level[level_map],&player);
+                } else {
+                    print_treasure_room(level,&player);
+                }      
                 print_player(&player);
 
                 command = getch();

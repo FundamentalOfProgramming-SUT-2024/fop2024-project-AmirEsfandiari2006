@@ -75,6 +75,12 @@ bool valid_tile(int x,int y){
     }
 }
 
+void handle_treasure_room(Level *level, Player *player){
+    player->position.x = level->treasure_room.start.x + random_number(2,level->treasure_room.width);
+    player->position.y = level->treasure_room.start.y + random_number(2,level->treasure_room.height);
+}
+
+
 
 void move_player(int command,Player* player){
     switch(command){
@@ -134,7 +140,8 @@ bool handle_movement(Point position,Level *level,Player *player){
         }
         return true;
     case '^':
-        is_game_ended = true;
+        is_treasure_room = true;
+        handle_treasure_room(level,player);
         clear();
         return true;
     case '>':
@@ -150,9 +157,16 @@ bool handle_movement(Point position,Level *level,Player *player){
     case 'G':
         if(can_get_item){
             clear();
-            player->gold += (&level[level_map])->rooms[player->room].places[item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position)].amout;
-            mvprintw(1,1,"You collect %d gold!",(&level[level_map])->rooms[player->room].places[item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position)].amout);
-            remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            if(!is_treasure_room){
+                player->gold += (&level[level_map])->rooms[player->room].places[item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position)].amout;
+                mvprintw(1,1,"You collect %d gold!",(&level[level_map])->rooms[player->room].places[item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position)].amout);
+                remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
+            } else {
+                player->gold += level->treasure_room.places[item_of_room_index_in_room(&(level->treasure_room),player->position)].amout;
+                mvprintw(1,1,"You collect %d gold!",(level->treasure_room.places[item_of_room_index_in_room(&level->treasure_room,player->position)].amout));
+                 remove_place(&(level->treasure_room),item_of_room_index_in_room(&level->treasure_room,player->position));
+            }
+
             return true;
         }
     case 'H':

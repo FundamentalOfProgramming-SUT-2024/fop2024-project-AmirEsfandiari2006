@@ -470,7 +470,7 @@ void printf_level(const Level* level,const Player* player){
 
     }
     mvprintw(1,cols - 30,"Game difficulty: %s",game_difficulty);
-    mvprintw(lines - 1,cols - 25,"You're at level: %d %d",level_map + 1,player->room + 1);
+    mvprintw(lines - 1,cols - 25,"You're at level: %d Room:%d",level_map + 1,player->room + 1);
     print_status(player);
     clear_baord();
 }
@@ -600,10 +600,10 @@ void random_food(Level *level,int max_number,int max_chance){
 
 
 
-void random_gold(Level *level){
+void random_gold(Level *level,int number){
     for(int gold_room = 0; gold_room < MAX_ROOM; gold_room++){
         if(level->is_there_room[gold_room] == true){
-            for(int repeat = 0; repeat < random_number(0,3) - game_diff; repeat++){
+            for(int repeat = 0; repeat < random_number(0,number) - game_diff; repeat++){
                 Point gold_position;
                 bool position_found = false;
                 int total_attmpt =  1000;
@@ -664,8 +664,69 @@ void random_trap(Level *level,int max_number,int max_chance){
     }
 }
 
+void random_gold_room(Room*room,int number){
+            for(int repeat = 0; repeat < number - 10 * game_diff; repeat++){
+                Point gold_position;
+                bool position_found = false;
+                int total_attmpt =  1000;
+                while (!position_found && total_attmpt >= 0) {
+                    gold_position = random_position_point(room);
+                    position_found = true; 
+                    for (int i = 0; i < room->total_places; i++) {
+                        if (room->places[i].position.x == gold_position.x &&
+                            room->places[i].position.y == gold_position.y) {
+                            position_found = false; 
+                            total_attmpt--;
+                            break;
+                        }
+                    }
+                }
+                    int color;
+                    int start,end;
+                    if(!random_number(0,9)){
+                        color = 5; start = 30; end = 60;
+                    } else {
+                        color = 4; start = 10; end = 30;
+                    }
+                    room->places[room->total_places].display = 'G';
+                    room->places[room->total_places].position = gold_position;
+                    room->places[room->total_places].color = color;
+                    room->places[room->total_places].amout = random_number(start,end);
+                    room->total_places++;
+                }
+}
+
+void init_treasure_room(Room *room){
+    Point treasure_room_pos = {lines/3 - 5,cols/3 - 5};
+    room->start = treasure_room_pos;
+    room->width = 20;
+    room->height = 60;
+    room->num_of_door = 0;
+    random_gold_room(room, 20);
+}
+
+void print_treasure_room(Level * level,Player *player){
+    set_up_colors();
+    attron(COLOR_PAIR(7));
+    print_room(level->treasure_room);
+    attroff(COLOR_PAIR(7));
+    
+    char game_difficulty[MAX_LENGTH];
+    switch(game_diff){
+        case -1: strcpy(game_difficulty,"Easy");   break;
+        case 0: strcpy(game_difficulty,"Normal"); break;
+        case 1: strcpy(game_difficulty,"Hard"); break;
+
+    }
+    mvprintw(1,cols - 30,"Game difficulty: %s",game_difficulty);
+    mvprintw(lines - 1,cols - 25,"You're at Treasure room.");
+    print_status(player);
+    clear_baord();
+}
 
 void init_level(Level level[]){
+
+    init_treasure_room(&(level->treasure_room));
 
     for(int i = 0; i < MAX_LEVEL - 3;i++){
         generate_random_room(&level[i]);
@@ -676,7 +737,7 @@ void init_level(Level level[]){
             }
     }
     for(int i = 0; i < MAX_LEVEL - 3; i++){
-        random_gold(&level[i]);
+        random_gold(&level[i],3);
     }
     for(int i = 0; i < MAX_LEVEL - 3; i++){
         
@@ -700,7 +761,10 @@ void init_level(Level level[]){
     }
     for(int i = 0; i < MAX_LEVEL - 3; i++){
         random_trap(&level[i],1,3);
-    }         
+    }
+
 }
+
+
 
 #endif

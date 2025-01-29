@@ -59,7 +59,7 @@ typedef struct
 
     int is_there_corridor[MAX_ROOM];
 
-    
+    Room treasure_room;
 
 } Level;
 

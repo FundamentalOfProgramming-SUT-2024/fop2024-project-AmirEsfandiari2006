@@ -20,6 +20,7 @@ void set_up_colors(){
     init_pair(4,COLOR_YELLOW,COLOR_BLACK);
     init_pair(5,COLOR_MAGENTA,COLOR_BLACK);
     init_pair(6,COLOR_WHITE,COLOR_BLACK);
+    init_pair(7,186,COLOR_BLACK);
     }
 
 
