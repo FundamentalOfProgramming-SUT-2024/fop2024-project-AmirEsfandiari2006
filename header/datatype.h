@@ -82,6 +82,10 @@ typedef struct {
 
 typedef struct 
 {
+
+    char username[MAX_NAME];
+    int total_player_moves;
+
     Point position;
     int room;
     int gold;
@@ -97,7 +101,7 @@ typedef struct
     int number_of_each_food[MAX_FOOD];
     int number_of_each_spell[MAX_ITEM];
     int number_of_each_weapon[MAX_ITEM];
-  
+
 } Player;
 
 

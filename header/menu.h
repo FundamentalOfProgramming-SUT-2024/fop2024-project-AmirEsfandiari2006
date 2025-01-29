@@ -242,7 +242,7 @@ void log_in_user(){
             } else {
 
                 is_logged_in = true;
-                //strcpy(player.username,username);
+                strcpy(player_username,username);
                 //It should be continued by other values but for now. It would be enough.
                 clear();
                 break;
@@ -407,9 +407,9 @@ void open_and_handle_inventory(Player* player){
             mvprintw(1,1,"Which Item do want to use? (Enter the number)");
             command = getch();
             if(hover == 0){
-                //use_weapon(int index);
+                //use_weapon(command - 1 - '0',player);
             } else if(hover == 1){
-                //use_spell(int index);
+                //use_spell(command - 1 - '0',player);
             } else if(hover == 2){
                 use_food(command - 1 - '0',player);
             }

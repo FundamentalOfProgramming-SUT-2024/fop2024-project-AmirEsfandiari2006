@@ -16,7 +16,6 @@ int main() {
     Player player;
     init_player(&player, &level[level_map]);
   
-    
     int command = 0;   
     while (command != EXIT) {
         if(!is_game_playing) {
@@ -43,10 +42,16 @@ int main() {
                 update_player_room(&player,&(level[level_map]));
 
                 if(handle_command(command,&player) || handle_movement(player.position,level,&player)){
+                    player.total_player_moves++;
                 }
                 else{
                     clear();
-                } 
+                }
+                if(is_treasure_room && level->treasure_room.total_places == 0){
+                    clear();
+                    handle_ending(&player);
+                    break;
+                }
             }
             is_game_playing = false;
         }

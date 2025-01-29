@@ -31,6 +31,7 @@ void init_player(Player *player,const Level* level){
     player->number_of_player_weapon = 1;
     player->number_of_player_spell = 0;
     player->number_of_player_food = 0;
+    player->total_player_moves = 0;
     for(int i = 0; i < MAX_FOOD; i++){
         player->number_of_each_food[i] = 0;
         player->number_of_each_spell[i] = 0;
@@ -321,6 +322,34 @@ void use_food(int food_index,Player *player){
             }
    
     }
+}
+
+void handle_ending(const Player *player){
+    clear();
+    for(int x = lines/2 - 10; x <  lines/2 +10; x++){
+        mvprintw(x,cols/2 - 20, "|");
+        mvprintw(x,cols/2 + 20, "|");
+    }
+    for(int y = cols/2 - 20; y <  cols/2 + 20; y++){
+        mvprintw(lines/2 - 10, y, "-");
+        mvprintw(lines/2 + 10, y, "-");
+    }
+    mvprintw(lines/2 - 10,cols/2 - 20,"+");
+    mvprintw(lines/2 - 10,cols/2 + 20,"+");
+    mvprintw(lines/2 + 10,cols/2 - 20,"+");
+    mvprintw(lines/2 + 10,cols/2 + 20,"+");
+
+    mvprintw(lines/2 - 9,cols/2 - 15,"   Congragulation! You win!");
+    mvprintw(lines/2 - 6,cols/2 - 19," ->Total time playing: %d",player->total_player_moves);
+    mvprintw(lines/2 - 3,cols/2 - 19," ->Total gold collected: %d",player->gold);
+    mvprintw(lines/2 - 0,cols/2 - 19," ->Total score: %d",player->gold * (game_diff + 2));
+    mvprintw(lines/2 + 5,cols/2 - 15,"   Press any key to exit...");
+
+    update_score_file(player->gold * (game_diff + 2),player->total_player_moves,player->gold);
+
+    getch();
+    clear();
+    return;
 }
 
 
