@@ -6,7 +6,10 @@
 #include "datatype.h"
 
 void use_food(int,Player*);
+void sort_leaderboard(PlayerScore leaderboard[], int count);
+int get_user_data(const char *username, PlayerScore *playerscore);
 void clear_message();
+void set_up_colors();
 
 void draw_borders(){
     for(int i = 0; i < COLS; i++){
@@ -337,12 +340,90 @@ void setting(){
     endwin();
 }
 
+
+void show_leaderboard(){
+    char usernames[MAX_PLAYER][MAX_LEN];
+    PlayerScore leaderboard[MAX_PLAYER];
+    int user_count = read_usernames("usernames.txt", usernames);
+    int valid_users = 0;
+
+    for (int i = 0; i < user_count; i++) {
+        if (get_user_data(usernames[i], &leaderboard[valid_users])) {
+            valid_users++;
+        }
+    }
+    sort_leaderboard(leaderboard, valid_users);
+
+    start_color();
+    while(true){
+        clear();
+        draw_borders();
+        set_up_colors();
+        
+        attron(COLOR_PAIR(3));
+        mvprintw(1,cols/2 -5, "|            |");
+        mvprintw(2,cols/2 -5, "|------------|");
+        mvprintw(3,cols/2 -5, "|LEADER BOARD|");
+        mvprintw(4,cols/2 -5, "+------------+");
+        attroff(COLOR_PAIR(3));
+
+
+        attron(COLOR_PAIR(5));
+        mvprintw(6,cols/2 - 43," %-s | %-25s       | %-8s  | %-8s  | %-15s | %-15s","Rank","Player\'s Name","Score","Gold","Spending Time","New Games");
+        attroff(COLOR_PAIR(5));
+
+
+
+        for(int index = 0; index < user_count; index++){
+            if(!strcmp(leaderboard[index].username,player_username)){
+                attron(A_BOLD);
+            }
+            if(index == 0){
+                    attron(COLOR_PAIR(7));
+                    char temp_name[MAX_LEN];
+                    strcpy(temp_name,leaderboard[index].username);
+                    strcat(temp_name,", The Legend!");
+                    mvprintw(8 + index * 2,cols/2 - 43," %-6ls | %-25s       | %-8d  | %-8d  | %-15d | %-15d",L"🏆",temp_name,leaderboard[index].score,leaderboard[index].total_gold,leaderboard[index].total_time,leaderboard[index].num_plays);
+                    attroff(COLOR_PAIR(7));
+
+            } else if(index == 1){
+                    attron(COLOR_PAIR(8));
+                    char temp_name[MAX_LEN];
+                    strcpy(temp_name,leaderboard[index].username);
+                    strcat(temp_name,", The Elite!");
+                    mvprintw(8 + index * 2,cols/2 - 43," %-6ls | %-25s       | %-8d  | %-8d  | %-15d | %-15d",L"🥈",temp_name,leaderboard[index].score,leaderboard[index].total_gold,leaderboard[index].total_time,leaderboard[index].num_plays);
+                    attroff(COLOR_PAIR(8));
+            } else if(index == 2){
+                    attron(COLOR_PAIR(9));
+                    char temp_name[MAX_LEN];
+                    strcpy(temp_name,leaderboard[index].username);
+                    strcat(temp_name,", The Prodigy!");
+                    mvprintw(8 + index * 2,cols/2 - 43," %-6ls | %-25s       | %-8d  | %-8d  | %-15d | %-15d",L"🥉",temp_name,leaderboard[index].score,leaderboard[index].total_gold,leaderboard[index].total_time,leaderboard[index].num_plays);
+                    attroff(COLOR_PAIR(9));
+            } else {
+                mvprintw(8 + index * 2,cols/2 - 43," %-4d | %-25s       | %-8d  | %-8d  | %-15d | %-15d",index+1,leaderboard[index].username,leaderboard[index].score,leaderboard[index].total_gold,leaderboard[index].total_time,leaderboard[index].num_plays);    
+            }
+            if(!strcmp(leaderboard[index].username,player_username)){
+                attroff(A_BOLD);
+            }
+            
+        }
+        if(getch() == ESCAPE){
+            clear();
+            return;
+        }   
+    }
+
+}
+
+
+
 //incomplete function.
 void open_items_menu(int menu_number){
     switch(menu_number){
         case LOGIN         : log_in_user() ;      return;
         case SIGNUP        : sign_up_user();      return;
-        case LEADERBOSRD   : /* leader_board()*/  return;
+        case LEADERBOSRD   : show_leaderboard();  return;
         case SETTING       : setting();           return;
         case EXIT          :                      return;
     }

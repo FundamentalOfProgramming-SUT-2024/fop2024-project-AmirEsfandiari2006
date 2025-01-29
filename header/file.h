@@ -2,6 +2,7 @@
 #define FILE_H
 
 #include "include.h"
+#include "datatype.h"
 
 extern char  player_username[MAX_NAME];
 
@@ -46,9 +47,6 @@ void add_info(char username[],char password[],char email[]){
 }
 
 
-
-
-
 void update_score_file(int score_add, int time_add, int gold_add) {
 
     char score_file[256];
@@ -74,6 +72,34 @@ void update_score_file(int score_add, int time_add, int gold_add) {
     fflush(file);
     fclose(file);
 }
+
+int read_usernames(const char *filename, char usernames[MAX_PLAYER][MAX_LEN]) {
+    FILE *file = fopen(filename, "r");
+
+    int count = 0;
+    while (count < MAX_PLAYER && fscanf(file, "%s", usernames[count]) == 1) {
+        count++;
+    }
+    
+    fclose(file);
+    return count;
+}
+
+int get_user_data(const char *username, PlayerScore *playerscore) {
+    char filepath[MAX_LEN];
+    snprintf(filepath, sizeof(filepath), "data/%s/score.txt", username);
+
+    FILE *file = fopen(filepath, "r");
+    if (fscanf(file, "%d %d %d %d", &playerscore->score, &playerscore->total_time, &playerscore->total_gold, &playerscore->num_plays) != 4) {
+        fclose(file);
+        return 0; 
+    }
+
+    strcpy(playerscore->username, username);
+    fclose(file);
+    return 1;
+}
+
 
 
 

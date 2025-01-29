@@ -68,4 +68,7 @@
 
 #define MAX_TRAP 2
 
+#define MAX_PLAYER 200
+#define MAX_LEN 1000
+
 #endif

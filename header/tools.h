@@ -21,6 +21,8 @@ void set_up_colors(){
     init_pair(5,COLOR_MAGENTA,COLOR_BLACK);
     init_pair(6,COLOR_WHITE,COLOR_BLACK);
     init_pair(7,186,COLOR_BLACK);
+    init_pair(8,51,COLOR_BLACK);
+    init_pair(9,94,COLOR_BLACK);
     }
 
 
@@ -110,5 +112,18 @@ bool handle_unicode(char symbol,Point point){
     }
     return false;
 }
+
+void sort_leaderboard(PlayerScore leaderboard[], int count) {
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = i + 1; j < count; j++) {
+            if (leaderboard[i].score < leaderboard[j].score) {
+                PlayerScore temp = leaderboard[i];
+                leaderboard[i] = leaderboard[j];
+                leaderboard[j] = temp;
+            }
+        }
+    }
+}
+
 
 #endif

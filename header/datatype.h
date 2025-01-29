@@ -3,14 +3,14 @@
 
 #define MAX_LENGTH 1000
 
-typedef struct 
-{
-    char username[MAX_LENGTH];
-    int playing_time;
-    int total_gold;
-    int number_of_end;
 
-} PlayerInfo;
+typedef struct {
+    char username[MAX_LEN];
+    int score;
+    int total_time;
+    int total_gold;
+    int num_plays;
+} PlayerScore;
 
 
 typedef struct 
