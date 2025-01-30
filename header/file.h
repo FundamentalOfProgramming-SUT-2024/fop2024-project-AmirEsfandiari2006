@@ -100,7 +100,25 @@ int get_user_data(const char *username, PlayerScore *playerscore) {
     return 1;
 }
 
+bool is_savefile_exits(const char *username) {
+    char file_path[256];
+    strcpy(file_path,"data/");
+    strcat(file_path,username);
+    strcat(file_path,"/save.txt");
+    FILE *file = fopen(file_path, "r");
+    if (file) {
+        fclose(file);
+        return true; 
+    }
+    return false; 
+}
 
+void delete_savegane(char username[]){
+    char save_path_file[256] = "data/";
+    strcat(save_path_file,username);
+    strcat(save_path_file,"/save.txt");
+    remove(save_path_file);
+}
 
 
 #endif

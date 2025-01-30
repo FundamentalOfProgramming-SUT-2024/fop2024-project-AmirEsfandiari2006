@@ -28,7 +28,11 @@ void draw_borders(){
 }
 
 int play_the_game_menu(){
-    const char* menu_item[] = {"New Game","Load Game"};
+
+    player_new_game = false;
+    player_load_game = false;
+
+    const char* menu_item[] = {"New Game","Continue"};
     const int number_menu_item = 2;
     initscr();
     noecho();
@@ -53,8 +57,14 @@ int play_the_game_menu(){
         else if (command == KEY_DOWN)
             hover = (hover == number_menu_item - 1) ? 0 : hover + 1;
         else if (command == ENTER){
+            if(hover == 0){
+                player_new_game = true;
+                player_load_game = false;
+            } else if( hover == 1){
+                player_new_game = false;
+                player_load_game = true;
+            }
             clear();
-            endwin();
             is_game_playing = true;
             return hover;
         }
@@ -247,6 +257,9 @@ void log_in_user(){
                 is_logged_in = true;
                 strcpy(player_username,username);
                 //It should be continued by other values but for now. It would be enough.
+                if(is_savefile_exits(username)){
+                    is_there_savegame = true;
+                }
                 clear();
                 break;
             }

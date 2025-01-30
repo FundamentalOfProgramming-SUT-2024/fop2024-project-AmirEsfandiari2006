@@ -765,6 +765,10 @@ void init_level(Level level[]){
 
 }
 
+void reset_gamemap(Level **level){
+
+    level = NULL;
+}
 
 
 #endif

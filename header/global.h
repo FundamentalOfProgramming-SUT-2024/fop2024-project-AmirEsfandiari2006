@@ -7,8 +7,17 @@ char player_username[MAX_NAME];
 
 bool  is_logged_in = false;
 bool  is_game_playing = false;
+bool  is_game_ended = false;
+bool  is_there_savegame = false;
 bool  is_treasure_room = false;
+bool  is_game_stop = true;
 bool  can_get_item = true;
+
+
+bool have_game_played = false;
+
+bool  player_new_game = false;
+bool  player_load_game = false;
 
 int level_map = 0;
 int game_diff = 0;

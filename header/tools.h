@@ -125,5 +125,17 @@ void sort_leaderboard(PlayerScore leaderboard[], int count) {
     }
 }
 
+void reset_player(Player *player){
+    memset(player, 0, sizeof(*player));
+}
+
+void reset_level(Level level[]){
+    for(int i = 0; i < MAX_LEVEL; i++){
+        memset(&level[i], 0, sizeof(level[i]));
+    } 
+}
+
+
+
 
 #endif
