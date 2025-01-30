@@ -148,6 +148,25 @@ int monster_room(Point point, const Level* level) {
     }
 }
 
+char* get_monster_name(Monster monster){
+    switch(monster.display){
+        case 'E': return "Deamon";
+        case 'B': return "Fire Breathing";
+        case 'I': return "Giant";
+        case 'N': return "Snake";
+        case 'U': return "Undeed";
+    }
+}
+
+Monster* get_monster_by_point(Point point,Level* level,Player* player){
+    for(int i = 0; i < level[level_map].rooms[player->room].total_monsters; i++){
+        if(point.x == level[level_map].rooms[player->room].monsters[i].position.x && 
+           point.y == level[level_map].rooms[player->room].monsters[i].position.y) {
+                return &level[level_map].rooms[player->room].monsters[i];
+           }
+    }
+    return NULL;
+}
 
 
 #endif

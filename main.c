@@ -52,17 +52,24 @@ int main() {
                 command = getch();
                 if(command == ESCAPE){
                     is_game_stop = true;
+                    
                 }
+                clear_message();
+
                 move_player(command, &player);
                 update_player_room(&player,&(level[level_map]));
-
+                
                 if(handle_command(command,&player) || handle_movement(player.position,level,&player)){
                     player.total_player_moves++;
                 }
                 else{
-                    clear();
+                    if(attack_monster(command,&player,level)){
+
+                    } else {
+                        clear();
+                    }
                 }
-                
+
                 handle_monsters_movement(level,&player);
 
                 if(is_treasure_room && level->treasure_room.total_places == 0){

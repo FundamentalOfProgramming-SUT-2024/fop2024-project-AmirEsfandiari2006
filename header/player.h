@@ -87,6 +87,50 @@ void handle_treasure_room(Level *level, Player *player){
     player->position.y = level->treasure_room.start.y + random_number(2,level->treasure_room.height);
 }
 
+bool attack_monster(int command,Player* player,Level* level){
+        Point position = player->position;
+        switch(command){
+        case KEY_LEFT:
+            position.y--;
+        break;
+        case KEY_RIGHT:
+            position.y++;
+        break;
+        case KEY_UP:
+            position.x--;
+        break;
+        case KEY_DOWN:
+            position.x++;
+        break;
+        case KEY_HOME:
+            position.x--;position.y--;
+        break;
+        case KEY_PPAGE:
+            position.x--; position.y++;
+        break;
+        case KEY_NPAGE:
+            position.x++; position.y++;
+        break;
+        case KEY_END:
+            position.x++; position.y--;
+        }
+        char tile = mvinch(position.x,position.y);
+        if(tile == 'B' || tile == 'E' || tile == 'N' || tile == 'U' || tile == 'I'){
+            Monster* monster = get_monster_by_point(position,level,player);
+            monster->health -= player->armor;
+            if(monster->health <= 0){
+                
+                mvprintw(1,1,"You killed %s. Good luck!",get_monster_name(*monster));
+                monster->position.x = -1;
+                monster->position.y = -1;
+            } else {
+                mvprintw(1,1,"You hit %s and give it %d damage!",get_monster_name(*monster),player->armor);
+            }
+            return true;
+        }
+        return false;
+}
+
 
 
 void move_player(int command,Player* player){
@@ -114,7 +158,7 @@ void move_player(int command,Player* player){
         break;
         case KEY_PPAGE:
         if(valid_tile(player->position.x - 1,player->position.y + 1)){
-                        player->position.x--; player->position.y++;
+            player->position.x--; player->position.y++;
         }
         break;
         case KEY_NPAGE:
@@ -286,9 +330,8 @@ bool handle_movement(Point position,Level *level,Player *player){
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
             player->number_of_each_weapon[SWORD_INDEX]++;
             return true;
-        }       
+        }  
     }
-
     return false;
 }
 
@@ -312,6 +355,8 @@ bool handle_command(char command,Player*player){
 
 void clear_message(){
     mvprintw(1,1,"                                                  ");
+    mvprintw(2,1,"                                                  ");
+    mvprintw(3,1,"                                                  ");
 }
 
 void use_food(int food_index,Player *player){

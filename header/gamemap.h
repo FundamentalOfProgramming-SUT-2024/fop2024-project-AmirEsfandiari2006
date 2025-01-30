@@ -8,6 +8,7 @@ Point random_position_point(const Room*);
 void set_up_colors();
 bool handle_unicode(char,Point);
 int monster_room(Point point, const Level* level);
+char* get_monster_name(Monster monster);
 
 
 Room init_room(Point start,int width,int height,int num_of_door){
@@ -819,14 +820,25 @@ void init_level(Level level[]){
 
 }
 
-int is_walkable(int x, int y) {
-    return (mvinch(x, y) != 'O') && ((mvinch(x, y) & A_CHARTEXT )!= '@') ;
+void attack_player(Monster* monster, Player* player){
+    player->health -= monster->damage;
+    attron(COLOR_PAIR(3));
+    mvprintw(2,1,"The Monster: %s, gives you %d damage!",get_monster_name(*monster),monster->damage);
+    attroff(COLOR_PAIR(3));
 }
 
-void moveMonster(Point *monster, Point player) {
-    int dx = player.x - monster->x;
-    int dy = player.y - monster->y;
+
+int is_walkable(int x, int y) {
+    return ((mvinch(x, y) & A_CHARTEXT ) != 'O') && ((mvinch(x, y) & A_CHARTEXT )!= '@') ;
+}
+
+void moveMonster(Monster* monster_man, Player* player_man) {
+    Point* player = &player_man->position;
+    Point* monster = &monster_man->position;
+    int dx = player->x - monster->x;
+    int dy = player->y - monster->y;
     if (abs(dx) <= 1 && abs(dy) <= 1) {
+        attack_player(monster_man,player_man);
         return;
     }
 
@@ -845,10 +857,12 @@ void moveMonster(Point *monster, Point player) {
     }
 }
 
-
 void handle_monsters_movement(Level*level,Player*player){
+    
     for(int i = 0; i < level[level_map].rooms[player->room].total_monsters; i++){
-        moveMonster(&(level[level_map].rooms[player->room].monsters[i].position),player->position);
+        if(player->room != -1 && level[level_map].rooms[player->room].monsters[i].health > 0){
+            moveMonster(&(level[level_map].rooms[player->room].monsters[i]),player);
+        }
     }
 
 }
