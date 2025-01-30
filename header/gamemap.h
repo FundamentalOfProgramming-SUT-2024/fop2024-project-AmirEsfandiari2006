@@ -7,6 +7,7 @@ int random_room(const Level*);
 Point random_position_point(const Room*);
 void set_up_colors();
 bool handle_unicode(char,Point);
+int monster_room(Point point, const Level* level);
 
 
 Room init_room(Point start,int width,int height,int num_of_door){
@@ -108,6 +109,12 @@ void print_room(Room room){
             mvprintw(room.places[i].position.x,room.places[i].position.y,"%c",room.places[i].display);
         }
         attroff(COLOR_PAIR(room.places[i].color));
+    }
+    for(int i = 0; i < room.total_monsters; i++){
+        set_up_colors();
+        attron(COLOR_PAIR(3));
+        mvprintw(room.monsters[i].position.x,room.monsters[i].position.y,"%c",room.monsters[i].display);
+        attroff(COLOR_PAIR(3));
     }
 }
 
@@ -696,6 +703,49 @@ void random_gold_room(Room*room,int number){
                 }
 }
 
+void random_monster(Level *level,int max_number,int max_chance){
+    for(int item_room = 0; item_room < MAX_ROOM; item_room++){
+        if(random_number(0,max_chance)){
+        if(level->is_there_room[item_room] == true){
+            for(int repeat = 0; repeat < random_number(0,max_number); repeat++){
+                Point item_position;
+                bool position_found = false;
+                int total_attmpt =  1000;
+                while (!position_found && total_attmpt >= 0) {
+                    item_position = random_position_point(&level->rooms[item_room]);
+                    position_found = true; 
+                    for (int i = 0; i < level->rooms[item_room].total_places; i++) {
+                        if (level->rooms[item_room].places[i].position.x == item_position.x &&
+                            level->rooms[item_room].places[i].position.y == item_position.y) {
+                            position_found = false; 
+                            total_attmpt--;
+                            break;
+                        }
+                    }
+                    for (int i = 0; i < level->rooms[item_room].total_monsters; i++) {
+                        if (level->rooms[item_room].monsters[i].position.x == item_position.x &&
+                            level->rooms[item_room].monsters[i].position.y == item_position.y) {
+                            position_found = false; 
+                            total_attmpt--;
+                            break;
+                        }
+                    }
+                }
+                    int which = random_number(0,MAX_MONSTER -1);
+                    level->rooms[item_room].monsters[level->rooms[item_room].total_monsters].display = monster_name[which];
+                    level->rooms[item_room].monsters[level->rooms[item_room].total_monsters].position = item_position;
+                    level->rooms[item_room].monsters[level->rooms[item_room].total_monsters].damage = monster_damge[which];
+                    level->rooms[item_room].monsters[level->rooms[item_room].total_monsters].health = monster_health[which];
+                    level->rooms[item_room].monsters[level->rooms[item_room].total_monsters].room = monster_room(item_position,&(level[level_map]));
+                    level->rooms[item_room].total_monsters++;
+                }
+        }
+    }
+    }
+}
+
+
+
 void init_treasure_room(Room *room){
     Point treasure_room_pos = {lines/3 - 5,cols/3 - 5};
     room->start = treasure_room_pos;
@@ -762,13 +812,47 @@ void init_level(Level level[]){
     for(int i = 0; i < MAX_LEVEL - 3; i++){
         random_trap(&level[i],1,3);
     }
+    for(int i = 0; i < MAX_LEVEL - 3; i++){
+        random_monster(&level[i],1,3);
+    }
+
 
 }
 
-void reset_gamemap(Level **level){
-
-    level = NULL;
+int is_walkable(int x, int y) {
+    return (mvinch(x, y) != 'O') && ((mvinch(x, y) & A_CHARTEXT )!= '@') ;
 }
+
+void moveMonster(Point *monster, Point player) {
+    int dx = player.x - monster->x;
+    int dy = player.y - monster->y;
+    if (abs(dx) <= 1 && abs(dy) <= 1) {
+        return;
+    }
+
+    int new_x = monster->x;
+    int new_y = monster->y;
+
+    if (dx > 0 && is_walkable(monster->x + 1, monster->y)) new_x++;
+    else if (dx < 0 && is_walkable(monster->x - 1, monster->y)) new_x--;
+
+    if (dy > 0 && is_walkable(new_x, monster->y + 1)) new_y++;
+    else if (dy < 0 && is_walkable(new_x, monster->y - 1)) new_y--;
+
+    if (is_walkable(new_x, new_y)) {
+        monster->x = new_x;
+        monster->y = new_y;
+    }
+}
+
+
+void handle_monsters_movement(Level*level,Player*player){
+    for(int i = 0; i < level[level_map].rooms[player->room].total_monsters; i++){
+        moveMonster(&(level[level_map].rooms[player->room].monsters[i].position),player->position);
+    }
+
+}
+
 
 
 #endif

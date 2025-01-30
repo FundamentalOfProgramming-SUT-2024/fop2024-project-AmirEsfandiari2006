@@ -135,6 +135,18 @@ void reset_level(Level level[]){
     } 
 }
 
+int monster_room(Point point, const Level* level) {
+    for (int i = 0; i < MAX_ROOM; i++) {
+        if (level->is_there_room[i] == 1) {
+            if (point.x > level->rooms[i].start.x &&
+                point.x <= level->rooms[i].start.x + level->rooms[i].width &&
+                point.y > level->rooms[i].start.y &&
+                point.y <= level->rooms[i].start.y + level->rooms[i].height) { 
+                return i;         
+            }
+        }
+    }
+}
 
 
 

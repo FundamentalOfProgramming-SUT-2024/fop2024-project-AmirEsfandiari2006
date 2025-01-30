@@ -25,7 +25,7 @@ int main() {
                     if(is_game_stop == true && is_game_ended == false){
 
                     } else if(is_there_savegame){
-                        //load_game(player_username);
+                        //load_game(&player,level);
                         have_game_played = true;
                     } else {
                         is_game_playing = false;
@@ -62,6 +62,9 @@ int main() {
                 else{
                     clear();
                 }
+                
+                handle_monsters_movement(level,&player);
+
                 if(is_treasure_room && level->treasure_room.total_places == 0){
                     clear();
                     handle_ending(&player);
@@ -76,7 +79,7 @@ int main() {
     }
 
     if(is_game_ended == false && is_game_stop == true){
-        //save_game(username,Level level, Player player);
+        //save_game(&player,level);
     }
 
     refresh();

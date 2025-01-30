@@ -11,7 +11,6 @@
 #include <wchar.h>
 #include <ncursesw/ncurses.h>
 
-
 #include "constants.h"
 #include "checkerfunc.h"
 #include "file.h"

@@ -37,7 +37,7 @@ void init_player(Player *player,const Level* level){
         player->number_of_each_spell[i] = 0;
         player->number_of_each_weapon[i] = 0;
     }
-
+    player->number_of_each_weapon[MACE_INDEX] = 1;
 }
 
 
@@ -50,7 +50,7 @@ void print_player(const Player* player){
 }
 
 bool valid_tile(int x,int y){
-    char tile = mvinch(x,y);
+    char tile = mvinch(x,y) & A_CHARTEXT;
     switch (tile)
     {
     case '.':
@@ -72,6 +72,12 @@ bool valid_tile(int x,int y){
     case 'O':
     case ' ':
     case '|':
+    case 'I':
+    case 'U':
+    case 'E':
+    case 'N':
+    case 'B':
+    
         return false;
     }
 }

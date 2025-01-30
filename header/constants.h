@@ -71,4 +71,7 @@
 #define MAX_PLAYER 200
 #define MAX_LEN 1000
 
+#define MAX_MONSTER 5
+
+
 #endif
