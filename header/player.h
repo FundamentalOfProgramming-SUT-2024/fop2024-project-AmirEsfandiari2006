@@ -348,6 +348,7 @@ void handle_ending(const Player *player){
     update_score_file(player->gold * (game_diff + 2),player->total_player_moves,player->gold);
     is_game_ended = true;
     delete_savegane(player_username);
+    
     is_game_stop = true;
     getch();
     clear();

@@ -22,7 +22,7 @@ int main() {
 
         if (is_game_playing && is_logged_in) {
             if(player_load_game){
-                    if(is_game_stop == true){
+                    if(is_game_stop == true && is_game_ended == false){
 
                     } else if(is_there_savegame){
                         //load_game(player_username);
@@ -65,6 +65,9 @@ int main() {
                 if(is_treasure_room && level->treasure_room.total_places == 0){
                     clear();
                     handle_ending(&player);
+                    level_map = 0;
+                    reset_level(level);
+                    reset_player(&player);
                     break;
                 }
             }
