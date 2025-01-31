@@ -144,7 +144,7 @@ void attack_monster_away(Monster* monster,Player*player){
                 monster->position.x = -1;
                 monster->position.y = -1;
             } else {
-                mvprintw(1,1,"You hit %s and give it %d damage!",get_monster_name(*monster),player->strength);
+                mvprintw(1,1,"You hit %s and give it %d damage!",get_monster_name(*monster),weapons_damage[player->thrown_weapon]);
             }
     
 }
