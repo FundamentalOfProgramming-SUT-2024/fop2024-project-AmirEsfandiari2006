@@ -25,6 +25,7 @@ typedef struct
     int amout;
     char display;
     Point position;
+    bool is_it_thrown;
     int color;
 
 } Place;
@@ -106,6 +107,8 @@ typedef struct
     int strength;
     int hunger;
     Weapon player_weapon[MAX_ITEM];
+    Weapon current_weapon;
+    int thrown_weapon;
     Spell plaeyr_spell [MAX_ITEM];
     Food player_food[MAX_FOOD];
     int number_of_player_food;
@@ -114,7 +117,7 @@ typedef struct
     int number_of_each_food[MAX_FOOD];
     int number_of_each_spell[MAX_ITEM];
     int number_of_each_weapon[MAX_ITEM];
-    
+
 
 } Player;
 

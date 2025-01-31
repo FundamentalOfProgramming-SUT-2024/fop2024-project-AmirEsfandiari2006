@@ -14,6 +14,7 @@ bool  is_game_stop = true;
 bool  can_get_item = true;
 
 
+
 bool have_game_played = false;
 
 bool  player_new_game = false;
@@ -26,8 +27,10 @@ int player_color = 2;
 int cols;
 int lines;
 
-char weapons[MAX_ITEM] = {'M','D','W','R','S'};
 const int  weapons_number = 5;
+char weapons[MAX_ITEM] = {'M','D','W','R','S'};
+int weapons_damage[MAX_ITEM] = {5,12,15,5,10};
+
 
 char spell[MAX_ITEM] = {'H','Z','C'};
 const int spell_number = 3;
@@ -49,6 +52,6 @@ int damage_spell_bonus = 0;
 int speed_spell_bonus = 0;
 
 
-
+bool throw_dart = false;
 
 #endif

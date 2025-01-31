@@ -7,10 +7,10 @@
 #define MAX_ROOM 8
 #define MAX_CORRIDOR 10
 #define MAX_LEVEL 8
-#define MAX_PLACE 20
-#define MAX_ITEM 50
-#define MAX_NAME 20
-#define MAX_FOOD 20
+#define MAX_PLACE 2000
+#define MAX_ITEM 500
+#define MAX_NAME 200
+#define MAX_FOOD 200
 
 #define true 1
 #define false 0
@@ -35,7 +35,7 @@
 #define Down  3
 
 #define START_HEALTH 25
-#define START_STRENGHTH 6
+#define START_STRENGHTH 4
 #define START_HUNGER 400
 
 

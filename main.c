@@ -63,14 +63,20 @@ int main() {
                 handle_player_spell(&player);
                 heal_full_food(&player);
                 
-                if(handle_command(command,&player) || handle_movement(player.position,level,&player)){
+                if(handle_command(command,&player,level) || handle_movement(player.position,level,&player)){
                     player.total_player_moves++;
                 }
                 else{
                     if(attack_monster(command,&player,level)){
 
                     } else {
-                        clear();
+                        if(!throw_dart){
+                            clear();
+                            
+                        } else {
+                            throw_dart = false;
+                        }
+                        
                     }
                 }
     

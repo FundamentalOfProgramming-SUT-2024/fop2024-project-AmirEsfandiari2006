@@ -450,13 +450,22 @@ void print_message(char message[]){
     mvprintw(1,1,"%s",message);
 }
 
+char* current_weapon(char symbol){
+    switch (symbol)
+    {
+    case ' ': return "Nothing";
+    case 'M': return "Mace";
+    case 'S': return "Sword";    
+    }
+}
 
 void print_status(const Player* player){
-    mvprintw(lines - 1,cols/2 - 38,"                                                                                    ");
-    mvprintw(lines - 1,cols/2 - 38,"Health: %d",player->health);
-    mvprintw(lines - 1,cols/2 - 18,"Gold: %d"  ,player->gold);
-    mvprintw(lines - 1,cols/2 + 2,"Strength: %d",player->strength + damage_spell_bonus);
-    mvprintw(lines - 1,cols/2 + 22,"Hunger: %d",player->hunger);
+    mvprintw(lines - 1,cols/2 - 42,"                                                                                    ");
+    mvprintw(lines - 1,cols/2 - 42,"Health: %d",player->health);
+    mvprintw(lines - 1,cols/2 - 22,"Gold: %d"  ,player->gold);
+    mvprintw(lines - 1,cols/2 - 2,"Strength: %d ",player->strength + damage_spell_bonus);
+    mvprintw(lines - 1,cols/2 + 10,"(%s)",current_weapon(player->current_weapon.symbol));
+    mvprintw(lines - 1,cols/2 + 26,"Hunger: %d",player->hunger);
 }
 
 void printf_level(const Level* level,const Player* player){
@@ -533,6 +542,7 @@ void random_weapon(Level *level,int max_number,int max_chance){
                     level->rooms[item_room].places[level->rooms[item_room].total_places].display = weapon;
                     level->rooms[item_room].places[level->rooms[item_room].total_places].position = item_position;
                     level->rooms[item_room].places[level->rooms[item_room].total_places].color = color;
+                    level->rooms[item_room].places[level->rooms[item_room].total_places].is_it_thrown = false;
                     level->rooms[item_room].total_places++;
                 }
         }

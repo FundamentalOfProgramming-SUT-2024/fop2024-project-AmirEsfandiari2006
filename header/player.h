@@ -39,6 +39,8 @@ void init_player(Player *player,const Level* level){
         player->number_of_each_weapon[i] = 0;
     }
     player->number_of_each_weapon[MACE_INDEX] = 1;
+    player->current_weapon.symbol = ' ';
+    player->thrown_weapon = NORMAL_ARROW_INDEX;
 }
 
 
@@ -132,6 +134,21 @@ bool attack_monster(int command,Player* player,Level* level){
         return false;
 }
 
+void attack_monster_away(Monster* monster,Player*player){
+            clear_message();
+            throw_dart = true;
+            monster->health -= weapons_damage[player->thrown_weapon];
+            if(monster->health <= 0){
+                
+                mvprintw(1,1,"You killed %s. Good luck!",get_monster_name(*monster));
+                monster->position.x = -1;
+                monster->position.y = -1;
+            } else {
+                mvprintw(1,1,"You hit %s and give it %d damage!",get_monster_name(*monster),player->strength);
+            }
+    
+}
+
 
 
 void move_player(int command,Player* player){
@@ -173,6 +190,603 @@ void move_player(int command,Player* player){
         }
         break;
     }
+}
+
+
+void throw_weapon(Level *level,Player *player){
+
+    clear_message();
+    mvprintw(1,1,"Which direction do you want to throw the dart?");
+    int which_way = getch();
+    Point start_point = player->position;
+    switch(player->thrown_weapon){
+        case NORMAL_ARROW_INDEX:
+            if(player->number_of_each_weapon[NORMAL_ARROW_INDEX] > 0){
+                switch(which_way){
+                case KEY_LEFT:
+                while(true){
+                    char tile = mvinch(start_point.x,start_point.y - 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x,start_point.y - 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                    start_point.y--;
+                }
+                break;
+                case KEY_RIGHT:
+                while(true){
+                    char tile = mvinch(start_point.x,start_point.y + 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x,start_point.y + 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                    start_point.y++;
+                }
+                break;     
+                case KEY_UP:
+                while(true){
+                    char tile = mvinch(start_point.x - 1,start_point.y);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x - 1,start_point.y};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                    start_point.x--;
+                }
+                break;
+                case KEY_DOWN:
+                while(true){
+                    char tile = mvinch(start_point.x + 1,start_point.y);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x + 1,start_point.y};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                    start_point.x++;
+                }
+                break;
+                case KEY_HOME:
+                while(true){
+                    char tile = mvinch(start_point.x - 1,start_point.y - 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x - 1,start_point.y - 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                    start_point.x--; start_point.y--;
+                }
+                break;
+                case KEY_PPAGE:
+                while(true){
+                    char tile = mvinch(start_point.x - 1,start_point.y + 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x - 1,start_point.y + 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                     start_point.x--; start_point.y++;
+                }
+                break;
+                case KEY_NPAGE:
+                while(true){
+                    char tile = mvinch(start_point.x + 1,start_point.y + 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x + 1,start_point.y + 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                     start_point.x++; start_point.y++;
+                }
+                break;
+                case KEY_END:
+                while(true){
+                    char tile = mvinch(start_point.x + 1,start_point.y - 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x + 1,start_point.y - 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
+                        break;
+                    }
+                     start_point.x++; start_point.y--;
+                }
+                break;
+            }
+            } 
+            else {
+                clear_message();
+                throw_dart = true;
+                mvprintw(1,1,"You don't have normal arrow to throw!");
+            }
+            break;
+            case DAGGER_INDEX:
+            if(player->number_of_each_weapon[DAGGER_INDEX] > 0){
+                switch(which_way){
+                case KEY_LEFT:
+                while(true){
+                    char tile = mvinch(start_point.x,start_point.y - 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x,start_point.y - 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                    start_point.y--;
+                }
+                break;
+                case KEY_RIGHT:
+                while(true){
+                    char tile = mvinch(start_point.x,start_point.y + 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x,start_point.y + 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                    start_point.y++;
+                }
+                break;     
+                case KEY_UP:
+                while(true){
+                    char tile = mvinch(start_point.x - 1,start_point.y);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x - 1,start_point.y};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                    start_point.x--;
+                }
+                break;
+                case KEY_DOWN:
+                while(true){
+                    char tile = mvinch(start_point.x + 1,start_point.y);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x + 1,start_point.y};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                    start_point.x++;
+                }
+                break;
+                case KEY_HOME:
+                while(true){
+                    char tile = mvinch(start_point.x - 1,start_point.y - 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x - 1,start_point.y - 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                    start_point.x--; start_point.y--;
+                }
+                break;
+                case KEY_PPAGE:
+                while(true){
+                    char tile = mvinch(start_point.x - 1,start_point.y + 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x - 1,start_point.y + 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                     start_point.x--; start_point.y++;
+                }
+                break;
+                case KEY_NPAGE:
+                while(true){
+                    char tile = mvinch(start_point.x + 1,start_point.y + 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x + 1,start_point.y + 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                     start_point.x++; start_point.y++;
+                }
+                break;
+                case KEY_END:
+                while(true){
+                    char tile = mvinch(start_point.x + 1,start_point.y - 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x + 1,start_point.y - 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[DAGGER_INDEX]--;
+                        break;
+                    }
+                     start_point.x++; start_point.y--;
+                }
+                break;
+            }
+            } 
+            else {
+                clear_message();
+                throw_dart = true;
+                mvprintw(1,1,"You don't have dagger to throw!");
+            }
+            break;     
+                    case MAGIC_WAND_INDEX:
+            if(player->number_of_each_weapon[MAGIC_WAND_INDEX] > 0){
+                switch(which_way){
+                case KEY_LEFT:
+                while(true){
+                    char tile = mvinch(start_point.x,start_point.y - 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x,start_point.y - 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                    start_point.y--;
+                }
+                break;
+                case KEY_RIGHT:
+                while(true){
+                    char tile = mvinch(start_point.x,start_point.y + 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x,start_point.y + 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                    start_point.y++;
+                }
+                break;     
+                case KEY_UP:
+                while(true){
+                    char tile = mvinch(start_point.x - 1,start_point.y);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x - 1,start_point.y};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                    start_point.x--;
+                }
+                break;
+                case KEY_DOWN:
+                while(true){
+                    char tile = mvinch(start_point.x + 1,start_point.y);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x + 1,start_point.y};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                    start_point.x++;
+                }
+                break;
+                case KEY_HOME:
+                while(true){
+                    char tile = mvinch(start_point.x - 1,start_point.y - 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x - 1,start_point.y - 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                    start_point.x--; start_point.y--;
+                }
+                break;
+                case KEY_PPAGE:
+                while(true){
+                    char tile = mvinch(start_point.x - 1,start_point.y + 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x - 1,start_point.y + 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                     start_point.x--; start_point.y++;
+                }
+                break;
+                case KEY_NPAGE:
+                while(true){
+                    char tile = mvinch(start_point.x + 1,start_point.y + 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x + 1,start_point.y + 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                     start_point.x++; start_point.y++;
+                }
+                break;
+                case KEY_END:
+                while(true){
+                    char tile = mvinch(start_point.x + 1,start_point.y - 1);
+                    if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
+                        level[level_map].rooms[player->room].total_places += 21;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places++;
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                    if(tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E'){
+                        Point point = {start_point.x + 1,start_point.y - 1};
+                        Monster* monster = get_monster_by_point(point,level,player);
+                        printf("%d",monster->health);
+                        attack_monster_away(monster,player);
+                        player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
+                        break;
+                    }
+                     start_point.x++; start_point.y--;
+                }
+                break;
+            }
+            } 
+            else {
+                clear_message();
+                throw_dart = true;
+                mvprintw(1,1,"You don't have magic wand to throw!");
+            }
+            break; 
+    }
+    
 }
 
 
@@ -293,10 +907,16 @@ bool handle_movement(Point position,Level *level,Player *player){
             clear();
             strcpy(player->player_weapon[player->number_of_player_weapon].name, "Dagger");
             player->player_weapon[player->number_of_player_weapon].symbol = 'D';
-            player->number_of_player_weapon++;
-            mvprintw(1,1,"You collect a Dagger!");
+            if(level[level_map].rooms[player->room].places[item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position)].is_it_thrown == true){
+                  mvprintw(1,1,"You collect a Dagger Arrows!");  
+                  player->number_of_each_weapon[DAGGER_INDEX]++;
+                  player->number_of_player_weapon += 1;
+            } else {
+                mvprintw(1,1,"You collect 3 Daggers!");
+                player->number_of_each_weapon[DAGGER_INDEX] += 3;
+                player->number_of_player_weapon += 3;
+            }
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
-            player->number_of_each_weapon[DAGGER_INDEX]++;
             return true;
         }
     case MAGIC_WAND:
@@ -315,10 +935,16 @@ bool handle_movement(Point position,Level *level,Player *player){
             clear();
             strcpy(player->player_weapon[player->number_of_player_weapon].name, "Normal Arrow");
             player->player_weapon[player->number_of_player_weapon].symbol = 'R';
-            player->number_of_player_weapon++;
-            mvprintw(1,1,"You collect a Normal Arrow!");
+            if(level[level_map].rooms[player->room].places[item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position)].is_it_thrown == true){
+                  mvprintw(1,1,"You collect a Normal Arrows!");  
+                  player->number_of_each_weapon[NORMAL_ARROW_INDEX]++;
+                  player->number_of_player_weapon += 1;
+            } else {
+                mvprintw(1,1,"You collect 5 Normal Arrows!");
+                player->number_of_each_weapon[NORMAL_ARROW_INDEX] += 5;
+                player->number_of_player_weapon+= 5;
+            }
             remove_place(&level[level_map].rooms[player->room],item_of_room_index_in_room(&level[level_map].rooms[player->room],player->position));
-            player->number_of_each_weapon[NORMAL_ARROW_INDEX]++;
             return true;
         }
     case SWORD:
@@ -336,7 +962,7 @@ bool handle_movement(Point position,Level *level,Player *player){
     return false;
 }
 
-bool handle_command(char command,Player*player){
+bool handle_command(char command,Player*player,Level *level){
     switch(command){
         case 'q':
         if(can_get_item == true){
@@ -350,6 +976,8 @@ bool handle_command(char command,Player*player){
         case 'i':
             open_and_handle_inventory(player);
         return true;
+        case 'a':
+            throw_weapon(level,player);
     }
     return false;
 }
@@ -409,6 +1037,44 @@ void use_spell(int spell_index,Player *player){
         } else {
             mvprintw(1,1,"You don't have speed spell to consume!");
         }
+        return;
+    }
+}
+
+void use_weapon(int weapon_index,Player *player){
+    clear_message();
+    switch(weapon_index){
+        case MACE_INDEX:
+        if(player->number_of_each_weapon[MACE_INDEX] > 0){
+            player->current_weapon.symbol = weapons[MACE_INDEX];
+            player->strength = START_STRENGHTH; player->strength += weapons_damage[MACE_INDEX];
+            player->number_of_each_weapon[MACE_INDEX] -= 1;
+            mvprintw(1,1,"Now, you use a Mace!");
+        } else {
+            mvprintw(1,1,"You don't have a Mace to use!");
+        }
+        return;
+        case SWORD_INDEX:
+        if(player->number_of_each_weapon[SWORD_INDEX] > 0){
+            player->current_weapon.symbol = weapons[SWORD_INDEX];
+            player->strength = START_STRENGHTH; player->strength += weapons_damage[SWORD_INDEX];
+            player->number_of_each_weapon[SWORD_INDEX] -= 1;
+            mvprintw(1,1,"Now, you use a Sword!");
+        } else {
+            mvprintw(1,1,"You don't have a Sword to use!");
+        }
+        return;
+        case DAGGER_INDEX:
+            player->thrown_weapon = DAGGER_INDEX;
+            mvprintw(1,1,"Now, you throw dagger!");
+        return;
+        case NORMAL_ARROW_INDEX:
+            player->thrown_weapon = NORMAL_ARROW_INDEX;
+            mvprintw(1,1,"Now, you throw arrow!");
+        return;
+        case MAGIC_WAND_INDEX:
+            player->thrown_weapon = MAGIC_WAND_INDEX;
+            mvprintw(1,1,"Now, you throw magic wand!");
         return;
     }
 }
