@@ -61,6 +61,7 @@ int main() {
                 update_player_room(&player,&(level[level_map]));
 
                 handle_player_spell(&player);
+                heal_full_food(&player);
                 
                 if(handle_command(command,&player) || handle_movement(player.position,level,&player)){
                     player.total_player_moves++;

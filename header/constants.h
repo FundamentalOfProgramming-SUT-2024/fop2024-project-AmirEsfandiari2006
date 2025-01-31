@@ -36,7 +36,7 @@
 
 #define START_HEALTH 25
 #define START_STRENGHTH 6
-#define START_HUNGER 100
+#define START_HUNGER 400
 
 
 #define PLAYER_SYM "@"

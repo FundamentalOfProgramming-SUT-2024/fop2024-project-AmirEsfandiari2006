@@ -461,5 +461,13 @@ void handle_player_spell(Player *player){
     }
 }
 
+void heal_full_food(Player* player){
+    if(player->hunger > START_HUNGER - 20){
+        if(player->health < START_HEALTH){
+            player->health++;
+        }
+    }
+}
+
 
 #endif 
