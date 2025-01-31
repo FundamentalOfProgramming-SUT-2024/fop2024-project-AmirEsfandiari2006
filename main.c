@@ -57,6 +57,7 @@ int main() {
                 clear_message();
 
                 move_player(command, &player);
+                player.hunger--;
                 update_player_room(&player,&(level[level_map]));
                 
                 if(handle_command(command,&player) || handle_movement(player.position,level,&player)){

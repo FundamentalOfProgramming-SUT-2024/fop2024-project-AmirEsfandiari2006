@@ -34,8 +34,10 @@
 #define Left  2
 #define Down  3
 
-#define START_HEALTH 16
-#define START_ARMOR 6
+#define START_HEALTH 25
+#define START_STRENGHTH 6
+#define START_HUNGER 100
+
 
 #define PLAYER_SYM "@"
 

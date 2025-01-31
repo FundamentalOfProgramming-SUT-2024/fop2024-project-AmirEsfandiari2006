@@ -22,7 +22,8 @@ Point random_position(Player *player, const Level* level){
 
 void init_player(Player *player,const Level* level){
     player->gold = 0;
-    player->armor = START_ARMOR;
+    player->hunger = START_HUNGER;
+    player->strength = START_STRENGHTH;
     player->health = START_HEALTH;
     player->room = random_room(level);
     player->position.x = random_position(player,level).x;
@@ -117,14 +118,14 @@ bool attack_monster(int command,Player* player,Level* level){
         char tile = mvinch(position.x,position.y);
         if(tile == 'B' || tile == 'E' || tile == 'N' || tile == 'U' || tile == 'I'){
             Monster* monster = get_monster_by_point(position,level,player);
-            monster->health -= player->armor;
+            monster->health -= player->strength;
             if(monster->health <= 0){
                 
                 mvprintw(1,1,"You killed %s. Good luck!",get_monster_name(*monster));
                 monster->position.x = -1;
                 monster->position.y = -1;
             } else {
-                mvprintw(1,1,"You hit %s and give it %d damage!",get_monster_name(*monster),player->armor);
+                mvprintw(1,1,"You hit %s and give it %d damage!",get_monster_name(*monster),player->strength);
             }
             return true;
         }
@@ -364,7 +365,8 @@ void use_food(int food_index,Player *player){
     switch(food_index){
         case NORMAL_FOOD_INDEX:
             if(player->number_of_each_food[NORMAL_FOOD_INDEX] >= 1){
-                player->health++;
+                player->health += 3;
+                player -> hunger += 30;
                 if(player->health > START_HEALTH){player->health = START_HEALTH;}
                 player->number_of_each_food[NORMAL_FOOD_INDEX]--;
                 mvprintw(1,1,"You Consumed a normal food!");
