@@ -455,7 +455,7 @@ void print_status(const Player* player){
     mvprintw(lines - 1,cols/2 - 38,"                                                                                    ");
     mvprintw(lines - 1,cols/2 - 38,"Health: %d",player->health);
     mvprintw(lines - 1,cols/2 - 18,"Gold: %d"  ,player->gold);
-    mvprintw(lines - 1,cols/2 + 2,"Strength: %d",player->strength);
+    mvprintw(lines - 1,cols/2 + 2,"Strength: %d",player->strength + damage_spell_bonus);
     mvprintw(lines - 1,cols/2 + 22,"Hunger: %d",player->hunger);
 }
 

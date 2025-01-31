@@ -118,7 +118,7 @@ bool attack_monster(int command,Player* player,Level* level){
         char tile = mvinch(position.x,position.y);
         if(tile == 'B' || tile == 'E' || tile == 'N' || tile == 'U' || tile == 'I'){
             Monster* monster = get_monster_by_point(position,level,player);
-            monster->health -= player->strength;
+            monster->health -= player->strength + damage_spell_bonus;
             if(monster->health <= 0){
                 
                 mvprintw(1,1,"You killed %s. Good luck!",get_monster_name(*monster));
@@ -137,39 +137,39 @@ bool attack_monster(int command,Player* player,Level* level){
 void move_player(int command,Player* player){
     switch(command){
         case KEY_LEFT:
-        if(valid_tile(player->position.x,player->position.y - 1))
-            player->position.y--;
+        if(valid_tile(player->position.x,player->position.y - (1 + speed_spell_bonus)))
+            player->position.y -= (1 + speed_spell_bonus);
         break;
         case KEY_RIGHT:
-        if(valid_tile(player->position.x,player->position.y + 1))
-            player->position.y++;
+        if(valid_tile(player->position.x,player->position.y + (1 + speed_spell_bonus)))
+            player->position.y += (1 + speed_spell_bonus);
         break;
         case KEY_UP:
-        if(valid_tile(player->position.x - 1,player->position.y))
-            player->position.x--;
+        if(valid_tile(player->position.x - (1 + speed_spell_bonus),player->position.y))
+            player->position.x -= (1 + speed_spell_bonus);
         break;
         case KEY_DOWN:
-        if(valid_tile(player->position.x + 1,player->position.y))
-            player->position.x++;
+        if(valid_tile(player->position.x + (1 + speed_spell_bonus),player->position.y))
+            player->position.x += (1 + speed_spell_bonus);
         break;
         case KEY_HOME:
-        if(valid_tile(player->position.x - 1,player->position.y - 1)){
-            player->position.x--;player->position.y--;
+        if(valid_tile(player->position.x - (1 + speed_spell_bonus),player->position.y - (1 + speed_spell_bonus))){
+            player->position.x -= (1 + speed_spell_bonus);player->position.y -= (1 + speed_spell_bonus);
         } 
         break;
         case KEY_PPAGE:
-        if(valid_tile(player->position.x - 1,player->position.y + 1)){
-            player->position.x--; player->position.y++;
+        if(valid_tile(player->position.x - (1 + speed_spell_bonus),player->position.y + (1 + speed_spell_bonus))){
+            player->position.x -= (1 + speed_spell_bonus); player->position.y += (1 + speed_spell_bonus);
         }
         break;
         case KEY_NPAGE:
-        if(valid_tile(player->position.x + 1,player->position.y + 1)){
-            player->position.x++; player->position.y++;
+        if(valid_tile(player->position.x + (1 + speed_spell_bonus),player->position.y + (1 + speed_spell_bonus))){
+            player->position.x += (1 + speed_spell_bonus); player->position.y += (1 + speed_spell_bonus);
         }
         break;
         case KEY_END:
-        if(valid_tile(player->position.x + 1,player->position.y - 1)){
-            player->position.x++; player->position.y--;
+        if(valid_tile(player->position.x + (1 + speed_spell_bonus),player->position.y - (1 + speed_spell_bonus))){
+            player->position.x += (1 + speed_spell_bonus); player->position.y -= (1 + speed_spell_bonus);
         }
         break;
     }
@@ -367,6 +367,9 @@ void use_food(int food_index,Player *player){
             if(player->number_of_each_food[NORMAL_FOOD_INDEX] >= 1){
                 player->health += 3;
                 player -> hunger += 30;
+                if(player->hunger > 100){
+                    player-> hunger = 100;
+                }
                 if(player->health > START_HEALTH){player->health = START_HEALTH;}
                 player->number_of_each_food[NORMAL_FOOD_INDEX]--;
                 mvprintw(1,1,"You Consumed a normal food!");
@@ -374,6 +377,39 @@ void use_food(int food_index,Player *player){
                 mvprintw(1,1,"You don't have normal food to consume!");
             }
    
+    }
+}
+
+void use_spell(int spell_index,Player *player){
+    clear_message();
+    switch(spell_index){
+        case DAMAGE_SPELL_INDEX:
+        if(player->number_of_each_spell[DAMAGE_SPELL_INDEX] > 0){
+            damage_spell_life  += 15;
+            player->number_of_each_spell[DAMAGE_SPELL_INDEX]--;
+            mvprintw(1,1,"You consumed a damage spell!");
+        } else {
+            mvprintw(1,1,"You don't have damage spell to consume!");
+        }
+        return;
+        case HEALTH_SPELL_INDEX:
+        if(player->number_of_each_spell[HEALTH_SPELL_INDEX] > 0){
+            health_spell_life  += 15;
+            player->number_of_each_spell[HEALTH_SPELL_INDEX]--;
+            mvprintw(1,1,"You consumed a health spell!");
+        } else {
+            mvprintw(1,1,"You don't have health spell to consume!");
+        }
+        return;
+        case SPEED_SPELL_INDEX:
+        if(player->number_of_each_spell[SPEED_SPELL_INDEX] > 0){
+            speed_spell_life  += 15;
+            player->number_of_each_spell[SPEED_SPELL_INDEX]--;
+            mvprintw(1,1,"You consumed a speed spell!");
+        } else {
+            mvprintw(1,1,"You don't have speed spell to consume!");
+        }
+        return;
     }
 }
 
@@ -406,6 +442,23 @@ void handle_ending(const Player *player){
     getch();
     clear();
     return;
+}
+
+
+void handle_player_spell(Player *player){
+    if(health_spell_life > 0 && player->health < START_HEALTH){
+        player->health += 1;
+    }
+    if(damage_spell_life > 0){
+        damage_spell_bonus = player->strength;
+    } else {
+        damage_spell_bonus = 0;
+    }
+    if(speed_spell_life > 0){
+        speed_spell_bonus = 1;
+    } else {
+        speed_spell_bonus = 0;
+    }
 }
 
 

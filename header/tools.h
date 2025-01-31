@@ -29,7 +29,6 @@ void set_up_colors(){
 
 int random_number(int min, int max) {
     if (min > max) {
-        fprintf(stderr, "Error: min cannot be greater than max.\n");
         exit(EXIT_FAILURE);
     }
     return (random() % (max - min + 1)) + min;
@@ -166,6 +165,18 @@ Monster* get_monster_by_point(Point point,Level* level,Player* player){
            }
     }
     return NULL;
+}
+
+void handle_time(){
+    if(damage_spell_life > 0){
+            damage_spell_life--;
+    }
+    if(health_spell_life > 0){
+            health_spell_life--;
+    }
+    if(speed_spell_life > 0){
+            speed_spell_life--;
+    }
 }
 
 

@@ -10,6 +10,7 @@ void sort_leaderboard(PlayerScore leaderboard[], int count);
 int get_user_data(const char *username, PlayerScore *playerscore);
 void clear_message();
 void set_up_colors();
+void use_spell(int spell_index,Player *player);
 
 void draw_borders(){
     for(int i = 0; i < COLS; i++){
@@ -503,7 +504,7 @@ void open_and_handle_inventory(Player* player){
             if(hover == 0){
                 //use_weapon(command - 1 - '0',player);
             } else if(hover == 1){
-                //use_spell(command - 1 - '0',player);
+                use_spell(command - 1 - '0',player);
             } else if(hover == 2){
                 use_food(command - 1 - '0',player);
             }

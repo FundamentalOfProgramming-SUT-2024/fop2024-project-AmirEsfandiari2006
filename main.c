@@ -59,6 +59,8 @@ int main() {
                 move_player(command, &player);
                 player.hunger--;
                 update_player_room(&player,&(level[level_map]));
+
+                handle_player_spell(&player);
                 
                 if(handle_command(command,&player) || handle_movement(player.position,level,&player)){
                     player.total_player_moves++;
@@ -70,8 +72,10 @@ int main() {
                         clear();
                     }
                 }
-
+    
                 handle_monsters_movement(level,&player);
+
+                handle_time();
 
                 if(is_treasure_room && level->treasure_room.total_places == 0){
                     clear();
