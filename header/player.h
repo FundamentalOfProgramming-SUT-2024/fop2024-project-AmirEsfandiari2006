@@ -201,6 +201,9 @@ void throw_weapon(Level *level,Player *player){
     int dagger_longest_way = 5;
     int magic_wand_longest_way = 10;
     Point start_point = player->position;
+    if(player->room != -1){
+
+    
     switch(player->thrown_weapon){
         case NORMAL_ARROW_INDEX:
             if(player->number_of_each_weapon[NORMAL_ARROW_INDEX] > 0){
@@ -791,6 +794,10 @@ void throw_weapon(Level *level,Player *player){
             }
             break; 
     }
+    } else {
+        clear_message();
+        mvprintw(1,1,"You have to be in a room to throw a dart.");
+    }
     
 }
 
@@ -982,9 +989,8 @@ bool handle_command(char command,Player*player,Level *level){
             open_and_handle_inventory(player);
         return true;
         case 'a':
-            throw_weapon(level,player);
-        case 'n':
-            music_on = !music_on;
+            throw_weapon(level,player);          
+        return true;
     }
     return false;
 }

@@ -277,11 +277,13 @@ void log_in_user(){
 void setting(){
     const char* line1[] = {"Easy","Normal","Hard",};
     const char* line2[] = {"Green","Blue","Cyan"};
-    const char* line3[] = {"Track 1", "Track 2","Track 3"};
+    const char* line3[] = {"On","Off"};
+    const char* line4[] = {"Track 1", "Track 2","Track 3"};
 
     const int number_lien1_item = 3;
     const int number_lien2_item = 3;
-    const int number_lien3_item = 3;
+    const int number_lien3_item = 2;
+    const int number_lien4_item = 3;
     
     initscr();
     noecho();
@@ -292,23 +294,27 @@ void setting(){
     while(true){
         
         draw_borders();
-        mvprintw(LINES/2 - 2,COLS/2 - 30,"Game Difficulty:");
-        mvprintw(LINES/2,COLS/2 - 30,"Player Color: ");
-        mvprintw(LINES/2 + 2,COLS/2 - 30,"Playing Track: ");
-        for(int i = 0; i < number_lien2_item;i++){
-            mvprintw(LINES/2 - 2,COLS/2 -number_lien1_item + 10 * i ,"%s\n",line1[i]);
-        }
+        mvprintw(LINES/2 - 4,COLS/2 - 30,"Game Difficulty:");
+        mvprintw(LINES/2 - 2,COLS/2 - 30,"Player Color: ");
+        mvprintw(LINES/2    ,COLS/2 - 30,"Playing Music: ");
+        mvprintw(LINES/2 + 2,COLS/2 - 30,"Which Track: ");
         for(int i = 0; i < number_lien1_item;i++){
-            mvprintw(LINES/2 ,COLS/2 -number_lien2_item + 10 * i ,"%s\n",line2[i]);
+            mvprintw(LINES/2 - 4,COLS/2 -number_lien1_item + 10 * i ,"%s\n",line1[i]);
+        }
+        for(int i = 0; i < number_lien2_item;i++){
+            mvprintw(LINES/2 - 2,COLS/2 -number_lien2_item + 10 * i ,"%s\n",line2[i]);
         }
         for(int i = 0; i < number_lien3_item;i++){
-            mvprintw(LINES/2 + 2,COLS/2 -number_lien3_item + 10 * i ,"%s\n",line3[i]);
+            mvprintw(LINES/2    ,COLS/2 -number_lien3_item + 10 * i ,"%s\n",line3[i]);
+        }
+        for(int i = 0; i < number_lien4_item;i++){
+            mvprintw(LINES/2 + 2,COLS/2 -number_lien4_item + 10 * i ,"%s\n",line4[i]);
         }
         if(which_line == 1){
         for(int i = 0; i < number_lien1_item; i++){
             if(i == hover)
                 attron(A_REVERSE);
-            mvprintw(LINES/2 - 2,COLS/2 -number_lien1_item + 10 * i ,"%s\n",line1[i]);
+            mvprintw(LINES/2 - 4,COLS/2 -number_lien1_item + 10 * i ,"%s\n",line1[i]);
             if(i == hover)
                 attroff(A_REVERSE);
             }
@@ -330,7 +336,7 @@ void setting(){
             for(int i = 0; i < number_lien2_item; i++){
                 if(i == hover)
                     attron(A_REVERSE);
-                mvprintw(LINES/2 ,COLS/2 -number_lien2_item + 10 * i ,"%s\n",line2[i]);
+                mvprintw(LINES/2 - 2 ,COLS/2 -number_lien2_item + 10 * i ,"%s\n",line2[i]);
                 if(i == hover)
                     attroff(A_REVERSE);
             }
@@ -350,6 +356,7 @@ void setting(){
                 which_line = 3;
             } else if(command == ESCAPE){
                 which_line = 1;
+                hover = 0;
 
             }
         }
@@ -357,7 +364,7 @@ void setting(){
             for(int i = 0; i < number_lien3_item; i++){
                 if(i == hover)
                     attron(A_REVERSE);
-                mvprintw(LINES/2 +2,COLS/2 -number_lien3_item + 10 * i ,"%s\n",line3[i]);
+                mvprintw(LINES/2 ,COLS/2 -number_lien3_item + 10 * i ,"%s\n",line3[i]);
                 if(i == hover)
                     attroff(A_REVERSE);
             }
@@ -369,6 +376,36 @@ void setting(){
             else if (command == ENTER){
                 switch (hover)
                 {
+                case 0: music_on = 1; break;
+                case 1: music_on = 0; break;
+                }
+                if(music_on){
+                    which_line = 4;
+                } else {
+                    clear();
+                    break;
+                }
+            } else if(command == ESCAPE){
+                which_line = 2;
+                hover = 0;
+            }
+        }   
+        if(which_line == 4){
+            for(int i = 0; i < number_lien4_item; i++){
+                if(i == hover)
+                    attron(A_REVERSE);
+                mvprintw(LINES/2 + 2 ,COLS/2 -number_lien4_item + 10 * i ,"%s\n",line4[i]);
+                if(i == hover)
+                    attroff(A_REVERSE);
+            }
+            int command = getch();
+            if (command == KEY_LEFT)
+                hover = (hover == 0) ? number_lien4_item - 1: hover - 1;
+            else if (command == KEY_RIGHT)
+                hover = (hover == number_lien4_item - 1) ? 0 : hover + 1;
+            else if (command == ENTER){
+                switch (hover)
+                {
                 case 0: selected_music = 0; break;
                 case 1: selected_music = 1; break;
                 case 2: selected_music = 2; break;
@@ -376,13 +413,13 @@ void setting(){
                 clear();
                 break;
             } else if(command == ESCAPE){
-                which_line = 2;
+                which_line = 3;
 
             }   
 
-        clear();
-        }
         
+        }
+        clear();
     }
     
     refresh();

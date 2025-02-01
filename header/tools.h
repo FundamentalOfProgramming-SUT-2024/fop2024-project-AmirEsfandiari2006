@@ -180,6 +180,7 @@ void handle_time(){
 }
 
 void *play_music(void *arg) {
+    if(music_on){
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
         printf("Error initializing SDL_mixer: %s\n", Mix_GetError());
         return NULL;
@@ -201,9 +202,11 @@ void *play_music(void *arg) {
     Mix_FreeMusic(music);
     Mix_CloseAudio();
     return NULL;
+    }
 }
 
 void *play_music_mainmenu(void *arg) {
+    if(music_on){
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
         printf("Error initializing SDL_mixer: %s\n", Mix_GetError());
         return NULL;
@@ -225,6 +228,8 @@ void *play_music_mainmenu(void *arg) {
     Mix_FreeMusic(music);
     Mix_CloseAudio();
     return NULL;
+    }
+
 }
 
 

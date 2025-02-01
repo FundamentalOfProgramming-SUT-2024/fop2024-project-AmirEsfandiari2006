@@ -55,7 +55,7 @@ int health_spell_bonus= 1;
 int damage_spell_bonus = 0;
 int speed_spell_bonus = 0;
 
-bool music_on = 0;  
+bool music_on = 1;  
 char *music_paths[] = {"musics/first.mp3","musics/second.mp3","musics/third.mp3"}; 
 char main_menu_music[] = "musics/mainmenu.mp3"; 
 int selected_music = 1;
