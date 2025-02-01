@@ -277,9 +277,11 @@ void log_in_user(){
 void setting(){
     const char* line1[] = {"Easy","Normal","Hard",};
     const char* line2[] = {"Green","Blue","Cyan"};
+    const char* line3[] = {"Track 1", "Track 2","Track 3"};
 
     const int number_lien1_item = 3;
     const int number_lien2_item = 3;
+    const int number_lien3_item = 3;
     
     initscr();
     noecho();
@@ -290,19 +292,23 @@ void setting(){
     while(true){
         
         draw_borders();
-        mvprintw(LINES/2,COLS/2 - 30,"Game Difficulty:");
-        mvprintw(LINES/2 +2,COLS/2 - 30,"Player Color: ");
+        mvprintw(LINES/2 - 2,COLS/2 - 30,"Game Difficulty:");
+        mvprintw(LINES/2,COLS/2 - 30,"Player Color: ");
+        mvprintw(LINES/2 + 2,COLS/2 - 30,"Playing Track: ");
         for(int i = 0; i < number_lien2_item;i++){
-            mvprintw(LINES/2,COLS/2 -number_lien1_item + 10 * i ,"%s\n",line1[i]);
+            mvprintw(LINES/2 - 2,COLS/2 -number_lien1_item + 10 * i ,"%s\n",line1[i]);
         }
         for(int i = 0; i < number_lien1_item;i++){
-            mvprintw(LINES/2 +2,COLS/2 -number_lien2_item + 10 * i ,"%s\n",line2[i]);
+            mvprintw(LINES/2 ,COLS/2 -number_lien2_item + 10 * i ,"%s\n",line2[i]);
+        }
+        for(int i = 0; i < number_lien3_item;i++){
+            mvprintw(LINES/2 + 2,COLS/2 -number_lien3_item + 10 * i ,"%s\n",line3[i]);
         }
         if(which_line == 1){
         for(int i = 0; i < number_lien1_item; i++){
             if(i == hover)
                 attron(A_REVERSE);
-            mvprintw(LINES/2,COLS/2 -number_lien1_item + 10 * i ,"%s\n",line1[i]);
+            mvprintw(LINES/2 - 2,COLS/2 -number_lien1_item + 10 * i ,"%s\n",line1[i]);
             if(i == hover)
                 attroff(A_REVERSE);
             }
@@ -324,7 +330,7 @@ void setting(){
             for(int i = 0; i < number_lien2_item; i++){
                 if(i == hover)
                     attron(A_REVERSE);
-                mvprintw(LINES/2 +2,COLS/2 -number_lien2_item + 10 * i ,"%s\n",line2[i]);
+                mvprintw(LINES/2 ,COLS/2 -number_lien2_item + 10 * i ,"%s\n",line2[i]);
                 if(i == hover)
                     attroff(A_REVERSE);
             }
@@ -340,15 +346,43 @@ void setting(){
                 case 1: player_color = COLOR_BLUE; break;
                 case 2: player_color = COLOR_CYAN; break;
                 }
-                clear();
-                break;
+                hover = 0;
+                which_line = 3;
             } else if(command == ESCAPE){
                 which_line = 1;
 
-            }    
+            }
+        }
+        if(which_line == 3){
+            for(int i = 0; i < number_lien3_item; i++){
+                if(i == hover)
+                    attron(A_REVERSE);
+                mvprintw(LINES/2 +2,COLS/2 -number_lien3_item + 10 * i ,"%s\n",line3[i]);
+                if(i == hover)
+                    attroff(A_REVERSE);
+            }
+            int command = getch();
+            if (command == KEY_LEFT)
+                hover = (hover == 0) ? number_lien3_item - 1: hover - 1;
+            else if (command == KEY_RIGHT)
+                hover = (hover == number_lien3_item - 1) ? 0 : hover + 1;
+            else if (command == ENTER){
+                switch (hover)
+                {
+                case 0: selected_music = 0; break;
+                case 1: selected_music = 1; break;
+                case 2: selected_music = 2; break;
+                }
+                clear();
+                break;
+            } else if(command == ESCAPE){
+                which_line = 2;
+
+            }   
 
         clear();
         }
+        
     }
     
     refresh();
@@ -433,14 +467,13 @@ void show_leaderboard(){
 
 
 
-//incomplete function.
 void open_items_menu(int menu_number){
     switch(menu_number){
         case LOGIN         : log_in_user() ;      return;
         case SIGNUP        : sign_up_user();      return;
         case LEADERBOSRD   : show_leaderboard();  return;
         case SETTING       : setting();           return;
-        case EXIT          :                      return;
+        case EXIT          : is_exit = true;      return;
     }
 }
 

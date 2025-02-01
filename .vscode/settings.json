@@ -4,6 +4,8 @@
         "global.h": "c",
         "include.h": "c",
         "locale.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "sdl_mixer.h": "c",
+        "constants.h": "c"
     }
 }

@@ -11,6 +11,7 @@ bool  is_game_ended = false;
 bool  is_there_savegame = false;
 bool  is_treasure_room = false;
 bool  is_game_stop = true;
+bool  is_exit = false;
 bool  can_get_item = true;
 
 
@@ -53,6 +54,15 @@ int speed_spell_life = 0;
 int health_spell_bonus= 1;
 int damage_spell_bonus = 0;
 int speed_spell_bonus = 0;
+
+bool music_on = 0;  
+char *music_paths[] = {"musics/first.mp3","musics/second.mp3","musics/third.mp3"}; 
+char main_menu_music[] = "musics/mainmenu.mp3"; 
+int selected_music = 1;
+
+pthread_t music_thread;
+pthread_t music_thread2;
+
 
 
 bool throw_dart = false;

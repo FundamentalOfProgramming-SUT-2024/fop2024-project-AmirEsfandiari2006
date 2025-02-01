@@ -983,6 +983,8 @@ bool handle_command(char command,Player*player,Level *level){
         return true;
         case 'a':
             throw_weapon(level,player);
+        case 'n':
+            music_on = !music_on;
     }
     return false;
 }

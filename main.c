@@ -7,20 +7,25 @@ int main() {
     srand(time(0));
     set_up_display();
     
+    
+
     Level level[MAX_LEVEL];
     Player player;
   
     int command = 0;   
-    while (command != EXIT) {
+    while (true) {
         if(!is_game_playing) {
-
+            pthread_create(&music_thread2, NULL, play_music_mainmenu, NULL);
             while (command != EXIT && !is_game_playing) {
                 command = get_command_main_menu();
                 open_items_menu(command);
+
             }
+            pthread_join(music_thread2, NULL);
         }
 
         if (is_game_playing && is_logged_in) {
+            pthread_create(&music_thread, NULL, play_music, NULL);
             if(player_load_game){
                     if(is_game_stop == true && is_game_ended == false){
 
@@ -109,6 +114,7 @@ int main() {
                 }
             }
             is_game_playing = false;
+            pthread_join(music_thread, NULL);
         }
     }
 

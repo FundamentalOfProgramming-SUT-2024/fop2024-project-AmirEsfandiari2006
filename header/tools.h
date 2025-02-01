@@ -179,6 +179,57 @@ void handle_time(){
     }
 }
 
+void *play_music(void *arg) {
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        printf("Error initializing SDL_mixer: %s\n", Mix_GetError());
+        return NULL;
+    }
+    
+    Mix_Music *music = Mix_LoadMUS(music_paths[selected_music]); 
+    if (!music) {
+        printf("Error loading music: %s\n", Mix_GetError());
+        return NULL;
+    }
+
+    while (is_game_playing && is_exit != true) { 
+        if (!Mix_PlayingMusic()) {
+            Mix_PlayMusic(music, -1); 
+        }
+        SDL_Delay(500);
+    }
+
+    Mix_FreeMusic(music);
+    Mix_CloseAudio();
+    return NULL;
+}
+
+void *play_music_mainmenu(void *arg) {
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        printf("Error initializing SDL_mixer: %s\n", Mix_GetError());
+        return NULL;
+    }
+
+    Mix_Music *music = Mix_LoadMUS(main_menu_music); 
+    if (!music) {
+        printf("Error loading music: %s\n", Mix_GetError());
+        return NULL;
+    }
+
+    while (!is_game_playing && is_exit != true) { 
+        if (!Mix_PlayingMusic()) {
+            Mix_PlayMusic(music, -1); 
+        }
+        SDL_Delay(500);
+    }
+
+    Mix_FreeMusic(music);
+    Mix_CloseAudio();
+    return NULL;
+}
+
+
+
+
 
 #endif
 

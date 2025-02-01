@@ -10,6 +10,10 @@
 #include <locale.h>
 #include <wchar.h>
 #include <ncursesw/ncurses.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
+#include <pthread.h>
+
 
 #include "constants.h"
 #include "checkerfunc.h"
@@ -20,5 +24,7 @@
 #include "gamemap.h"
 #include "tools.h"
 #include "player.h"
+
+
 
 #endif
