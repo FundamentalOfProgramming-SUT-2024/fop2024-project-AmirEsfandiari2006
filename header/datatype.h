@@ -61,6 +61,8 @@ typedef struct
     int total_places;
     int total_monsters;
     int total_trap;
+
+    bool is_seen;
 } Room;
 
 typedef struct 

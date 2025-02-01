@@ -1,14 +1,12 @@
 #include "header/include.h"
 
-int main() {
+int main(){
     
     setlocale(LC_ALL, "");
 
     srand(time(0));
     set_up_display();
     
-    
-
     Level level[MAX_LEVEL];
     Player player;
   
@@ -40,6 +38,7 @@ int main() {
                 
                 reset_level(level);
                 reset_player(&player);
+                reset_seen();
             
                 init_level(level);
                 init_player(&player, &level[level_map]);
@@ -61,7 +60,7 @@ int main() {
                 }
                 clear_message();
 
-                move_player(command, &player);
+                move_player(command, &player,level);
                 if(player.hunger > 0){
                     player.hunger--;
                 } else {
@@ -112,9 +111,11 @@ int main() {
                     reset_player(&player);
                     break;
                 }
+                
             }
             is_game_playing = false;
             pthread_join(music_thread, NULL);
+            
         }
     }
 

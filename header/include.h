@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <locale.h>
+#include <math.h>
 #include <wchar.h>
 #include <ncursesw/ncurses.h>
 #include <SDL2/SDL.h>

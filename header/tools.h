@@ -8,6 +8,15 @@ void set_up_display(){
     initscr();
     cols = COLS;
     lines = LINES;
+
+    for(int x = 0; x < MAX_HEIGHT; x++){
+        for(int y = 0; y < MAX_WIDTH; y++){
+            for(int z = 0; z < MAX_LEVEL; z++){
+                is_tile_seen[z][x][y] = false;
+            }
+        }
+    }
+
     endwin();
     refresh;
 }
@@ -232,8 +241,25 @@ void *play_music_mainmenu(void *arg) {
 
 }
 
+void reset_seen(){
+    for(int x = 0; x < MAX_HEIGHT; x++){
+        for(int y = 0; y < MAX_WIDTH; y++){
+            for(int z = 0; z < MAX_LEVEL; z++){
+                is_tile_seen[z][x][y] = false;
+            }
+        }
+    }
+}
 
+void clear_except_top_three() {
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);  // Get terminal size
 
+    WINDOW* clear_win = newwin(max_y - 3, max_x, 3, 0);  // New window below line 3
+    wclear(clear_win);   // Clear the window
+    wrefresh(clear_win); // Refresh only the affected area
+    delwin(clear_win);   // Delete the temporary window
+}
 
 
 #endif

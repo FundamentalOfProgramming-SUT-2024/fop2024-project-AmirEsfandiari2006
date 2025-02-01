@@ -149,48 +149,89 @@ void attack_monster_away(Monster* monster,Player*player){
     
 }
 
+void handle_seen(int x, int y, Player* player, Level* level) {
+
+        
+    for (int i = -5; i <= 5; i++) {
+        for (int j = -5; j <= 5; j++){
+            is_tile_seen[level_map][x + i][y +j] = true;
+        }
+    }
+    for(int i = 0; i < MAX_ROOM;i++){
+       for(int j = 0; j < MAX_DOOR;j++){
+            if(level[level_map].rooms[i].is_door[j] == 1){
+                if(abs(level[level_map].rooms[i].doors[j].x - player->position.x) <= 1 && abs(level[level_map].rooms[i].doors[j].y - player->position.y) <= 1){
+                        level[level_map].rooms[i].is_seen = true;
+                }
+            }   
+            
+        } 
+    }
+    
+     if(player->room != -1){
+        level[level_map].rooms[player->room].is_seen = true;
+    }
+}
 
 
-void move_player(int command,Player* player){
+
+
+void move_player(int command,Player* player,Level*level){
     switch(command){
         case KEY_LEFT:
-        if(valid_tile(player->position.x,player->position.y - (1 + speed_spell_bonus)))
+        if(valid_tile(player->position.x,player->position.y - (1 + speed_spell_bonus))){
+            handle_seen(player->position.x,player->position.y - (1 + speed_spell_bonus),player,level);
             player->position.y -= (1 + speed_spell_bonus);
+        }    
         break;
         case KEY_RIGHT:
-        if(valid_tile(player->position.x,player->position.y + (1 + speed_spell_bonus)))
+        if(valid_tile(player->position.x,player->position.y + (1 + speed_spell_bonus))){
+            handle_seen(player->position.x,player->position.y + (1 + speed_spell_bonus),player,level);
             player->position.y += (1 + speed_spell_bonus);
+        }
+            
+            
         break;
         case KEY_UP:
-        if(valid_tile(player->position.x - (1 + speed_spell_bonus),player->position.y))
-            player->position.x -= (1 + speed_spell_bonus);
+        if(valid_tile(player->position.x - (1 + speed_spell_bonus),player->position.y)){
+            handle_seen(player->position.x -  (1 + speed_spell_bonus),player->position.y ,player,level);
+            player->position.x -= (1 + speed_spell_bonus); 
+        } 
         break;
         case KEY_DOWN:
-        if(valid_tile(player->position.x + (1 + speed_spell_bonus),player->position.y))
-            player->position.x += (1 + speed_spell_bonus);
+        if(valid_tile(player->position.x + (1 + speed_spell_bonus),player->position.y)){
+            handle_seen(player->position.x +  (1 + speed_spell_bonus),player->position.y ,player,level);
+            player->position.x += (1 + speed_spell_bonus); 
+        }
         break;
         case KEY_HOME:
         if(valid_tile(player->position.x - (1 + speed_spell_bonus),player->position.y - (1 + speed_spell_bonus))){
             player->position.x -= (1 + speed_spell_bonus);player->position.y -= (1 + speed_spell_bonus);
+            handle_seen(player->position.x -  (1 + speed_spell_bonus),player->position.y -  (1 + speed_spell_bonus),player,level);
         } 
         break;
         case KEY_PPAGE:
         if(valid_tile(player->position.x - (1 + speed_spell_bonus),player->position.y + (1 + speed_spell_bonus))){
             player->position.x -= (1 + speed_spell_bonus); player->position.y += (1 + speed_spell_bonus);
+            handle_seen(player->position.x -  (1 + speed_spell_bonus),player->position.y +  (1 + speed_spell_bonus),player,level);
         }
         break;
         case KEY_NPAGE:
         if(valid_tile(player->position.x + (1 + speed_spell_bonus),player->position.y + (1 + speed_spell_bonus))){
             player->position.x += (1 + speed_spell_bonus); player->position.y += (1 + speed_spell_bonus);
+            handle_seen(player->position.x +  (1 + speed_spell_bonus),player->position.y +  (1 + speed_spell_bonus),player,level);
         }
         break;
         case KEY_END:
         if(valid_tile(player->position.x + (1 + speed_spell_bonus),player->position.y - (1 + speed_spell_bonus))){
             player->position.x += (1 + speed_spell_bonus); player->position.y -= (1 + speed_spell_bonus);
+            handle_seen(player->position.x +  (1 + speed_spell_bonus),player->position.y -  (1 + speed_spell_bonus),player,level);
         }
         break;
     }
 }
+
+
 
 
 void throw_weapon(Level *level,Player *player){
@@ -825,12 +866,18 @@ bool handle_movement(Point position,Level *level,Player *player){
     case '>':
         level_map++;
         player->position = find_point_by_char(level[level_map],'<');
+        update_player_room(player,&(level[level_map]));
         clear();
+        printf_level(&level[level_map],player);
+        refresh();
         return true;
     case '<':
         level_map--;
         player->position = find_point_by_char(level[level_map],'>');
+        update_player_room(player,&(level[level_map]));
         clear();
+        printf_level(&level[level_map],player);
+        refresh();
         return true;
     case 'G':
         if(can_get_item){
@@ -990,6 +1037,12 @@ bool handle_command(char command,Player*player,Level *level){
         return true;
         case 'a':
             throw_weapon(level,player);          
+        return true;
+        case 'm':
+            is_hidden = !is_hidden;
+            clear();
+            printf_level(&level[level_map],player); 
+            refresh();
         return true;
     }
     return false;

@@ -19,6 +19,7 @@ Room init_room(Point start,int width,int height,int num_of_door){
     room.height = height;
     room.total_places = 0;
     room.total_trap = 0;
+    room.is_seen = false;
     return room;
 }
 
@@ -338,64 +339,52 @@ void generate_random_room(Level* level){
 }
 
 
-Point find_empty_for_door(Point point){
-    if(mvinch(point.x + 1,point.y) == ' '){
+Point find_empty_for_door(Point point,int dir){
+    
+    if(dir == Down){
         point.x ++; return point;
     }
-    if(mvinch(point.x - 1,point.y) == ' '){
+    if(dir == Up){
         point.x --; return point;
     }
-    if(mvinch(point.x,point.y + 1) == ' '){
+    if(dir == Right){
         point.y++; return point;
     }
-    if(mvinch(point.x,point.y - 1) == ' '){
+    if(dir == Left){
         point.y--; return point;
     }
 }   
 
 
 
+void draw_line(int x1, int y1, int x2, int y2) {
+    int dx = abs(x2 - x1);
+    int dy = abs(y2 - y1);
+    int sx = (x1 < x2) ? 1 : -1;
+    int sy = (y1 < y2) ? 1 : -1;
+    int err = dx - dy;
+
+    while (true) {
+        if (!is_hidden || is_tile_seen[level_map][x1][y1] == true) {
+            mvprintw(x1, y1, "#");  
+        }
+
+        if (x1 == x2 && y1 == y2) break;
+        int e2 = err * 2;
+        if (e2 > -dy) { err -= dy; x1 += sx; }
+        if (e2 < dx) { err += dx; y1 += sy; }
+    }
+}
+
 void generate_road(Point start, Point end) {
     Point mid;
-
-
     mid.x = end.x;
     mid.y = start.y;
 
-    int dx = abs(mid.x - start.x);
-    int dy = abs(mid.y - start.y);
-    int sx = (start.x < mid.x) ? 1 : -1;
-    int sy = (start.y < mid.y) ? 1 : -1;
-
-    int x = start.x, y = start.y;
-    while (true) {
-        mvprintw(x, y, "#");
-        if (x == mid.x && y == mid.y) break;
-
-        if (dx >= dy) {
-            x += sx;
-        } else {
-            y += sy;
-        }
-    }
-
-    dx = abs(end.x - mid.x);
-    dy = abs(end.y - mid.y);
-    sx = (mid.x < end.x) ? 1 : -1;
-    sy = (mid.y < end.y) ? 1 : -1;
-
-    x = mid.x, y = mid.y;
-    while (true) {
-        mvprintw(x, y, "#"); 
-        if (x == end.x && y == end.y) break;
-
-        if (dx >= dy) {
-            x += sx;
-        } else {
-            y += sy;
-        }
-    }
+    draw_line(start.x, start.y, mid.x, mid.y);
+    draw_line(mid.x, mid.y, end.x, end.y);     
 }
+
 
 
 void generate_corridor(Point start, Point end) {
@@ -413,19 +402,29 @@ void generate_corridor(Point start, Point end) {
 void set_up_corridors(Level level){
     for(int i = 0; i < 3; i++){
         if(level.rooms[i].is_door[Right] == 1 && level.rooms[i + 1].is_door[Left] == 1){
-            generate_corridor(find_empty_for_door(level.rooms[i].doors[Right]),find_empty_for_door(level.rooms[i + 1].doors[Left]));
-            level.is_there_corridor[i] = 1;
+            if(!is_hidden || level.rooms[i].is_seen == true || level.rooms[i + 1].is_seen == true){
+                generate_corridor(find_empty_for_door(level.rooms[i].doors[Right],Right),find_empty_for_door(level.rooms[i + 1].doors[Left],Left));
+                level.is_there_corridor[i] = 1;
+            }
+            
         }
     }
     for(int i = 4; i < 7; i++){
         if(level.rooms[i].is_door[Right] == 1 && level.rooms[i + 1].is_door[Left] == 1){
-            generate_corridor(find_empty_for_door(level.rooms[i].doors[Right]),find_empty_for_door(level.rooms[i + 1].doors[Left]));
-            level.is_there_corridor[i] = 1;
+            if(!is_hidden || level.rooms[i].is_seen == true || level.rooms[i + 1].is_seen == true){
+                generate_corridor(find_empty_for_door(level.rooms[i].doors[Right],Right),find_empty_for_door(level.rooms[i + 1].doors[Left],Left));
+                level.is_there_corridor[i] = 1;
+            }
+            
         }
     }
     for(int i = 0; i < 4; i++){
         if(level.rooms[i].is_door[Down] == 1 && level.rooms[i + 4].is_door[Up] == 1){
-            generate_corridor(find_empty_for_door(level.rooms[i].doors[Down]),find_empty_for_door(level.rooms[i + 4].doors[Up]));
+            if(!is_hidden || level.rooms[i].is_seen == true || level.rooms[i + 4].is_seen == true){
+                generate_corridor(find_empty_for_door(level.rooms[i].doors[Down],Down),find_empty_for_door(level.rooms[i + 4].doors[Up],Up));
+                level.is_there_corridor[i] = 1;
+            }
+
             level.is_there_corridor[i + 7] = 1;
         }
     }
@@ -473,11 +472,30 @@ void printf_level(const Level* level,const Player* player){
     noecho();
     curs_set(0);
     keypad(stdscr, true); 
-    for(int i = 0 ;i < MAX_ROOM; i++){
+    if(is_hidden == false){
+        for(int i = 0 ;i < MAX_ROOM; i++){
         if(level->is_there_room[i] == 1){
-                print_room(level->rooms[i]);
+                    print_room(level->rooms[i]);
+            }
         }
+    } else {
+        for(int i = 0 ;i < MAX_ROOM; i++){
+            if(level->is_there_room[i] == 1 && level->rooms[i].is_seen == true){
+                    print_room(level->rooms[i]);
+            }
+            for(int j = 0; j < MAX_DOOR; j++){
+                for(int z1 = -1; z1 <= 1; z1++){
+                    for(int z2 = -1; z2 <= 1; z2++){
+                        if((level->rooms[i].is_door[j] == true) && (player->position.x + z1 == level->rooms[i].doors[j].x)  && (player->position.y  + z2 == level->rooms[i].doors[j].y))
+                            mvprintw(level->rooms[i].doors[j].x,level->rooms[i].doors[j].y,"+");
+                    }
+                }
+            }   
+        }
+        print_room(level->rooms[player->room]);
     }
+    
+
     set_up_corridors(*level);
 
     char game_difficulty[MAX_LENGTH];

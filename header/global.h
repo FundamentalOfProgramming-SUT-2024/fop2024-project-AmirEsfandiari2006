@@ -66,5 +66,9 @@ pthread_t music_thread2;
 
 
 bool throw_dart = false;
+bool is_hidden = true;
+
+bool is_tile_seen[MAX_LEVEL][MAX_HEIGHT][MAX_WIDTH];
+
 
 #endif

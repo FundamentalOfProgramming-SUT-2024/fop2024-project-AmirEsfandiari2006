@@ -80,4 +80,9 @@
 #define ROTTEN_CYCLE 300
 
 
+#define MAX_WIDTH 1024
+#define MAX_HEIGHT 768
+
+
+
 #endif
