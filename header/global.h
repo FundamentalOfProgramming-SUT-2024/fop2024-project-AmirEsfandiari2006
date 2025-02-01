@@ -43,6 +43,9 @@ const char monster_damge[MAX_MONSTER] = {1,2,3,4,5};
 const char monster_health[MAX_MONSTER] = {5,10,15,20,30};
 
 
+int rotten_food_cycle = ROTTEN_CYCLE;
+
+
 int damage_spell_life = 0;
 int health_spell_life = 0;
 int speed_spell_life = 0;

@@ -67,6 +67,7 @@
 #define NORMAL_FOOD_INDEX 0
 #define PURE_FOOD_INDEX 1
 #define MAGIC_FOOD_INDEX 2
+#define ROTTEN_FOOD_INDEX 3
 
 #define MAX_TRAP 2
 
@@ -74,6 +75,9 @@
 #define MAX_LEN 1000
 
 #define MAX_MONSTER 5
+
+
+#define ROTTEN_CYCLE 300
 
 
 #endif

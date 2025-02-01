@@ -68,6 +68,7 @@ int main() {
 
                 handle_player_spell(&player);
                 heal_full_food(&player);
+                handle_rotten_food(&player);
                 
                 if(handle_command(command,&player,level) || handle_movement(player.position,level,&player)){
                     player.total_player_moves++;
