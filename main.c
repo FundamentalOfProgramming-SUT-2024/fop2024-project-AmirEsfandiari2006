@@ -57,7 +57,13 @@ int main() {
                 clear_message();
 
                 move_player(command, &player);
-                player.hunger--;
+                if(player.hunger > 0){
+                    player.hunger--;
+                } else {
+                    player.hunger = 0;
+                    player.health--;
+                }
+                
                 update_player_room(&player,&(level[level_map]));
 
                 handle_player_spell(&player);
@@ -81,6 +87,14 @@ int main() {
                 }
     
                 handle_monsters_movement(level,&player);
+
+                if(handle_player_death(&player)){
+                    reset_level(level);
+                    reset_player(&player);
+                    level_map = 0;
+                    clear();
+                    break;
+                }
 
                 handle_time();
 

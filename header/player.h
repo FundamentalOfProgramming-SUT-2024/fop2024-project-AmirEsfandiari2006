@@ -994,9 +994,9 @@ void use_food(int food_index,Player *player){
         case NORMAL_FOOD_INDEX:
             if(player->number_of_each_food[NORMAL_FOOD_INDEX] >= 1){
                 player->health += 3;
-                player -> hunger += 30;
-                if(player->hunger > 100){
-                    player-> hunger = 100;
+                player -> hunger += 80;
+                if(player->hunger > START_HUNGER){
+                    player-> hunger = START_HUNGER;
                 }
                 if(player->health > START_HEALTH){player->health = START_HEALTH;}
                 player->number_of_each_food[NORMAL_FOOD_INDEX]--;
@@ -1004,6 +1004,35 @@ void use_food(int food_index,Player *player){
             } else {
                 mvprintw(1,1,"You don't have normal food to consume!");
             }
+        case PURE_FOOD_INDEX:
+            if(player->number_of_each_food[PURE_FOOD_INDEX] >= 1){
+                player->health += 15;
+                player -> hunger += 150;
+                damage_spell_life += 15;
+                if(player->hunger > START_HUNGER){
+                    player-> hunger = START_HUNGER;
+                }
+                if(player->health > START_HEALTH){player->health = START_HEALTH;}
+                player->number_of_each_food[PURE_FOOD_INDEX]--;
+                mvprintw(1,1,"You Consumed a pure food!");
+            } else {
+                mvprintw(1,1,"You don't have pure food to consume!");
+            }
+        case MAGIC_FOOD_INDEX:
+            if(player->number_of_each_food[MAGIC_FOOD_INDEX] >= 1){
+                player->health += 15;
+                player -> hunger += 150;
+                speed_spell_life += 15;
+                if(player->hunger > START_HUNGER){
+                    player-> hunger = START_HUNGER;
+                }
+                if(player->health > START_HEALTH){player->health = MAGIC_FOOD_INDEX;}
+                player->number_of_each_food[MAGIC_FOOD_INDEX]--;
+                mvprintw(1,1,"You Consumed a magic food!");
+            } else {
+                mvprintw(1,1,"You don't have magic food to consume!");
+            }
+   
    
     }
 }
@@ -1109,6 +1138,42 @@ void handle_ending(const Player *player){
     clear();
     return;
 }
+
+bool handle_player_death(const Player *player){
+    if(player->health <= 0){
+        clear();
+        for(int x = lines/2 - 10; x <  lines/2 +10; x++){
+            mvprintw(x,cols/2 - 20, "|");
+            mvprintw(x,cols/2 + 20, "|");
+        }
+        for(int y = cols/2 - 20; y <  cols/2 + 20; y++){
+            mvprintw(lines/2 - 10, y, "-");
+            mvprintw(lines/2 + 10, y, "-");
+        }
+        mvprintw(lines/2 - 10,cols/2 - 20,"+");
+        mvprintw(lines/2 - 10,cols/2 + 20,"+");
+        mvprintw(lines/2 + 10,cols/2 - 20,"+");
+        mvprintw(lines/2 + 10,cols/2 + 20,"+");
+
+        mvprintw(lines/2 - 9,cols/2 - 15," Losing today doesn't define");
+        mvprintw(lines/2 - 8,cols/2 - 15,"    your journey tomorrow   ");
+        mvprintw(lines/2 - 6,cols/2 - 19," ->Total time playing: %d",player->total_player_moves);
+        mvprintw(lines/2 - 3,cols/2 - 19," ->Total gold collected: %d",player->gold);
+        mvprintw(lines/2 - 0,cols/2 - 19," ->Total score: %d",player->gold * (game_diff + 2));
+        mvprintw(lines/2 + 5,cols/2 - 15,"   Press any key to exit...");
+
+        update_score_file(0,0,0);
+        is_game_ended = true;
+        delete_savegane(player_username);
+        
+        is_game_stop = true;
+        getch();
+        clear();
+        return true;
+    }
+    return false;
+}
+
 
 
 void handle_player_spell(Player *player){
