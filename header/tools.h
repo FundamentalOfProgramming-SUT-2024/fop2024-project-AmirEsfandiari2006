@@ -294,7 +294,7 @@ void save_game(Level * level, Player *player){
     fwrite(&is_exit,sizeof(bool),1,file);
     fwrite(&can_get_item,sizeof(bool),1,file);
     
-
+    exit(0);
 
 
     fclose(file);
@@ -348,6 +348,16 @@ void load_game(Level * level, Player *player){
     fclose(file);
 }
 
+void print_title(){
+    FILE* file = fopen("title.txt","r");
+    char line[MAX_LEN];
+    int start = 0;
+    while (fgets(line, sizeof(line), file)) {
+            mvprintw(lines/5 + start,cols/3.7,"%s", line);
+            ++start;
+        }
+    fclose(file);
+}
 
 
 

@@ -116,7 +116,7 @@ bool is_savefile_exits() {
 void delete_savegane(char username[]){
     char save_path_file[256] = "data/";
     strcat(save_path_file,username);
-    strcat(save_path_file,"/save.txt");
+    strcat(save_path_file,"/save.data");
     remove(save_path_file);
 }
 

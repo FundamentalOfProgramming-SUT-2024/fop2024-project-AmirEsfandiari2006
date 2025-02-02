@@ -13,6 +13,7 @@ void set_up_colors();
 void use_spell(int spell_index,Player *player);
 void use_weapon(int weapon_index,Player *player);
 void save_game(Level * level, Player *player);
+void print_title();
 
 void draw_borders(){
     for(int i = 0; i < COLS; i++){
@@ -94,7 +95,8 @@ int get_command_main_menu(){
     curs_set(0);
     int hover = 0;
     while(true){
-        draw_borders();
+        
+        print_title();
         for(int i = 0; i < number_menu_item; i++){
         if(i == hover)
             attron(A_REVERSE);
@@ -102,6 +104,7 @@ int get_command_main_menu(){
         if(i == hover)
             attroff(A_REVERSE);
         }
+        draw_borders();
         int command = getch();
         if (command == KEY_UP)
             hover = (hover == 0) ? number_menu_item - 1: hover - 1;
@@ -252,7 +255,6 @@ void log_in_user(){
                 }
             }
 
-            //make the input ready for next try or logged in and continue
             if(state == false){
                 for (int i = top; i < LINES/2; i++) {
                     move(i, start);
@@ -265,7 +267,6 @@ void log_in_user(){
 
                 is_logged_in = true;
                 strcpy(player_username,username);
-                //It should be continued by other values but for now. It would be enough.
                 if(is_savefile_exits(username)){
                     is_there_savegame = true;
                 }
@@ -520,6 +521,8 @@ void open_items_menu(int menu_number,Level* level,Player* player){
         case EXIT          :
         if(have_game_played == true && is_game_ended == false){
                 save_game(level,player);  
+        } else {
+            exit(0);
         }
         return;
     }
