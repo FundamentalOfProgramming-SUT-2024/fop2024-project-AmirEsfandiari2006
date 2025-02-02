@@ -1043,6 +1043,7 @@ bool handle_command(char command,Player*player,Level *level){
             clear();
             printf_level(&level[level_map],player); 
             refresh();
+        return true;
         case 'f':
             move_fast(&level[level_map],player);
         return true;

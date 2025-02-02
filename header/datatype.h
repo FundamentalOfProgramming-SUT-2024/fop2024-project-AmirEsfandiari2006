@@ -43,6 +43,7 @@ typedef struct
     int room;
     int health;
     int damage;
+    int moves;
 } Monster;
 
 

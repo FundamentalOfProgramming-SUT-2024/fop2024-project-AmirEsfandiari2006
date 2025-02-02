@@ -42,6 +42,7 @@ const int food_number = 1;
 const char monster_name[MAX_MONSTER] = {'E','B','I','N','U'};
 const char monster_damge[MAX_MONSTER] = {1,2,3,4,5};
 const char monster_health[MAX_MONSTER] = {5,10,15,20,30};
+int  monster_moves[MAX_MONSTER] = {1000,1000,0,1000,8};
 
 
 int rotten_food_cycle = ROTTEN_CYCLE;

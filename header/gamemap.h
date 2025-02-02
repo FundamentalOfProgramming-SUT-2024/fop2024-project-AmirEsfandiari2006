@@ -767,6 +767,7 @@ void random_monster(Level *level,int max_number,int max_chance){
                     level->rooms[item_room].monsters[level->rooms[item_room].total_monsters].position = item_position;
                     level->rooms[item_room].monsters[level->rooms[item_room].total_monsters].damage = monster_damge[which];
                     level->rooms[item_room].monsters[level->rooms[item_room].total_monsters].health = monster_health[which];
+                    level->rooms[item_room].monsters[level->rooms[item_room].total_monsters].moves = monster_moves[which];
                     level->rooms[item_room].monsters[level->rooms[item_room].total_monsters].room = monster_room(item_position,&(level[level_map]));
                     level->rooms[item_room].total_monsters++;
                 }
@@ -865,12 +866,18 @@ int is_walkable(int x, int y) {
 void moveMonster(Monster* monster_man, Player* player_man) {
     Point* player = &player_man->position;
     Point* monster = &monster_man->position;
+
     int dx = player->x - monster->x;
     int dy = player->y - monster->y;
     if (abs(dx) <= 1 && abs(dy) <= 1) {
         attack_player(monster_man,player_man);
         return;
     }
+
+    if(monster_man->moves <= 0){
+        return;
+    }
+
 
     int new_x = monster->x;
     int new_y = monster->y;
@@ -885,6 +892,7 @@ void moveMonster(Monster* monster_man, Player* player_man) {
         monster->x = new_x;
         monster->y = new_y;
     }
+    monster_man->moves -= 1;
 }
 
 void handle_monsters_movement(Level*level,Player*player){
