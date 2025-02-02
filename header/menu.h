@@ -12,6 +12,7 @@ void clear_message();
 void set_up_colors();
 void use_spell(int spell_index,Player *player);
 void use_weapon(int weapon_index,Player *player);
+void save_game(Level * level, Player *player);
 
 void draw_borders(){
     for(int i = 0; i < COLS; i++){
@@ -65,9 +66,12 @@ int play_the_game_menu(){
             } else if( hover == 1){
                 player_new_game = false;
                 player_load_game = true;
-                if(is_there_savegame == false && have_game_played == false && is_game_stop == false || is_game_ended == true){
+                if(is_savefile_exits()== false){
+                    if(is_there_savegame == false && have_game_played == false && is_game_stop == false || is_game_ended == true){
                     continue;
+                    }
                 }
+
             }
             clear();
             is_game_playing = true;
@@ -513,7 +517,11 @@ void open_items_menu(int menu_number,Level* level,Player* player){
         case SIGNUP        : sign_up_user();      return;
         case LEADERBOSRD   : show_leaderboard();  return;
         case SETTING       : setting();           return;
-        case EXIT          : /*save_game(level,player)*/      return;
+        case EXIT          :
+        if(have_game_played == true && is_game_ended == false){
+                save_game(level,player);  
+        }
+        return;
     }
 }
 

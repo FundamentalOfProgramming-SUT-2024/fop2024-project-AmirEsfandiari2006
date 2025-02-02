@@ -25,8 +25,8 @@ int main(){
         if (is_game_playing && is_logged_in) {
             pthread_create(&music_thread, NULL, play_music, NULL);
             if(player_load_game){
-                    if(is_there_savegame){
-                        //load_game(&player,level);
+                    if(is_savefile_exits() == true && have_game_played == false){
+                        load_game(level ,&player);
                         have_game_played = true;
                     } else if(is_game_stop == true && is_game_ended == false){
                         

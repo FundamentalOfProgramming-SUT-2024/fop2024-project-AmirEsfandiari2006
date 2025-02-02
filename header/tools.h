@@ -251,6 +251,103 @@ void reset_seen(){
     }
 }
 
+void save_game(Level * level, Player *player){
+    char file_path[256] = "data/";
+    strcat(file_path,player_username);
+    strcat(file_path,"/save.data");
+
+    FILE *file = fopen(file_path, "wb");
+
+    fwrite(player,sizeof(Player),1,file);
+    for(int i = 0 ; i <  MAX_LEVEL - 3;i++){
+        fwrite(&level[i],sizeof(Level),1,file);
+    }
+    fwrite(is_tile_seen,sizeof(int) * 8 * 768* 1024,1,file);
+    fwrite(&is_hidden,sizeof(bool),1,file);
+    fwrite(&throw_dart,sizeof(bool),1,file);
+    fwrite(&selected_music,sizeof(int),1,file);
+    fwrite(&music_on,sizeof(bool),1,file);
+
+    fwrite(&speed_spell_bonus,sizeof(int),1,file);
+    fwrite(&damage_spell_bonus,sizeof(int),1,file);
+    fwrite(&health_spell_bonus,sizeof(int),1,file);
+
+    fwrite(&speed_spell_life,sizeof(int),1,file);
+    fwrite(&damage_spell_life,sizeof(int),1,file);
+    fwrite(&health_spell_life,sizeof(int),1,file);
+
+    fwrite(&rotten_food_cycle,sizeof(int),1,file);
+
+    fwrite(&level_map,sizeof(int),1,file);
+    fwrite(&game_diff,sizeof(int),1,file);
+    fwrite(&player_color,sizeof(int),1,file);
+
+    fwrite(&player_load_game,sizeof(bool),1,file);
+    fwrite(&player_new_game,sizeof(bool),1,file);
+
+    fwrite(&is_logged_in,sizeof(bool),1,file);
+    fwrite(&is_game_playing,sizeof(bool),1,file);
+    fwrite(&is_game_ended,sizeof(bool),1,file);
+    fwrite(&is_there_savegame,sizeof(bool),1,file);
+    fwrite(&is_treasure_room,sizeof(bool),1,file);
+    fwrite(&is_game_stop,sizeof(bool),1,file);
+    fwrite(&is_exit,sizeof(bool),1,file);
+    fwrite(&can_get_item,sizeof(bool),1,file);
+    
+
+
+
+    fclose(file);
+}
+
+
+void load_game(Level * level, Player *player){
+    char file_path[256] = "data/";
+    strcat(file_path,player_username);
+    strcat(file_path,"/save.data");
+
+    FILE *file = fopen(file_path, "rb");
+
+    fread(player,sizeof(Player),1,file);
+    for(int i = 0 ; i <  MAX_LEVEL - 3;i++){
+        fread(&level[i],sizeof(Level),1,file);
+    }
+    fread(is_tile_seen,sizeof(int) * 8 * 768* 1024,1,file);
+    fread(&is_hidden,sizeof(bool),1,file);
+    fread(&throw_dart,sizeof(bool),1,file);
+    fread(&selected_music,sizeof(int),1,file);
+    fread(&music_on,sizeof(bool),1,file);
+
+    fread(&speed_spell_bonus,sizeof(int),1,file);
+    fread(&damage_spell_bonus,sizeof(int),1,file);
+    fread(&health_spell_bonus,sizeof(int),1,file);
+
+    fread(&speed_spell_life,sizeof(int),1,file);
+    fread(&damage_spell_life,sizeof(int),1,file);
+    fread(&health_spell_life,sizeof(int),1,file);
+
+    fread(&rotten_food_cycle,sizeof(int),1,file);
+
+    fread(&level_map,sizeof(int),1,file);
+    fread(&game_diff,sizeof(int),1,file);
+    fread(&player_color,sizeof(int),1,file);
+
+    fread(&player_load_game,sizeof(bool),1,file);
+    fread(&player_new_game,sizeof(bool),1,file);
+
+    fread(&is_logged_in,sizeof(bool),1,file);
+    fread(&is_game_playing,sizeof(bool),1,file);
+    fread(&is_game_ended,sizeof(bool),1,file);
+    fread(&is_there_savegame,sizeof(bool),1,file);
+    fread(&is_treasure_room,sizeof(bool),1,file);
+    fread(&is_game_stop,sizeof(bool),1,file);
+    fread(&is_exit,sizeof(bool),1,file);
+    fread(&can_get_item,sizeof(bool),1,file);
+
+
+    fclose(file);
+}
+
 
 
 
