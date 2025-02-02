@@ -253,10 +253,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x,start_point.y - 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
                         break;
@@ -276,10 +276,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x,start_point.y + 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
                         break;
@@ -299,10 +299,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x - 1,start_point.y);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
                         break;
@@ -322,10 +322,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x + 1,start_point.y);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
                         break;
@@ -345,10 +345,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x - 1,start_point.y - 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
                         break;
@@ -368,10 +368,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x - 1,start_point.y + 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
                         break;
@@ -391,10 +391,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x + 1,start_point.y + 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
                         break;
@@ -414,10 +414,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x + 1,start_point.y - 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O'){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'R';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'R';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[NORMAL_ARROW_INDEX]--;
                         break;
@@ -448,10 +448,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x,start_point.y - 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || dagger_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[DAGGER_INDEX]--;
                         break;
@@ -472,10 +472,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x,start_point.y + 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || dagger_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[DAGGER_INDEX]--;
                         break;
@@ -495,10 +495,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x - 1,start_point.y);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || dagger_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[DAGGER_INDEX]--;
                         break;
@@ -518,10 +518,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x + 1,start_point.y);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || dagger_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[DAGGER_INDEX]--;
                         break;
@@ -541,10 +541,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x - 1,start_point.y - 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || dagger_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[DAGGER_INDEX]--;
                         break;
@@ -564,10 +564,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x - 1,start_point.y + 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || dagger_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[DAGGER_INDEX]--;
                         break;
@@ -587,10 +587,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x + 1,start_point.y + 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || dagger_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[DAGGER_INDEX]--;
                         break;
@@ -610,10 +610,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x + 1,start_point.y - 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || dagger_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'D';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'D';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[DAGGER_INDEX]--;
                         break;
@@ -644,10 +644,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x,start_point.y - 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || magic_wand_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
                         break;
@@ -667,10 +667,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x,start_point.y + 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || magic_wand_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
                         break;
@@ -691,10 +691,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x - 1,start_point.y);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || magic_wand_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
                         break;
@@ -714,10 +714,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x + 1,start_point.y);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || magic_wand_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
                         break;
@@ -738,10 +738,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x - 1,start_point.y - 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || magic_wand_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
                         break;
@@ -761,10 +761,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x - 1,start_point.y + 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || magic_wand_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
                         break;
@@ -784,10 +784,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x + 1,start_point.y + 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || magic_wand_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
                         break;
@@ -807,10 +807,10 @@ void throw_weapon(Level *level,Player *player){
                 while(true){
                     char tile = mvinch(start_point.x + 1,start_point.y - 1);
                     if(tile == '_' || tile == '|' || tile == '+' ||tile == 'O' || magic_wand_longest_way == 0){
-                        level[level_map].rooms[player->room].total_places += 21;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].display = 'W';
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].position = start_point;
-                        level[level_map].rooms[player->room].places[level->rooms[player->room].total_places].is_it_thrown = true;
+                        level[level_map].rooms[player->room].total_places ;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].display = 'W';
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].position = start_point;
+                        level[level_map].rooms[player->room].places[level[level_map].rooms[player->room].total_places].is_it_thrown = true;
                         level[level_map].rooms[player->room].total_places++;
                         player->number_of_each_weapon[MAGIC_WAND_INDEX]--;
                         break;
@@ -848,12 +848,12 @@ bool handle_movement(Point position,Level *level,Player *player){
     switch (value)
     {
     case '.':
-        for(int i = 0; i < level->rooms[player->room].total_trap;i++){
-            if(level->rooms[player->room].traps[i].position.x == position.x && level->rooms[player->room].traps[i].position.y == position.y){
+        for(int i = 0; i < level[level_map].rooms[player->room].total_trap;i++){
+            if(level[level_map].rooms[player->room].traps[i].position.x == position.x && level[level_map].rooms[player->room].traps[i].position.y == position.y){
                 clear();
                 player->health -= 1;
-                level->rooms[player->room].traps[i].position.x = -1;
-                level->rooms[player->room].traps[i].position.y = -1;
+                level[level_map].rooms[player->room].traps[i].position.x = -1;
+                level[level_map].rooms[player->room].traps[i].position.y = -1;
                 mvprintw(1,1,"You stand on a trap! Becareful next time!");
             } 
         }
