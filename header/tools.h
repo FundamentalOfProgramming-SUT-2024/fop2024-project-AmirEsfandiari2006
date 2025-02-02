@@ -251,15 +251,7 @@ void reset_seen(){
     }
 }
 
-void clear_except_top_three() {
-    int max_y, max_x;
-    getmaxyx(stdscr, max_y, max_x);  // Get terminal size
 
-    WINDOW* clear_win = newwin(max_y - 3, max_x, 3, 0);  // New window below line 3
-    wclear(clear_win);   // Clear the window
-    wrefresh(clear_win); // Refresh only the affected area
-    delwin(clear_win);   // Delete the temporary window
-}
 
 
 #endif

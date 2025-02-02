@@ -16,7 +16,7 @@ int main(){
             pthread_create(&music_thread2, NULL, play_music_mainmenu, NULL);
             while (command != EXIT && !is_game_playing) {
                 command = get_command_main_menu();
-                open_items_menu(command);
+                open_items_menu(command,level,&player);
 
             }
             pthread_join(music_thread2, NULL);
@@ -25,12 +25,13 @@ int main(){
         if (is_game_playing && is_logged_in) {
             pthread_create(&music_thread, NULL, play_music, NULL);
             if(player_load_game){
-                    if(is_game_stop == true && is_game_ended == false){
-
-                    } else if(is_there_savegame){
+                    if(is_there_savegame){
                         //load_game(&player,level);
                         have_game_played = true;
+                    } else if(is_game_stop == true && is_game_ended == false){
+                        
                     } else {
+                        have_game_played = true;
                         is_game_playing = false;
                         continue;
                     }
@@ -43,9 +44,15 @@ int main(){
                 init_level(level);
                 init_player(&player, &level[level_map]);
 
+                level_map = 0;
+
                 is_game_ended = false; have_game_played = true; is_game_stop = false; delete_savegane(player_username);
             }
-            while (command != ESCAPE) {
+            while (true) {
+                if(command == ESCAPE){
+                    is_game_stop = true;
+                    break;
+                }
                 if(!is_treasure_room){
                     printf_level(&level[level_map],&player);
                 } else {
@@ -90,8 +97,11 @@ int main(){
                         
                     }
                 }
-    
-                handle_monsters_movement(level,&player);
+                if(is_treasure_room == false){
+                    handle_monsters_movement(level,&player);
+                }
+                
+
 
                 if(handle_player_death(&player)){
                     reset_level(level);
@@ -119,9 +129,7 @@ int main(){
         }
     }
 
-    if(is_game_ended == false && is_game_stop == true){
-        //save_game(&player,level);
-    }
+
 
     refresh();
     endwin();

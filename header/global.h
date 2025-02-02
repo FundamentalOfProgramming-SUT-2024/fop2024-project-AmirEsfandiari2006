@@ -10,7 +10,7 @@ bool  is_game_playing = false;
 bool  is_game_ended = false;
 bool  is_there_savegame = false;
 bool  is_treasure_room = false;
-bool  is_game_stop = true;
+bool  is_game_stop = false;
 bool  is_exit = false;
 bool  can_get_item = true;
 

@@ -1070,6 +1070,7 @@ void use_food(int food_index,Player *player){
             } else {
                 mvprintw(1,1,"You don't have normal food to consume!");
             }
+        return;
         case PURE_FOOD_INDEX:
             if(player->number_of_each_food[PURE_FOOD_INDEX] >= 1){
                 player->health += 15;
@@ -1084,6 +1085,7 @@ void use_food(int food_index,Player *player){
             } else {
                 mvprintw(1,1,"You don't have pure food to consume!");
             }
+        return;
         case MAGIC_FOOD_INDEX:
             if(player->number_of_each_food[MAGIC_FOOD_INDEX] >= 1){
                 player->health += 15;
@@ -1098,7 +1100,7 @@ void use_food(int food_index,Player *player){
             } else {
                 mvprintw(1,1,"You don't have magic food to consume!");
             }
-   
+        return;
    
     }
 }
@@ -1199,6 +1201,7 @@ void handle_ending(const Player *player){
     is_game_ended = true;
     delete_savegane(player_username);
     
+    is_treasure_room = false;
     is_game_stop = true;
     getch();
     clear();

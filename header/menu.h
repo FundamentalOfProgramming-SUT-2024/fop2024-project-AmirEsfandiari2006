@@ -65,6 +65,9 @@ int play_the_game_menu(){
             } else if( hover == 1){
                 player_new_game = false;
                 player_load_game = true;
+                if(is_there_savegame == false && have_game_played == false && is_game_stop == false || is_game_ended == true){
+                    continue;
+                }
             }
             clear();
             is_game_playing = true;
@@ -504,13 +507,13 @@ void show_leaderboard(){
 
 
 
-void open_items_menu(int menu_number){
+void open_items_menu(int menu_number,Level* level,Player* player){
     switch(menu_number){
         case LOGIN         : log_in_user() ;      return;
         case SIGNUP        : sign_up_user();      return;
         case LEADERBOSRD   : show_leaderboard();  return;
         case SETTING       : setting();           return;
-        case EXIT          : is_exit = true;      return;
+        case EXIT          : /*save_game(level,player)*/      return;
     }
 }
 
