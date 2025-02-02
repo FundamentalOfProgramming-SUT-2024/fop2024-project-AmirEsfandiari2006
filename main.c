@@ -61,6 +61,7 @@ int main(){
                 print_player(&player);
 
                 command = getch();
+                clear_message();
                 if(command == ESCAPE){
                     is_game_stop = true;
                     

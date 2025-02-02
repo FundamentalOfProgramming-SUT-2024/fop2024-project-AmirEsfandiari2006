@@ -4,7 +4,7 @@
 #define PLAYER_H
 
 int random_number(int,int);
-
+void move_fast(Level *level, Player* player);
 
 int random_room(const Level* level) {
     int result;
@@ -1043,6 +1043,8 @@ bool handle_command(char command,Player*player,Level *level){
             clear();
             printf_level(&level[level_map],player); 
             refresh();
+        case 'f':
+            move_fast(&level[level_map],player);
         return true;
     }
     return false;
@@ -1287,6 +1289,95 @@ void handle_rotten_food(Player* player){
         rotten_food_cycle = ROTTEN_CYCLE;
     } else {
         rotten_food_cycle--;
+    }
+}
+
+void move_fast(Level *level, Player* player){
+    clear_message();
+    mvprintw(1,1,"Which direction do you want to teleporte?");
+    Point start_point = player->position;
+    int which_way = getch();
+    switch(which_way){
+                case KEY_LEFT:
+                while(true){
+                    char tile = mvinch(start_point.x,start_point.y - 1);
+                    if(tile == '_' || tile == '|' || tile == 'O' || tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E' || tile == ' '){
+                        break;
+                    }
+                    start_point.y--;
+                }
+                player->position = start_point;
+                break;
+                case KEY_RIGHT:
+                while(true){
+                    char tile = mvinch(start_point.x,start_point.y + 1);
+                    if(tile == '_' || tile == '|' || tile == 'O' || tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E' || tile == ' '){
+                        break;
+                    }
+                    start_point.y++;
+                }
+                player->position = start_point;
+                break;     
+                case KEY_UP:
+                while(true){
+                    char tile = mvinch(start_point.x - 1,start_point.y);
+                    if(tile == '_' || tile == '|' || tile == 'O' || tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E' || tile == ' '){
+                        break;
+                    }
+                    start_point.x--;
+                }
+                player->position = start_point;
+                break;
+                case KEY_DOWN:
+                while(true){
+                    char tile = mvinch(start_point.x + 1,start_point.y);
+                    if(tile == '_' || tile == '|' || tile == 'O' || tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E' || tile == ' '){
+                        break;
+                    }
+                    start_point.x++;
+                }
+                player->position = start_point;
+                break;
+                case KEY_HOME:
+                while(true){
+                    char tile = mvinch(start_point.x - 1,start_point.y - 1);
+                    if(tile == '_' || tile == '|' || tile == 'O' || tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E' || tile == ' '){
+                        break;
+                    }
+                    start_point.x--; start_point.y--;
+                }
+                player->position = start_point;
+                break;
+                case KEY_PPAGE:
+                while(true){
+                    char tile = mvinch(start_point.x - 1,start_point.y + 1);
+                    if(tile == '_' || tile == '|' || tile == 'O' || tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E' || tile == ' '){
+                        break;
+                    }
+                     start_point.x--; start_point.y++;
+                }
+                player->position = start_point;
+                break;
+                case KEY_NPAGE:
+                while(true){
+                    char tile = mvinch(start_point.x + 1,start_point.y + 1);
+                    if(tile == '_' || tile == '|' || tile == 'O' || tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E' || tile == ' '){
+                        break;
+                    }
+                     start_point.x++; start_point.y++;
+                }
+                player->position = start_point;
+                break;
+                case KEY_END:
+                while(true){
+                    char tile = mvinch(start_point.x + 1,start_point.y - 1);
+                    if(tile == '_' || tile == '|' || tile == 'O' || tile == 'B' || tile == 'N' || tile == 'U' || tile == 'I' || tile == 'E' || tile == ' '){
+                        break;
+                    }
+                    start_point.x++; start_point.y--;
+                }
+                player->position = start_point;
+                break;
     }
 }
 

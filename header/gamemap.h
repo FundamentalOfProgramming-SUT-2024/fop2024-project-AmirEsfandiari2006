@@ -108,6 +108,7 @@ void print_room(Room room){
         set_up_colors();
         attron(COLOR_PAIR(room.places[i].color));
         if(!handle_unicode(room.places[i].display,room.places[i].position)){
+            
             mvprintw(room.places[i].position.x,room.places[i].position.y,"%c",room.places[i].display);
         }
         attroff(COLOR_PAIR(room.places[i].color));
@@ -737,7 +738,7 @@ void random_monster(Level *level,int max_number,int max_chance){
     for(int item_room = 0; item_room < MAX_ROOM; item_room++){
         if(random_number(0,max_chance)){
         if(level->is_there_room[item_room] == true){
-            for(int repeat = 0; repeat < random_number(0,max_number) + game_diff; repeat++){
+            for(int repeat = 0; repeat < random_number(0,max_number) + game_diff + 1; repeat++){
                 Point item_position;
                 bool position_found = false;
                 int total_attmpt =  1000;
