@@ -822,17 +822,6 @@ void init_level(Level level[]){
         random_gold(&level[i],3);
     }
     for(int i = 0; i < MAX_LEVEL - 3; i++){
-        
-        if(i !=  3){
-            random_place(&level[i],'>', 2);
-        } else {
-            random_place(&level[i],'^',2);
-        }
-        if(i != 0){
-            random_place(&level[i],'<', 2);
-        }
-    }
-    for(int i = 0; i < MAX_LEVEL - 3; i++){
         random_weapon(&level[i],1,3);
     }
     for(int i = 0; i < MAX_LEVEL - 3; i++){
@@ -847,8 +836,17 @@ void init_level(Level level[]){
     for(int i = 0; i < MAX_LEVEL - 3; i++){
         random_monster(&level[i],1,3);
     }
-
-
+    for(int i = 0; i < MAX_LEVEL - 3; i++){
+    
+    if(i !=  3){
+        random_place(&level[i],'>', 2);
+    } else {
+        random_place(&level[i],'^',2);
+    }
+    if(i != 0){
+        random_place(&level[i],'<', 2);
+    }
+}
 }
 
 void attack_player(Monster* monster, Player* player){
