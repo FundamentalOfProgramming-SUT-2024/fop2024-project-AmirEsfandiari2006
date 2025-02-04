@@ -543,7 +543,7 @@ void random_weapon(Level *level,int max_number,int max_chance){
             for(int repeat = 0; repeat < random_number(0,max_number) - game_diff; repeat++){
                 Point item_position;
                 bool position_found = false;
-                int total_attmpt =  1000;
+                int total_attmpt =  100000;
                 while (!position_found && total_attmpt >= 0) {
                     item_position = random_position_point(&level->rooms[item_room]);
                     position_found = true; 
@@ -777,8 +777,7 @@ void random_monster(Level *level,int max_number,int max_chance){
 }
 
 
-
-void init_treasure_room(Room *room){
+void init_treasure_room(Room *room,Level*level){
     Point treasure_room_pos = {lines/3 - 5,cols/3 - 5};
     room->start = treasure_room_pos;
     room->width = 20;
@@ -808,7 +807,7 @@ void print_treasure_room(Level * level,Player *player){
 
 void init_level(Level level[]){
 
-    init_treasure_room(&(level->treasure_room));
+    init_treasure_room(&(level->treasure_room),level);
 
     for(int i = 0; i < MAX_LEVEL - 3;i++){
         generate_random_room(&level[i]);
@@ -902,6 +901,7 @@ void handle_monsters_movement(Level*level,Player*player){
     }
 
 }
+
 
 
 

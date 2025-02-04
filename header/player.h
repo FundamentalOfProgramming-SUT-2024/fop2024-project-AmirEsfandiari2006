@@ -138,6 +138,9 @@ void attack_monster_away(Monster* monster,Player*player){
             clear_message();
             throw_dart = true;
             monster->health -= weapons_damage[player->thrown_weapon];
+            if(weapons[player->thrown_weapon] == 'W'){
+                monster->moves = 0;
+            }
             if(monster->health <= 0){
                 
                 mvprintw(1,1,"You killed %s. Good luck!",get_monster_name(*monster));
